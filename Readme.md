@@ -1,7 +1,7 @@
 # Личный проект «Шесть городов»
 
 * Студент: [Михаил Голубцов](https://up.htmlacademy.ru/react/13/user/125174).
-* Наставник: [Идель Гатауллин](https://htmlacademy.ru/profile/id2271765).
+* Наставник: [Олег Глущенко](https://htmlacademy.ru/profile/id305355).
 
 ---
 
