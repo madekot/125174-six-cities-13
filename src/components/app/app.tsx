@@ -5,14 +5,7 @@ import Favorites from '../../pages/favorites/favorites.tsx';
 import Offer from '../../pages/offer/offer.tsx';
 import PageNotFound from '../../pages/page-not-found/page-not-found.tsx';
 import PrivateRoute, { AuthorizationStatus } from '../private-route/private-route.tsx';
-
-export enum AppRoute {
-  MAIN = '/',
-  LOGIN = '/login',
-  FAVORITES = '/favorites',
-  OFFER = '/offer/:id',
-  PAGE_NOT_FOUND = '*'
-}
+import { AppRoute } from './app-route.ts';
 
 type AppProps = {
   offersCount: number;
@@ -24,27 +17,27 @@ function App({ offersCount }: AppProps): JSX.Element {
       <Routes>
         <Route
           index
-          path={AppRoute.MAIN}
+          path={AppRoute.Main}
           element={<Main offersCount={offersCount} />}
         />
         <Route
-          path={AppRoute.LOGIN}
+          path={AppRoute.Login}
           element={<Login />}
         />
         <Route
-          path={AppRoute.FAVORITES}
+          path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NO_AUTH}>
+            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
               <Favorites />
             </PrivateRoute>
           }
         />
         <Route
-          path={AppRoute.OFFER}
+          path={AppRoute.Offer}
           element={<Offer />}
         />
         <Route
-          path={AppRoute.PAGE_NOT_FOUND}
+          path={AppRoute.PageNotFound}
           element={<PageNotFound />}
         />
       </Routes>
