@@ -60,7 +60,8 @@ function Offer({ offers }: OfferProps): JSX.Element {
         <li
           key={good}
           className="offer__inside-item"
-        >{good}</li>
+        >{good}
+        </li>
       ))}
     </ul>
   );
@@ -82,7 +83,7 @@ function Offer({ offers }: OfferProps): JSX.Element {
                   width={81}
                   height={41}
                 />
-              </Link >
+              </Link>
             </div>
             <nav className="header__nav">
               <ul className="header__nav-list">
