@@ -7,19 +7,20 @@ import PageNotFound from '../../pages/page-not-found/page-not-found.tsx';
 import PrivateRoute, { AuthorizationStatus } from '../private-route/private-route.tsx';
 import { AppRoute } from './app-route.ts';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
+import { offerPageList, OfferPreview } from '../../mocks/offer.ts';
 
 type AppProps = {
-  offersCount: number;
+  offers: OfferPreview[];
 }
 
-function App({ offersCount }: AppProps): JSX.Element {
+function App({ offers }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           index
           path={AppRoute.Main}
-          element={<Main offersCount={offersCount} />}
+          element={<Main offers={offers} />}
         />
         <Route
           path={AppRoute.Login}
@@ -32,14 +33,14 @@ function App({ offersCount }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-              <Favorites />
+            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+              <Favorites favoriteList={offers} />
             </PrivateRoute>
           }
         />
         <Route
           path={AppRoute.Offer}
-          element={<Offer />}
+          element={<Offer offers={offerPageList} />}
         />
         <Route
           path={AppRoute.PageNotFound}

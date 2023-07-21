@@ -1,10 +1,14 @@
-import PlaceCard from '../../components/place-card/place-card.tsx';
+import { OfferPreview } from '../../mocks/offer.ts';
+import OfferList from '../../components/offer-list/offer-list.tsx';
 
 type MainProps = {
-  offersCount: number;
+  offers: OfferPreview[];
 }
 
-function Main({offersCount}: MainProps): JSX.Element {
+function Main({ offers }: MainProps): JSX.Element {
+  const offersCount = offers.length;
+
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -150,11 +154,7 @@ function Main({offersCount}: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <PlaceCard/>
-                <PlaceCard/>
-                <PlaceCard/>
-                <PlaceCard/>
-                <PlaceCard/>
+                <OfferList offers={offers} />
               </div>
             </section>
             <div className="cities__right-section">
