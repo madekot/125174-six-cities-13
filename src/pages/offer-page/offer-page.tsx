@@ -1,21 +1,24 @@
 import { Link, Navigate, useParams } from 'react-router-dom';
-import { OfferPage } from '../../mocks/offer.ts';
-import { AppRoute } from '../../components/app/app-route.ts';
+import { OfferFull } from '../../mocks/offer.ts';
+
+import { AppRoute } from '../../components/app/app.tsx';
+import FormComment from '../../components/form-comment/form-comment.tsx';
+import { calculateRatingPercentage, convertCapitalizeFirstLetter, getPluralSuffix } from '../../utils.ts';
 
 type PageParams = {
   id: string;
 }
 
 type OfferProps = {
-  offers: OfferPage[];
+  offers: OfferFull[];
 }
 
-function Offer({ offers }: OfferProps): JSX.Element {
+function OfferPage({ offers }: OfferProps): JSX.Element {
   const { id } = useParams<PageParams>();
   const offerPage = offers.find((offer) => offer.id === id);
 
   if (!offerPage) {
-    return <Navigate to={AppRoute.Main} />;
+    return <Navigate to={AppRoute.Main} replace />;
   }
 
   const {
@@ -33,34 +36,21 @@ function Offer({ offers }: OfferProps): JSX.Element {
     price,
   } = offerPage;
 
-  const RATING_STARS = 5;
-  const ratingWidth = window.Math.round(rating) * 100 / RATING_STARS;
-  const favoriteClassActive = `${isFavorite ? 'offer__bookmark-button--active' : ''}`;
-
-  const galleryList = (
+  const imageGallery = (
     <div className="offer__gallery">
       {images.map((image) => (
-        <div
-          key={image}
-          className="offer__image-wrapper"
-        >
-          <img
-            className="offer__image"
-            src={image}
-            alt="Photo studio"
-          />
+        <div key={image} className="offer__image-wrapper">
+          <img className="offer__image" src={image} alt="Photo studio" />
         </div>
       ))}
     </div>
   );
 
-  const goodsList = (
+  const offerGoodsList = (
     <ul className="offer__inside-list">
       {goods.map((good) => (
-        <li
-          key={good}
-          className="offer__inside-item"
-        >{good}
+        <li key={good} className="offer__inside-item">
+          {good}
         </li>
       ))}
     </ul>
@@ -88,16 +78,16 @@ function Offer({ offers }: OfferProps): JSX.Element {
             <nav className="header__nav">
               <ul className="header__nav-list">
                 <li className="header__nav-item user">
-                  <a
+                  <Link
                     className="header__nav-link header__nav-link--profile"
-                    href="#"
+                    to={AppRoute.Main}
                   >
                     <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                     <span className="header__user-name user__name">
                   Oliver.conner@gmail.com
                     </span>
                     <span className="header__favorite-count">3</span>
-                  </a>
+                  </Link>
                 </li>
                 <li className="header__nav-item">
                   <a
@@ -115,7 +105,7 @@ function Offer({ offers }: OfferProps): JSX.Element {
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
-            {galleryList}
+            {imageGallery}
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
@@ -126,7 +116,7 @@ function Offer({ offers }: OfferProps): JSX.Element {
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">{title}</h1>
                 <button
-                  className={`offer__bookmark-button button ${favoriteClassActive}`}
+                  className={`offer__bookmark-button button ${isFavorite ? 'offer__bookmark-button--active' : ''}`}
                   type="button"
                 >
                   <svg
@@ -141,15 +131,15 @@ function Offer({ offers }: OfferProps): JSX.Element {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${ratingWidth}%` }} />
+                  <span style={{ width: `${calculateRatingPercentage(rating)}%` }} />
                   <span className="visually-hidden">Rating</span>
                 </div>
                 <span className="offer__rating-value rating__value">{rating}</span>
               </div>
               <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">{type}</li>
-                <li className="offer__feature offer__feature--bedrooms">{bedrooms} Bedrooms</li>
-                <li className="offer__feature offer__feature--adults">Max {maxAdults} adults</li>
+                <li className="offer__feature offer__feature--entire">{convertCapitalizeFirstLetter(type)}</li>
+                <li className="offer__feature offer__feature--bedrooms">{bedrooms} {`Bedroom${getPluralSuffix(bedrooms)}`}</li>
+                <li className="offer__feature offer__feature--adults">Max {maxAdults} {`adult${getPluralSuffix(maxAdults)}`}</li>
               </ul>
               <div className="offer__price">
                 <b className="offer__price-value">€{price}</b>
@@ -157,7 +147,7 @@ function Offer({ offers }: OfferProps): JSX.Element {
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                {goodsList}
+                {offerGoodsList}
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
@@ -171,7 +161,7 @@ function Offer({ offers }: OfferProps): JSX.Element {
                       alt="Host avatar"
                     />
                   </div>
-                  <span className="offer__user-name">Angelina</span>
+                  <span className="offer__user-name">{host.name}</span>
                   {host.isPro && <span className="offer__user-status">Pro</span>}
                 </div>
                 <div className="offer__description">
@@ -217,142 +207,7 @@ function Offer({ offers }: OfferProps): JSX.Element {
                     </div>
                   </li>
                 </ul>
-                <form
-                  className="reviews__form form"
-                  action="#"
-                  method="post"
-                >
-                  <label
-                    className="reviews__label form__label"
-                    htmlFor="review"
-                  >
-                    Your review
-                  </label>
-                  <div className="reviews__rating-form form__rating">
-                    <input
-                      className="form__rating-input visually-hidden"
-                      name="rating"
-                      defaultValue={5}
-                      id="5-stars"
-                      type="radio"
-                    />
-                    <label
-                      htmlFor="5-stars"
-                      className="reviews__rating-label form__rating-label"
-                      title="perfect"
-                    >
-                      <svg
-                        className="form__star-image"
-                        width={37}
-                        height={33}
-                      >
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input
-                      className="form__rating-input visually-hidden"
-                      name="rating"
-                      defaultValue={4}
-                      id="4-stars"
-                      type="radio"
-                    />
-                    <label
-                      htmlFor="4-stars"
-                      className="reviews__rating-label form__rating-label"
-                      title="good"
-                    >
-                      <svg
-                        className="form__star-image"
-                        width={37}
-                        height={33}
-                      >
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input
-                      className="form__rating-input visually-hidden"
-                      name="rating"
-                      defaultValue={3}
-                      id="3-stars"
-                      type="radio"
-                    />
-                    <label
-                      htmlFor="3-stars"
-                      className="reviews__rating-label form__rating-label"
-                      title="not bad"
-                    >
-                      <svg
-                        className="form__star-image"
-                        width={37}
-                        height={33}
-                      >
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input
-                      className="form__rating-input visually-hidden"
-                      name="rating"
-                      defaultValue={2}
-                      id="2-stars"
-                      type="radio"
-                    />
-                    <label
-                      htmlFor="2-stars"
-                      className="reviews__rating-label form__rating-label"
-                      title="badly"
-                    >
-                      <svg
-                        className="form__star-image"
-                        width={37}
-                        height={33}
-                      >
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                    <input
-                      className="form__rating-input visually-hidden"
-                      name="rating"
-                      defaultValue={1}
-                      id="1-star"
-                      type="radio"
-                    />
-                    <label
-                      htmlFor="1-star"
-                      className="reviews__rating-label form__rating-label"
-                      title="terribly"
-                    >
-                      <svg
-                        className="form__star-image"
-                        width={37}
-                        height={33}
-                      >
-                        <use xlinkHref="#icon-star" />
-                      </svg>
-                    </label>
-                  </div>
-                  <textarea
-                    className="reviews__textarea form__textarea"
-                    id="review"
-                    name="review"
-                    placeholder="Tell how was your stay, what you like and what can be improved"
-                    defaultValue={''}
-                  />
-                  <div className="reviews__button-wrapper">
-                    <p className="reviews__help">
-                      To submit review please make sure to set{' '}
-                      <span className="reviews__star">rating</span> and describe
-                      your stay with at least{' '}
-                      <b className="reviews__text-amount">50 characters</b>.
-                    </p>
-                    <button
-                      className="reviews__submit form__submit button"
-                      type="submit"
-                      disabled
-                    >
-                      Submit
-                    </button>
-                  </div>
-                </form>
+                <FormComment />
               </section>
             </div>
           </div>
@@ -507,4 +362,4 @@ function Offer({ offers }: OfferProps): JSX.Element {
   );
 }
 
-export default Offer;
+export default OfferPage;

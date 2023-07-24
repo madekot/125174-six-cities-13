@@ -7,17 +7,16 @@ type OfferListProps = {
 };
 
 function OfferList({ offers }: OfferListProps): JSX.Element {
-  const [activeCardId, setActiveCardId] = useState<OfferPreview['id'] | null>(null);
-  const handleMouseEnterCard = (id: OfferPreview['id']) => setActiveCardId(id);
-  // eslint-disable-next-line no-console
-  console.log(activeCardId ? `Активная карточка: ${activeCardId}` : 'Активной карточки нет');
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [_, setActiveCardId] = useState<OfferPreview['id']>('');
 
   return (
     <>
       {offers.map((item) => (
         <PlaceCard
           key={item.id} {...item}
-          onMouseEnter={handleMouseEnterCard}
+          onMouseEnter={(id: OfferPreview['id']) => setActiveCardId(id)}
+          onMouseLeave={() => setActiveCardId('')}
         />
       ))}
     </>

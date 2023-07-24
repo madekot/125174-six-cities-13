@@ -5,7 +5,7 @@ type MainProps = {
   offers: OfferPreview[];
 }
 
-function Main({ offers }: MainProps): JSX.Element {
+function MainPage({ offers }: MainProps): JSX.Element {
   const offersCount = offers.length;
 
 
@@ -167,4 +167,4 @@ function Main({ offers }: MainProps): JSX.Element {
   );
 }
 
-export default Main;
+export default MainPage;

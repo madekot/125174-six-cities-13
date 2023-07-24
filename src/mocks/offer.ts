@@ -28,7 +28,7 @@ export type OfferPreview = {
   previewImage: string;
 }
 
-export type OfferPage = Omit<OfferPreview, 'previewImage'> & {
+export type OfferFull = Omit<OfferPreview, 'previewImage'> & {
   description: string;
   bedrooms: number;
   goods: string[];
@@ -86,7 +86,7 @@ const offerPreviewList: OfferPreview[] = [
   },
 ];
 
-const offerPageList: OfferPage[] = [
+const offerPageList: OfferFull[] = [
   {
     ...offerPreviewList[0],
     'bedrooms': 1,
@@ -134,7 +134,7 @@ const offerPageList: OfferPage[] = [
     ],
     'host': {
       'isPro': false,
-      'name': 'Angelina',
+      'name': 'Eva',
       'avatarUrl': 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     'images': [

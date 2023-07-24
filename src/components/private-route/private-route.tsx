@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute } from '../app/app-route.ts';
+
+import { AppRoute } from '../app/app.tsx';
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',

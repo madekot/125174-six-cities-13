@@ -1,8 +1,10 @@
 import { OfferPreview } from '../../mocks/offer.ts';
 import { Link } from 'react-router-dom';
+import { convertCapitalizeFirstLetter, calculateRatingPercentage } from '../../utils.ts';
 
 export type PlaceCardProps = OfferPreview & {
   onMouseEnter?: (id: OfferPreview['id']) => void;
+  onMouseLeave?: () => void;
 };
 
 function PlaceCard(props: PlaceCardProps): JSX.Element {
@@ -15,17 +17,17 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     rating,
     id,
     isPremium,
-    onMouseEnter
+    onMouseEnter,
+    onMouseLeave
   } = props;
 
-  const RATING_STARS = 5;
-  const ratingWidth = window.Math.round(rating) * 100 / RATING_STARS;
   const pathCard = `/offer/${id}`;
 
   return (
     <article
       className="cities__card place-card"
       onMouseEnter={() => onMouseEnter?.(id)}
+      onMouseLeave={() => onMouseLeave?.()}
     >
       {isPremium &&
         <div className="place-card__mark">
@@ -64,14 +66,14 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${ratingWidth}%` }} />
+            <span style={{ width: `${calculateRatingPercentage(rating)}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={pathCard}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{convertCapitalizeFirstLetter(type)}</p>
       </div>
     </article>
   );

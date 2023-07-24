@@ -1,58 +1,13 @@
 import { FavoriteItem } from '../../mocks/favorite.ts';
-import { OfferPreview } from '../../mocks/offer.ts';
-import PlaceCardFavorite from '../../components/place-card-favorite/place-card-favorite.tsx';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../components/app/app-route.ts';
+import FavoriteList from '../../components/favorite-list/favorite-list.tsx';
+import { AppRoute } from '../../components/app/app.tsx';
 
 type FavoritesProps = {
   favoriteList: FavoriteItem[];
 }
 
-function Favorites({ favoriteList }: FavoritesProps): JSX.Element {
-  const convertedFavorites: Record<string, OfferPreview[]> = {};
-
-  favoriteList.forEach((item: OfferPreview) => {
-    if (!(item.city.name in convertedFavorites)) {
-      convertedFavorites[item.city.name] = [];
-    }
-    convertedFavorites[item.city.name].push(item);
-  });
-
-  const favoritesList = Object.entries(convertedFavorites).map((item: [string, OfferPreview[]]) => {
-    const [cityName, cards] = item;
-
-    const placesList = (
-      <ul className="favorites__list">
-        {cards.map((card) => (
-          <PlaceCardFavorite
-            key={card.id} {...card}
-          />
-        ))}
-      </ul>
-    );
-
-    return (
-      <li
-        key={cityName}
-        className="favorites__locations-items"
-      >
-        <div className="favorites__locations locations locations--current">
-          <div className="locations__item">
-            <a
-              className="locations__item-link"
-              href="#"
-            >
-              <span>{cityName}</span>
-            </a>
-          </div>
-        </div>
-        <div className="favorites__places">
-          {placesList}
-        </div>
-      </li>
-    );
-  });
-
+function FavoritesPage({ favoriteList }: FavoritesProps): JSX.Element {
   return (
     <div className="page">
       <header className="header">
@@ -103,7 +58,7 @@ function Favorites({ favoriteList }: FavoritesProps): JSX.Element {
         <div className="page__favorites-container container">
           <section className="favorites">
             <h1 className="favorites__title">Saved listing</h1>
-            {favoritesList}
+            <FavoriteList favoriteList={favoriteList}/>
           </section>
         </div>
       </main>
@@ -122,8 +77,7 @@ function Favorites({ favoriteList }: FavoritesProps): JSX.Element {
         </a>
       </footer>
     </div>
-
   );
 }
 
-export default Favorites;
+export default FavoritesPage;
