@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React from 'react';
 
-function PageNotFound(): JSX.Element {
+function NotFoundPage(): JSX.Element {
   const style: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -20,4 +20,4 @@ function PageNotFound(): JSX.Element {
   );
 }
 
-export default PageNotFound;
+export default NotFoundPage;

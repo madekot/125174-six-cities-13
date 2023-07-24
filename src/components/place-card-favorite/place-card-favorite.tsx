@@ -1,13 +1,9 @@
 import { OfferPreview } from '../../mocks/offer.ts';
 import { Link } from 'react-router-dom';
-import { convertCapitalizeFirstLetter, calculateRatingPercentage } from '../../utils.ts';
 
-export type PlaceCardProps = OfferPreview & {
-  onMouseEnter?: (id: OfferPreview['id']) => void;
-  onMouseLeave?: () => void;
-};
+export type PlaceCardFavoriteProps = OfferPreview;
 
-function PlaceCard(props: PlaceCardProps): JSX.Element {
+function PlaceCardFavorite(props: PlaceCardFavoriteProps): JSX.Element {
   const {
     price,
     type,
@@ -17,38 +13,36 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
     rating,
     id,
     isPremium,
-    onMouseEnter,
-    onMouseLeave
   } = props;
 
+  const RATING_STARS = 5;
+  const ratingWidth = window.Math.round(rating) * 100 / RATING_STARS;
   const pathCard = `/offer/${id}`;
 
   return (
-    <article
-      className="cities__card place-card"
-      onMouseEnter={() => onMouseEnter?.(id)}
-      onMouseLeave={() => onMouseLeave?.()}
-    >
+    <article className="favorites__card place-card">
       {isPremium &&
         <div className="place-card__mark">
           <span>Premium</span>
         </div>}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className="favorites__image-wrapper place-card__image-wrapper">
         <Link to={pathCard}>
           <img
             className="place-card__image"
             src={previewImage}
-            width={260}
-            height={200}
+            width={150}
+            height={110}
             alt="Place image"
           />
         </Link>
       </div>
-      <div className="place-card__info">
+      <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">€{price}</b>
-            <span className="place-card__price-text">/&nbsp;night</span>
+            <span className="place-card__price-text">
+              /&nbsp;night
+            </span>
           </div>
           <button
             className={`place-card__bookmark-button ${isFavorite ? 'place-card__bookmark-button--active' : ''} button`}
@@ -66,17 +60,17 @@ function PlaceCard(props: PlaceCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${calculateRatingPercentage(rating)}%` }} />
+            <span style={{ width: `${ratingWidth}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
           <Link to={pathCard}>{title}</Link>
         </h2>
-        <p className="place-card__type">{convertCapitalizeFirstLetter(type)}</p>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 }
 
-export default PlaceCard;
+export default PlaceCardFavorite;

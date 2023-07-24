@@ -1,6 +1,6 @@
 import { Navigate } from 'react-router-dom';
-import { AppRoute } from '../app/app-route.ts';
 import { AuthorizationStatus } from '../private-route/private-route.tsx';
+import { AppRoute } from '../app/app.tsx';
 
 type RedirectToMainRouteProps = {
   children: JSX.Element;
