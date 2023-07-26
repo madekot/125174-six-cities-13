@@ -1,6 +1,6 @@
-import PlaceCard from '../place-card/place-card.tsx';
 import { OfferPreview } from '../../mocks/offer.ts';
 import { useState } from 'react';
+import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
 
 type OfferListProps = {
   offers: OfferPreview[];
@@ -13,8 +13,9 @@ function OfferList({ offers }: OfferListProps): JSX.Element {
   return (
     <>
       {offers.map((item) => (
-        <PlaceCard
+        <CommonPlaceCard
           key={item.id} {...item}
+          cardType={'cities'}
           onMouseEnter={(id: OfferPreview['id']) => setActiveCardId(id)}
           onMouseLeave={() => setActiveCardId('')}
         />
