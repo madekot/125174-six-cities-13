@@ -4,12 +4,12 @@ import { OfferPreview } from '../../mocks/offer.ts';
 
 type PlaceCardProps = OfferPreview & {
   cardType: 'cities' | 'favorites';
-  onMouseEnter?: (id: OfferPreview['id']) => void;
-  onMouseLeave?: () => void;
+  handleCardMouseEnter?: (id: OfferPreview['id']) => void;
+  handleCardMouseLeave?: () => void;
 };
 
 function CommonPlaceCard(props: PlaceCardProps): JSX.Element {
-  const { id, cardType, onMouseEnter, onMouseLeave, ...rest } = props;
+  const { id, cardType, handleCardMouseEnter, handleCardMouseLeave, ...rest } = props;
   const pathCard = `/offer/${id}`;
   const ratingPercentage = calculateRatingPercentage(rest.rating);
   const capitalizedType = convertCapitalizeFirstLetter(rest.type);
@@ -17,8 +17,8 @@ function CommonPlaceCard(props: PlaceCardProps): JSX.Element {
   return (
     <article
       className={`${cardType}__card place-card`}
-      onMouseEnter={() => onMouseEnter?.(id)}
-      onMouseLeave={() => onMouseLeave?.()}
+      onMouseEnter={() => handleCardMouseEnter?.(id)}
+      onMouseLeave={() => handleCardMouseLeave?.()}
     >
       {rest.isPremium && (
         <div className="place-card__mark">

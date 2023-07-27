@@ -1,23 +1,21 @@
 import { OfferPreview } from '../../mocks/offer.ts';
-import { useState } from 'react';
 import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
 
 type OfferListProps = {
   offers: OfferPreview[];
+  handleCardMouseEnter?: (id: OfferPreview['id']) => void;
+  handleCardMouseLeave?: () => void;
 };
 
-function OfferList({ offers }: OfferListProps): JSX.Element {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [_, setActiveCardId] = useState<OfferPreview['id']>('');
-
+function OfferList({ offers, handleCardMouseLeave, handleCardMouseEnter }: OfferListProps): JSX.Element {
   return (
     <>
       {offers.map((item) => (
         <CommonPlaceCard
           key={item.id} {...item}
           cardType={'cities'}
-          onMouseEnter={(id: OfferPreview['id']) => setActiveCardId(id)}
-          onMouseLeave={() => setActiveCardId('')}
+          handleCardMouseEnter={handleCardMouseEnter}
+          handleCardMouseLeave={handleCardMouseLeave}
         />
       ))}
     </>
