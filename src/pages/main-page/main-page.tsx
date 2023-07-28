@@ -1,13 +1,20 @@
 import { OfferPreview } from '../../mocks/offer.ts';
 import OfferList from '../../components/offer-list/offer-list.tsx';
+import Map from '../../components/map/map.tsx';
+import { useState } from 'react';
 
 type MainProps = {
   offers: OfferPreview[];
 }
 
 function MainPage({ offers }: MainProps): JSX.Element {
-  const offersCount = offers.length;
+  const [selectedOfferId, setSelectedOfferId] = useState<OfferPreview['id']>('');
+  const [selectedCity,] = useState(offers[0].city);
 
+  const handleCardMouseEnter = (id: OfferPreview['id']) => setSelectedOfferId(id);
+  const handleCardMouseLeave = () => setSelectedOfferId('');
+
+  const offersCount = offers.length;
 
   return (
     <div className="page page--gray page--main">
@@ -154,11 +161,13 @@ function MainPage({ offers }: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <OfferList offers={offers} />
+                <OfferList offers={offers} handleCardMouseEnter={handleCardMouseEnter} handleCardMouseLeave={handleCardMouseLeave}/>
               </div>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map" />
+              <section className="cities__map map" >
+                <Map city={selectedCity} offers={offers} selectedOfferId={selectedOfferId}/>
+              </section>
             </div>
           </div>
         </div>

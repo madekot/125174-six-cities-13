@@ -1,10 +1,10 @@
-type Location = {
+export type Location = {
   latitude: number;
   longitude: number;
   zoom: number;
 }
 
-type City = {
+export type City = {
   name: string;
   location: Location;
 }
@@ -39,22 +39,22 @@ export type OfferFull = Omit<OfferPreview, 'previewImage'> & {
 
 const offerPreviewList: OfferPreview[] = [
   {
-    'id': '34f50f68-803c-43a9-8d59-9556fb9c0eaa',
-    'title': 'The house among olive ',
+    'id': crypto.randomUUID(),
+    'title': 'The house-1',
     'type': 'hotel',
     'price': 197,
     'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
     'city': {
       'name': 'Amsterdam',
       'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
-        'zoom': 13
+        'latitude': 52.373061,
+        'longitude': 4.892555,
+        'zoom': 12
       }
     },
     'location': {
-      'latitude': 48.868610000000004,
-      'longitude': 2.342499,
+      'latitude': 52.3909553943508,
+      'longitude': 4.85309666406198,
       'zoom': 16
     },
     'isFavorite': false,
@@ -62,7 +62,53 @@ const offerPreviewList: OfferPreview[] = [
     'rating': 1.1
   },
   {
-    'id': '4b658388-7118-4e47-806a-fa5b0d41e8b0',
+    'id': crypto.randomUUID(),
+    'title': 'The house-2',
+    'type': 'hotel',
+    'price': 197,
+    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.373061,
+        'longitude': 4.892555,
+        'zoom': 12
+      }
+    },
+    'location': {
+      'latitude': 52.3609553943508,
+      'longitude': 4.85309666406198,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 1.1
+  },
+  {
+    'id': crypto.randomUUID(),
+    'title': 'The house-3',
+    'type': 'hotel',
+    'price': 197,
+    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.373061,
+        'longitude': 4.892555,
+        'zoom': 12
+      }
+    },
+    'location': {
+      'latitude': 52.3809553943508,
+      'longitude': 4.939309666406198,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 1.1
+  },
+  {
+    'id': crypto.randomUUID(),
     'title': 'Amazing and Extremely Central Flat',
     'type': 'apartment',
     'price': 174,
@@ -70,8 +116,8 @@ const offerPreviewList: OfferPreview[] = [
     'city': {
       'name': 'Paris',
       'location': {
-        'latitude': 48.85661,
-        'longitude': 2.351499,
+        'latitude': 52.35514938496378,
+        'longitude': 4.673877537499948,
         'zoom': 13
       }
     },
@@ -85,6 +131,36 @@ const offerPreviewList: OfferPreview[] = [
     'rating': 3
   },
 ];
+
+const placeholder = {
+  'bedrooms': 1,
+  'description': 'Design interior in most sympathetic area! Complitely renovated, well-equipped, cosy studio in idyllic, over 100 years old wooden house. Calm street, fast connection to center and airport.',
+  'goods': [
+    'Air conditioning',
+    'Coffee machine',
+    'Breakfast',
+    'Wi-Fi',
+    'Washer',
+    'Fridge',
+    'Laptop friendly workspace',
+    'Cable TV',
+    'Baby seat'
+  ],
+  'host': {
+    'isPro': false,
+    'name': 'Eva',
+    'avatarUrl': 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
+  },
+  'images': [
+    'https://13.design.pages.academy/static/hotel/9.jpg',
+    'https://13.design.pages.academy/static/hotel/1.jpg',
+    'https://13.design.pages.academy/static/hotel/16.jpg',
+    'https://13.design.pages.academy/static/hotel/10.jpg',
+    'https://13.design.pages.academy/static/hotel/7.jpg',
+    'https://13.design.pages.academy/static/hotel/5.jpg'
+  ],
+  'maxAdults': 2
+};
 
 const offerPageList: OfferFull[] = [
   {
@@ -146,7 +222,19 @@ const offerPageList: OfferFull[] = [
       'https://13.design.pages.academy/static/hotel/5.jpg'
     ],
     'maxAdults': 2
-  }
+  },
+  {
+    ...offerPreviewList[2],
+    ...placeholder
+  },
+  {
+    ...offerPreviewList[3],
+    ...placeholder
+  },
+  {
+    ...offerPreviewList[4],
+    ...placeholder
+  },
 ];
 
 export { offerPreviewList, offerPageList };

@@ -1,5 +1,5 @@
-import PlaceCardFavorite from '../place-card-favorite/place-card-favorite.tsx';
 import { OfferPreview } from '../../mocks/offer.ts';
+import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
 
 type FavoriteCitySectionProps = {
   cityName: string;
@@ -8,7 +8,7 @@ type FavoriteCitySectionProps = {
 
 function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX.Element {
   const favoritePlaceCards = cards.map((card) => (
-    <PlaceCardFavorite key={card.id} {...card} />
+    <CommonPlaceCard key={card.id} cardType={'favorites'} {...card} />
   ));
 
   return (
