@@ -43,7 +43,7 @@ const offerPreviewList: OfferPreview[] = [
     'title': 'The house-1',
     'type': 'hotel',
     'price': 197,
-    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
+    'previewImage': 'https://13.design.pages.academy/static/hotel/1.jpg',
     'city': {
       'name': 'Amsterdam',
       'location': {
@@ -66,7 +66,7 @@ const offerPreviewList: OfferPreview[] = [
     'title': 'The house-2',
     'type': 'hotel',
     'price': 197,
-    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
+    'previewImage': 'https://13.design.pages.academy/static/hotel/2.jpg',
     'city': {
       'name': 'Amsterdam',
       'location': {
@@ -82,14 +82,14 @@ const offerPreviewList: OfferPreview[] = [
     },
     'isFavorite': false,
     'isPremium': false,
-    'rating': 1.1
+    'rating': 2.5
   },
   {
     'id': crypto.randomUUID(),
     'title': 'The house-3',
     'type': 'hotel',
     'price': 197,
-    'previewImage': 'https://13.design.pages.academy/static/hotel/10.jpg',
+    'previewImage': 'https://13.design.pages.academy/static/hotel/3.jpg',
     'city': {
       'name': 'Amsterdam',
       'location': {
@@ -101,6 +101,29 @@ const offerPreviewList: OfferPreview[] = [
     'location': {
       'latitude': 52.3809553943508,
       'longitude': 4.939309666406198,
+      'zoom': 16
+    },
+    'isFavorite': false,
+    'isPremium': false,
+    'rating': 5
+  },
+  {
+    'id': crypto.randomUUID(),
+    'title': 'The house-4',
+    'type': 'hotel',
+    'price': 197,
+    'previewImage': 'https://13.design.pages.academy/static/hotel/3.jpg',
+    'city': {
+      'name': 'Amsterdam',
+      'location': {
+        'latitude': 52.373061,
+        'longitude': 4.892555,
+        'zoom': 12
+      }
+    },
+    'location': {
+      'latitude': 52.37183922001607,
+      'longitude': 4.898045741635563,
       'zoom': 16
     },
     'isFavorite': false,
@@ -147,7 +170,7 @@ const placeholder = {
     'Baby seat'
   ],
   'host': {
-    'isPro': false,
+    'isPro': true,
     'name': 'Eva',
     'avatarUrl': 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
   },

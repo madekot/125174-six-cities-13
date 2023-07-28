@@ -4,7 +4,7 @@ type User = {
   isPro: boolean;
 }
 
-type Review = {
+export type Review = {
   id: string;
   date: string;
   user: User;
@@ -17,7 +17,7 @@ const reviews: Review[] = [
     'id': '5abcc770-15be-46cb-85ba-07bbc0c50bdf',
     'comment': 'This villa is perfect in every way: the view on mountains and waterfalls, the hot tub and the villa itself. The evening here became a great continuation of our journeys over country.',
     'date': '2023-06-23T21:00:00.624Z',
-    'rating': 1,
+    'rating': 1.5,
     'user': {
       'name': 'Mollie',
       'avatarUrl': 'https://13.design.pages.academy/static/avatar/6.jpg',
@@ -30,7 +30,7 @@ const reviews: Review[] = [
     'date': '2023-06-21T21:00:00.624Z',
     'rating': 1,
     'user': {
-      'name': 'Christina',
+      'name': 'Christi',
       'avatarUrl': 'https://13.design.pages.academy/static/avatar/10.jpg',
       'isPro': false
     }

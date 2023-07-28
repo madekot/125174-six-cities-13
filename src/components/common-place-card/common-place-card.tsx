@@ -1,9 +1,10 @@
 import { Link } from 'react-router-dom';
 import { convertCapitalizeFirstLetter, calculateRatingPercentage } from '../../utils.ts';
 import { OfferPreview } from '../../mocks/offer.ts';
+import { CardType } from '../common-place-card-list/common-place-card-list.tsx';
 
 type PlaceCardProps = OfferPreview & {
-  cardType: 'cities' | 'favorites';
+  cardType: CardType;
   handleCardMouseEnter?: (id: OfferPreview['id']) => void;
   handleCardMouseLeave?: () => void;
 };
@@ -30,8 +31,8 @@ function CommonPlaceCard(props: PlaceCardProps): JSX.Element {
           <img
             className="place-card__image"
             src={rest.previewImage}
-            width={cardType === 'cities' ? 260 : 150}
-            height={cardType === 'cities' ? 200 : 110}
+            width={cardType === 'favorites' ? 150 : 260}
+            height={cardType === 'favorites' ? 110 : 200}
             alt="Place image"
           />
         </Link>

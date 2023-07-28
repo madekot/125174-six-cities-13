@@ -1,5 +1,5 @@
 import { OfferPreview } from '../../mocks/offer.ts';
-import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
+import CommonPlaceCardList from '../common-place-card-list/common-place-card-list.tsx';
 
 type FavoriteCitySectionProps = {
   cityName: string;
@@ -7,10 +7,6 @@ type FavoriteCitySectionProps = {
 }
 
 function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX.Element {
-  const favoritePlaceCards = cards.map((card) => (
-    <CommonPlaceCard key={card.id} cardType={'favorites'} {...card} />
-  ));
-
   return (
     <li key={cityName} className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -21,7 +17,7 @@ function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX
         </div>
       </div>
       <div className="favorites__places">
-        {favoritePlaceCards}
+        <CommonPlaceCardList offers={cards} cardType={'favorites'}/>
       </div>
     </li>
   );
