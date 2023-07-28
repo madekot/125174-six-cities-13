@@ -1,5 +1,5 @@
 import { OfferPreview } from '../../mocks/offer.ts';
-import CommonPlaceCardList from '../common-place-card-list/common-place-card-list.tsx';
+import PlaceList from '../place-list/place-list.tsx';
 
 type FavoriteCitySectionProps = {
   cityName: string;
@@ -17,7 +17,7 @@ function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX
         </div>
       </div>
       <div className="favorites__places">
-        <CommonPlaceCardList offers={cards} cardType={'favorites'}/>
+        <PlaceList offers={cards} cardType={'favorites'}/>
       </div>
     </li>
   );

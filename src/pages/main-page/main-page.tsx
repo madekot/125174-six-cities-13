@@ -1,5 +1,5 @@
 import { OfferPreview } from '../../mocks/offer.ts';
-import CommonPlaceCardList from '../../components/common-place-card-list/common-place-card-list.tsx';
+import PlaceList from '../../components/place-list/place-list.tsx';
 import Map from '../../components/map/map.tsx';
 import { useState } from 'react';
 
@@ -161,7 +161,7 @@ function MainPage({ offers }: MainProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CommonPlaceCardList cardType={'cities'} offers={offers} handleCardMouseEnter={handleCardMouseEnter} handleCardMouseLeave={handleCardMouseLeave}/>
+                <PlaceList cardType={'cities'} offers={offers} handleCardMouseEnter={handleCardMouseEnter} handleCardMouseLeave={handleCardMouseLeave}/>
               </div>
             </section>
             <div className="cities__right-section">

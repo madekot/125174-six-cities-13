@@ -10,12 +10,13 @@ type OfferListProps = {
   handleCardMouseLeave?: () => void;
 };
 
-function CommonPlaceCardList({ offers, cardType, handleCardMouseLeave, handleCardMouseEnter }: OfferListProps): JSX.Element {
+function PlaceList({ offers, cardType, handleCardMouseLeave, handleCardMouseEnter }: OfferListProps): JSX.Element {
   return (
     <>
       {offers.map((offer) => (
         <CommonPlaceCard
-          key={offer.id} {...offer}
+          key={offer.id}
+          {...offer}
           cardType={cardType}
           handleCardMouseEnter={handleCardMouseEnter}
           handleCardMouseLeave={handleCardMouseLeave}
@@ -25,4 +26,4 @@ function CommonPlaceCardList({ offers, cardType, handleCardMouseLeave, handleCar
   );
 }
 
-export default CommonPlaceCardList;
+export default PlaceList;

@@ -6,7 +6,7 @@ import FormComment from '../../components/form-comment/form-comment.tsx';
 import { calculateRatingPercentage, convertCapitalizeFirstLetter, getPluralSuffix } from '../../utils.ts';
 import Reviews from '../../components/reviews/reviews.tsx';
 import { Review } from '../../mocks/reviews.ts';
-import CommonPlaceCardList from '../../components/common-place-card-list/common-place-card-list.tsx';
+import PlaceList from '../../components/place-list/place-list.tsx';
 
 type PageParams = {
   id: string;
@@ -195,7 +195,7 @@ function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Elem
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              <CommonPlaceCardList offers={limitedNearPlaces} cardType={'near-places'}/>
+              <PlaceList offers={limitedNearPlaces} cardType={'near-places'}/>
             </div>
           </section>
         </div>
