@@ -1,19 +1,23 @@
 import { OfferPreview } from '../../mocks/offer.ts';
 import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
 
+export type CardType = 'cities' | 'favorites' | 'near-places';
+
 type OfferListProps = {
   offers: OfferPreview[];
+  cardType: CardType;
   handleCardMouseEnter?: (id: OfferPreview['id']) => void;
   handleCardMouseLeave?: () => void;
 };
 
-function OfferList({ offers, handleCardMouseLeave, handleCardMouseEnter }: OfferListProps): JSX.Element {
+function PlaceList({ offers, cardType, handleCardMouseLeave, handleCardMouseEnter }: OfferListProps): JSX.Element {
   return (
     <>
-      {offers.map((item) => (
+      {offers.map((offer) => (
         <CommonPlaceCard
-          key={item.id} {...item}
-          cardType={'cities'}
+          key={offer.id}
+          {...offer}
+          cardType={cardType}
           handleCardMouseEnter={handleCardMouseEnter}
           handleCardMouseLeave={handleCardMouseLeave}
         />
@@ -22,4 +26,4 @@ function OfferList({ offers, handleCardMouseLeave, handleCardMouseEnter }: Offer
   );
 }
 
-export default OfferList;
+export default PlaceList;

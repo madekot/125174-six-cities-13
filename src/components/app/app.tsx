@@ -7,6 +7,7 @@ import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute, { AuthorizationStatus } from '../private-route/private-route.tsx';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import { offerPageList, OfferPreview } from '../../mocks/offer.ts';
+import { Review } from '../../mocks/reviews.ts';
 
 export enum AppRoute {
   Main = '/',
@@ -18,9 +19,10 @@ export enum AppRoute {
 
 type AppProps = {
   offers: OfferPreview[];
+  reviews: Review[];
 }
 
-function App({ offers }: AppProps): JSX.Element {
+function App({ offers, reviews }: AppProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -47,7 +49,7 @@ function App({ offers }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage offers={offerPageList} />}
+          element={<OfferPage offersFull={offerPageList} offersPreview={offers} reviews={reviews}/>}
         />
         <Route
           path={AppRoute.PageNotFound}
