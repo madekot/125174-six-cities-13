@@ -31,6 +31,6 @@ function LocationsTabs() {
       </section>
     </div>
   );
-};
+}
 
 export default LocationsTabs;
