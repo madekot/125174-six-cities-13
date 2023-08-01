@@ -8,6 +8,8 @@ import PrivateRoute, { AuthorizationStatus } from '../private-route/private-rout
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import { offerPageList, OfferPreview } from '../../mocks/offer.ts';
 import { Review } from '../../mocks/reviews.ts';
+import { useAppDispatch } from '../../store/hooks.ts';
+import { getOffers } from '../../store/action.ts';
 
 export enum AppRoute {
   Main = '/',
@@ -23,13 +25,16 @@ type AppProps = {
 }
 
 function App({ offers, reviews }: AppProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  dispatch(getOffers());
+
   return (
     <BrowserRouter>
       <Routes>
         <Route
           index
           path={AppRoute.Main}
-          element={<MainPage offers={offers} />}
+          element={<MainPage />}
         />
         <Route
           path={AppRoute.Login}

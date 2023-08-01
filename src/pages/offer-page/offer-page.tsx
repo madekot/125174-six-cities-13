@@ -186,7 +186,7 @@ function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Elem
             </div>
           </div>
           <section className="offer__map map">
-            <Map offers={offersMap} city={mapCenter} selectedOfferId={id}/>
+            <Map offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id}/>
           </section>
         </section>
         <div className="container">
