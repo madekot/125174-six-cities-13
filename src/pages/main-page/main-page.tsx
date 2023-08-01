@@ -12,7 +12,6 @@ function MainPage(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const selectedCity = useAppSelector((state) => state.selectedCity);
   const OffersByCity = filterOffersByCity(offers, selectedCity);
-  const selectedCityCoordinates = OffersByCity[0]?.city?.location;
   const isNoPlaces = OffersByCity.length === 0;
 
   const handleCardMouseEnter = (id: OfferPreview['id']) => setSelectedOfferId(id);
@@ -63,7 +62,6 @@ function MainPage(): JSX.Element {
         <h1 className="visually-hidden">Cities</h1>
         <LocationsTabs/>
         <Cities
-          selectedCityCoordinates={selectedCityCoordinates}
           offers={OffersByCity}
           selectedOfferId={selectedOfferId}
           handleCardMouseLeave={handleCardMouseLeave}

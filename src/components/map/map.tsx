@@ -52,6 +52,13 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, selectedOfferId]);
 
+  useEffect(() => {
+    if (map) {
+      map.flyTo([centerCoordinates.latitude, centerCoordinates.longitude]);
+    }
+  }, [centerCoordinates, map]);
+
+
   return (
     <div ref={mapRef} style={{height: '100%'}}></div>
   );
