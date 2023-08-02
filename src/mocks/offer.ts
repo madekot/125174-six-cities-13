@@ -42,7 +42,7 @@ const offerPreviewList: OfferPreview[] = [
     'id': crypto.randomUUID(),
     'title': 'The house-1',
     'type': 'hotel',
-    'price': 197,
+    'price': 100,
     'previewImage': 'https://13.design.pages.academy/static/hotel/1.jpg',
     'city': {
       'name': 'Amsterdam',
@@ -65,7 +65,7 @@ const offerPreviewList: OfferPreview[] = [
     'id': crypto.randomUUID(),
     'title': 'The house-2',
     'type': 'hotel',
-    'price': 197,
+    'price': 300,
     'previewImage': 'https://13.design.pages.academy/static/hotel/2.jpg',
     'city': {
       'name': 'Amsterdam',
@@ -82,13 +82,13 @@ const offerPreviewList: OfferPreview[] = [
     },
     'isFavorite': false,
     'isPremium': false,
-    'rating': 2.5
+    'rating': 2.2
   },
   {
     'id': crypto.randomUUID(),
     'title': 'The house-3',
     'type': 'hotel',
-    'price': 197,
+    'price': 200,
     'previewImage': 'https://13.design.pages.academy/static/hotel/3.jpg',
     'city': {
       'name': 'Amsterdam',
@@ -111,7 +111,7 @@ const offerPreviewList: OfferPreview[] = [
     'id': crypto.randomUUID(),
     'title': 'The house-4',
     'type': 'hotel',
-    'price': 197,
+    'price': 400,
     'previewImage': 'https://13.design.pages.academy/static/hotel/3.jpg',
     'city': {
       'name': 'Amsterdam',
@@ -128,7 +128,7 @@ const offerPreviewList: OfferPreview[] = [
     },
     'isFavorite': false,
     'isPremium': false,
-    'rating': 1.1
+    'rating': 3.3
   },
   {
     'id': crypto.randomUUID(),

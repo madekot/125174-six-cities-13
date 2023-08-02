@@ -3,16 +3,16 @@ import { useState } from 'react';
 import LocationsTabs from '../../components/locations-tabs/locations-tabs.tsx';
 import Cities from '../../components/cities/cities.tsx';
 import { useAppSelector } from '../../store/hooks.ts';
-import { filterOffersByCity } from '../../utils.ts';
 import cn from 'classnames';
 
-function MainPage(): JSX.Element {
-  const [selectedOfferId, setSelectedOfferId] = useState<OfferPreview['id']>('');
+type MainPageProps = {
+  offers: OfferPreview[];
+}
 
-  const offers = useAppSelector((state) => state.offers);
+function MainPage({ offers }: MainPageProps): JSX.Element {
+  const [selectedOfferId, setSelectedOfferId] = useState<OfferPreview['id']>('');
   const selectedCity = useAppSelector((state) => state.selectedCity);
-  const OffersByCity = filterOffersByCity(offers, selectedCity);
-  const isNoPlaces = OffersByCity.length === 0;
+  const offersByCity = offers.filter((offer) => offer.city.name === selectedCity);
 
   const handleCardMouseEnter = (id: OfferPreview['id']) => setSelectedOfferId(id);
   const handleCardMouseLeave = () => setSelectedOfferId('');
@@ -58,11 +58,11 @@ function MainPage(): JSX.Element {
           </div>
         </div>
       </header>
-      <main className={cn('page__main page__main--index', {'page__main--index-empty': isNoPlaces})}>
+      <main className={cn('page__main page__main--index', {'page__main--index-empty': offersByCity.length === 0})}>
         <h1 className="visually-hidden">Cities</h1>
         <LocationsTabs/>
         <Cities
-          offers={OffersByCity}
+          offers={offersByCity}
           selectedOfferId={selectedOfferId}
           handleCardMouseLeave={handleCardMouseLeave}
           handleCardMouseEnter={handleCardMouseEnter}

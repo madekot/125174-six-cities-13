@@ -6,10 +6,11 @@ import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute, { AuthorizationStatus } from '../private-route/private-route.tsx';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
-import { offerPageList, OfferPreview } from '../../mocks/offer.ts';
+import { offerPageList } from '../../mocks/offer.ts';
 import { Review } from '../../mocks/reviews.ts';
-import { useAppDispatch } from '../../store/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import { getOffers } from '../../store/action.ts';
+import { useEffect } from 'react';
 
 export enum AppRoute {
   Main = '/',
@@ -20,13 +21,16 @@ export enum AppRoute {
 }
 
 type AppProps = {
-  offers: OfferPreview[];
   reviews: Review[];
 }
 
-function App({ offers, reviews }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
   const dispatch = useAppDispatch();
-  dispatch(getOffers());
+  const offers = useAppSelector((state) => state.offers);
+
+  useEffect(() => {
+    dispatch(getOffers());
+  }, [dispatch]);
 
   return (
     <BrowserRouter>
@@ -34,7 +38,7 @@ function App({ offers, reviews }: AppProps): JSX.Element {
         <Route
           index
           path={AppRoute.Main}
-          element={<MainPage />}
+          element={<MainPage offers={offers}/>}
         />
         <Route
           path={AppRoute.Login}
