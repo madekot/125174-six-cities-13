@@ -25,7 +25,7 @@ function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Elem
   const { id } = useParams<PageParams>();
   const offerPage = offersFull.find((offer) => offer.id === id);
   const limitedNearPlaces = offersPreview.slice(0, MAX_OFFERS_PREVIEW);
-  const mapCenter = offersPreview[0].city;
+  const mapCenter = offersPreview[0].city.location;
   const targetOfferPreview = offersPreview.find((offer) => offer.id === id);
   const offersMap = targetOfferPreview ? [targetOfferPreview, ...offersPreview] : offersPreview;
 
@@ -186,7 +186,7 @@ function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Elem
             </div>
           </div>
           <section className="offer__map map">
-            <Map offers={offersMap} city={mapCenter} selectedOfferId={id}/>
+            <Map offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id}/>
           </section>
         </section>
         <div className="container">

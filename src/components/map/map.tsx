@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import useMap from './use-map.ts';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { City, OfferPreview } from '../../mocks/offer.ts';
+import { Location, OfferPreview } from '../../mocks/offer.ts';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -17,16 +17,16 @@ const currentCustomIcon = new Icon({
 });
 
 type MapProps = {
-  city: City;
+  centerCoordinates: Location;
   offers: OfferPreview[];
   selectedOfferId?: OfferPreview['id'];
 };
 
 function Map(props: MapProps): JSX.Element {
-  const {city, offers, selectedOfferId} = props;
+  const {centerCoordinates, offers, selectedOfferId} = props;
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, city);
+  const map = useMap(mapRef, centerCoordinates);
 
   useEffect(() => {
     if (map) {
@@ -51,6 +51,13 @@ function Map(props: MapProps): JSX.Element {
       };
     }
   }, [map, offers, selectedOfferId]);
+
+  useEffect(() => {
+    if (map) {
+      map.flyTo([centerCoordinates.latitude, centerCoordinates.longitude]);
+    }
+  }, [centerCoordinates, map]);
+
 
   return (
     <div ref={mapRef} style={{height: '100%'}}></div>
