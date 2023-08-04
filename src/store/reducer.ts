@@ -1,6 +1,6 @@
 import { OfferPreview, offerPreviewList } from '../mocks/offer.ts';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortingType, getOffers, loadOffers, setOffersDataLoadingStatus } from './action.ts';
+import { changeCity, changeSortingType, getOffers, loadOffers, changeLoadingStatus } from './action.ts';
 import { CityName, SortingType } from '../const.ts';
 
 const DEFAULT_SELECTED_CITY = CityName.Paris;
@@ -34,7 +34,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(setOffersDataLoadingStatus, (state, action) => {
+    .addCase(changeLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
     });
 });

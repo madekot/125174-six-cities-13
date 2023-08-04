@@ -15,4 +15,4 @@ export const changeSortingType = createAction('offers/changeSortingType', (sorti
 
 export const loadOffers = createAction<OfferPreview[]>('data/loadOffers');
 
-export const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+export const changeLoadingStatus = createAction<boolean>('data/changeLoadingStatus');
