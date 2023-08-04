@@ -8,9 +8,8 @@ import PrivateRoute, { AuthorizationStatus } from '../private-route/private-rout
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import { offerPageList } from '../../mocks/offer.ts';
 import { Review } from '../../mocks/reviews.ts';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { getOffers } from '../../store/action.ts';
-import { useEffect } from 'react';
+import { useAppSelector } from '../../store/hooks.ts';
+import LoadingPage from '../../pages/loading-page/loading-page.tsx';
 
 export enum AppRoute {
   Main = '/',
@@ -25,12 +24,14 @@ type AppProps = {
 }
 
 function App({ reviews }: AppProps): JSX.Element {
-  const dispatch = useAppDispatch();
   const offers = useAppSelector((state) => state.offers);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  useEffect(() => {
-    dispatch(getOffers());
-  }, [dispatch]);
+  if (isOffersDataLoading) {
+    return (
+      <LoadingPage />
+    );
+  }
 
   return (
     <BrowserRouter>
