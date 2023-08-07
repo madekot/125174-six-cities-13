@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import useMap from './use-map.ts';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Location, OfferPreview } from '../../mocks/offer.ts';
+import { Location, OfferPreview } from '../../types.ts';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',

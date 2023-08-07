@@ -1,4 +1,5 @@
-import { offerPreviewList, OfferPreview } from './offer.ts';
+import { offerPreviewList } from './offer.ts';
+import { OfferPreview } from '../types.ts';
 
 export type FavoriteItem = OfferPreview;
 

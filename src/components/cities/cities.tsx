@@ -1,8 +1,8 @@
-import { OfferPreview } from '../../mocks/offer.ts';
 import PlaceList from '../place-list/place-list.tsx';
 import Map from '../map/map.tsx';
 import cn from 'classnames';
 import PlacesSorting from '../places-sorting/places-sorting.tsx';
+import { OfferPreview } from '../../types.ts';
 
 interface CitiesProps {
   offers: OfferPreview[];

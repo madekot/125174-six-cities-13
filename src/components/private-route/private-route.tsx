@@ -1,12 +1,6 @@
 import { Navigate } from 'react-router-dom';
 
-import { AppRoute } from '../app/app.tsx';
-
-export enum AuthorizationStatus {
-  Auth = 'AUTH',
-  NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
-}
+import { AppRoute, AuthorizationStatus } from '../../const.ts';
 
 type PrivateRouteProps = {
   children: JSX.Element;

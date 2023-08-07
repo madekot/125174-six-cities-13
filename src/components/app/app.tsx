@@ -1,23 +1,18 @@
 import MainPage from '../../pages/main-page/main-page.tsx';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import LoginPage from '../../pages/login-page/login-page.tsx';
 import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
 import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
-import PrivateRoute, { AuthorizationStatus } from '../private-route/private-route.tsx';
+import PrivateRoute from '../private-route/private-route.tsx';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import { offerPageList } from '../../mocks/offer.ts';
-import { Review } from '../../mocks/reviews.ts';
 import { useAppSelector } from '../../store/hooks.ts';
 import LoadingPage from '../../pages/loading-page/loading-page.tsx';
-
-export enum AppRoute {
-  Main = '/',
-  Login = '/login',
-  Favorites = '/favorites',
-  Offer = '/offer/:id',
-  PageNotFound = '*'
-}
+import { AppRoute } from '../../const.ts';
+import { Review } from '../../types.ts';
+import HistoryRouter from '../history-route/history-route.tsx';
+import browserHistory from '../../browser-history.ts';
 
 type AppProps = {
   reviews: Review[];
@@ -26,6 +21,7 @@ type AppProps = {
 function App({ reviews }: AppProps): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
   const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const userAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isOffersDataLoading) {
     return (
@@ -34,7 +30,7 @@ function App({ reviews }: AppProps): JSX.Element {
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           index
@@ -44,7 +40,7 @@ function App({ reviews }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Login}
           element={
-            <RedirectToMainRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <RedirectToMainRoute authorizationStatus={userAuthorizationStatus}>
               <LoginPage/>
             </RedirectToMainRoute>
           }
@@ -52,7 +48,7 @@ function App({ reviews }: AppProps): JSX.Element {
         <Route
           path={AppRoute.Favorites}
           element={
-            <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+            <PrivateRoute authorizationStatus={userAuthorizationStatus}>
               <FavoritesPage favoriteList={offers} />
             </PrivateRoute>
           }
@@ -66,7 +62,7 @@ function App({ reviews }: AppProps): JSX.Element {
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

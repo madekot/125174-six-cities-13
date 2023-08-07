@@ -1,7 +1,7 @@
-import { OfferPreview } from '../../mocks/offer.ts';
 import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
 import { SortingType } from '../../const.ts';
 import { useAppSelector } from '../../store/hooks.ts';
+import { OfferPreview } from '../../types.ts';
 
 const SortingFunctions: Record<SortingType, (offers: Readonly<OfferPreview[]>) => OfferPreview[]> = {
   [SortingType.Popular]: (offers) => [...offers],
