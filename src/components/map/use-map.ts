@@ -1,6 +1,7 @@
 import { MutableRefObject, useEffect, useRef, useState } from 'react';
 import { Map, TileLayer } from 'leaflet';
-import { Location } from '../../mocks/offer.ts';
+
+import { Location } from '../../types.ts';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,

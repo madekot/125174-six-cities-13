@@ -1,5 +1,5 @@
-import { OfferPreview } from '../../mocks/offer.ts';
 import PlaceList from '../place-list/place-list.tsx';
+import { OfferPreview } from '../../types.ts';
 
 type FavoriteCitySectionProps = {
   cityName: string;

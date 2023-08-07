@@ -13,3 +13,17 @@ export enum SortingType {
   HighToLow = 'Price: high to low',
   TopRated = 'Top rated first',
 }
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN'
+}
+
+export enum AppRoute {
+  Main = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer/:id',
+  PageNotFound = '*'
+}

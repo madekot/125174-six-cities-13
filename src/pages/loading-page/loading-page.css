@@ -1,0 +1,11 @@
+.loading-page__text {
+    position: fixed;
+    top: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px;
+    background-color: lightgreen;
+    color: white;
+    border-radius: 5px;
+    font-size: 25px;
+}

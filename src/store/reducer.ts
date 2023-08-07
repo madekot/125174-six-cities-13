@@ -1,7 +1,13 @@
-import { OfferPreview, offerPreviewList } from '../mocks/offer.ts';
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, changeSortingType, getOffers, loadOffers, setOffersDataLoadingStatus } from './action.ts';
-import { CityName, SortingType } from '../const.ts';
+import {
+  changeCity,
+  changeSortingType,
+  loadOffers,
+  changeLoadingStatus,
+  requireAuthorization,
+} from './action.ts';
+import { AuthorizationStatus, CityName, SortingType } from '../const.ts';
+import { OfferPreview } from '../types.ts';
 
 const DEFAULT_SELECTED_CITY = CityName.Paris;
 const DEFAULT_SELECTED_SORTING = SortingType.Popular;
@@ -11,13 +17,15 @@ type InitialState = {
   offers: OfferPreview[];
   selectedSortType: SortingType;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
 }
 
 const initialState: InitialState = {
   selectedCity: DEFAULT_SELECTED_CITY,
   offers: [],
   selectedSortType: DEFAULT_SELECTED_SORTING,
-  isOffersDataLoading: false
+  isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -25,17 +33,17 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeCity, (state, action) => {
       state.selectedCity = action.payload;
     })
-    .addCase(getOffers, (state) => {
-      state.offers = offerPreviewList;
-    })
     .addCase(changeSortingType, (state, action) => {
       state.selectedSortType = action.payload;
     })
     .addCase(loadOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(setOffersDataLoadingStatus, (state, action) => {
+    .addCase(changeLoadingStatus, (state, action) => {
       state.isOffersDataLoading = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 

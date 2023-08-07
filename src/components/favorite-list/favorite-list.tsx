@@ -1,6 +1,6 @@
 import { FavoriteItem } from '../../mocks/favorite.ts';
-import { OfferPreview } from '../../mocks/offer.ts';
 import FavoriteCitySection from '../favorite-city-section/favorite-city-section.tsx';
+import { OfferPreview } from '../../types.ts';
 
 const groupFavoritesByCity = (favoriteList: OfferPreview[]) => (
   favoriteList.reduce((favoritesByCity: Record<string, OfferPreview[]>, item: OfferPreview) => {

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { convertCapitalizeFirstLetter, calculateRatingPercentage } from '../../utils.ts';
-import { OfferPreview } from '../../mocks/offer.ts';
 import { CardType } from '../place-list/place-list.tsx';
+import { OfferPreview } from '../../types.ts';
 
 type PlaceCardProps = OfferPreview & {
   cardType: CardType;
