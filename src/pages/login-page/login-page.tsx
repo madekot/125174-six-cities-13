@@ -45,7 +45,7 @@ function LoginPage(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
-                  defaultValue={'Oliver.conner@gmail.com'}
+                  defaultValue={'sarah.conner@gmail.com'}
                   ref={loginRef}
                 />
               </div>

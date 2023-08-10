@@ -27,3 +27,11 @@ export enum AppRoute {
   Offer = '/offer/:id',
   PageNotFound = '*'
 }
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Logout = '/logout',
+  Review = '/comments',
+  Nearby = '/nearby',
+}

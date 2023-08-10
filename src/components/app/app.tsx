@@ -5,22 +5,16 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
 import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
-import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
-import { offerPageList } from '../../mocks/offer.ts';
 import { useAppSelector } from '../../store/hooks.ts';
 import LoadingPage from '../../pages/loading-page/loading-page.tsx';
 import { AppRoute } from '../../const.ts';
-import { Review } from '../../types.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
+import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 
-type AppProps = {
-  reviews: Review[];
-}
-
-function App({ reviews }: AppProps): JSX.Element {
+function App(): JSX.Element {
   const offers = useAppSelector((state) => state.offers);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
   const userAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
 
   if (isOffersDataLoading) {
@@ -55,7 +49,7 @@ function App({ reviews }: AppProps): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage offersFull={offerPageList} offersPreview={offers} reviews={reviews}/>}
+          element={<OfferPage offersPreview={offers}/>}
         />
         <Route
           path={AppRoute.PageNotFound}

@@ -1,5 +1,7 @@
 import { Fragment, useState } from 'react';
 import { getPluralSuffix } from '../../utils.ts';
+import { useAppDispatch } from '../../store/hooks.ts';
+import { postReviewAction } from '../../store/api-actions.ts';
 
 const ratingTitlesToValues: Record<string, number> = {
   'terribly': 1,
@@ -9,28 +11,52 @@ const ratingTitlesToValues: Record<string, number> = {
   'perfect': 5,
 };
 
-const MIN_LENGTH_COMMENT = 3;
+const MIN_LENGTH_COMMENT = 50;
+const MAX_LENGTH_COMMENT = 300;
 const DEFAULT_RATING = 0;
 
-function FormComment(): JSX.Element {
-  const [textComment, setTextComment] = useState('');
+type FormCommentProps = {
+  offerId: string;
+}
+
+function FormComment({ offerId }: FormCommentProps): JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const [comment, setComment] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [invalid, setInvalid] = useState(true);
 
   const validateForm = (commentLength: number, newRating: number) => {
-    const isInvalid = !(commentLength >= MIN_LENGTH_COMMENT && newRating !== DEFAULT_RATING);
+    const isInvalid = !(
+      commentLength >= MIN_LENGTH_COMMENT &&
+      commentLength <= MAX_LENGTH_COMMENT &&
+      newRating !== DEFAULT_RATING
+    );
     setInvalid(isInvalid);
+  };
+
+  const resetForm = (evt: React.FormEvent<HTMLFormElement>) => {
+    setComment('');
+    setRating(DEFAULT_RATING);
+    setInvalid(true);
+    evt.currentTarget.reset();
+  };
+
+  const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    dispatch(postReviewAction({comment, rating, offerId}));
+    resetForm(evt);
   };
 
   const handleClickStar = (evt: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
     const newRating = ratingTitlesToValues[evt.currentTarget.title];
     setRating(newRating);
-    validateForm(textComment.length, newRating);
+    validateForm(comment.length, newRating);
   };
 
   const handleChangeComment = (evt: React.ChangeEvent<HTMLTextAreaElement>) => {
     const { value: text } = evt.target;
-    setTextComment(text);
+    setComment(text);
     validateForm(text.length, rating);
   };
 
@@ -69,9 +95,7 @@ function FormComment(): JSX.Element {
       className="reviews__form form"
       action="#"
       method="post"
-      onSubmit={(evt) => {
-        evt.preventDefault();
-      }}
+      onSubmit={handleSubmit}
     >
       <label
         className="reviews__label form__label"
@@ -87,7 +111,7 @@ function FormComment(): JSX.Element {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={textComment}
+        value={comment}
         required
         onChange={handleChangeComment}
       />
