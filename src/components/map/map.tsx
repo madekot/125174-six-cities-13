@@ -20,13 +20,19 @@ type MapProps = {
   centerCoordinates: Location;
   offers: OfferPreview[];
   selectedOfferId?: OfferPreview['id'];
+  scrollWheelZoom?: boolean;
 };
 
 function Map(props: MapProps): JSX.Element {
-  const {centerCoordinates, offers, selectedOfferId} = props;
+  const {
+    centerCoordinates,
+    offers,
+    selectedOfferId,
+    scrollWheelZoom
+  } = props;
 
   const mapRef = useRef(null);
-  const map = useMap(mapRef, centerCoordinates);
+  const map = useMap(mapRef, centerCoordinates, scrollWheelZoom);
 
   useEffect(() => {
     if (map) {
@@ -34,7 +40,7 @@ function Map(props: MapProps): JSX.Element {
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
-          lng: offer.location.longitude
+          lng: offer.location.longitude,
         });
 
         marker

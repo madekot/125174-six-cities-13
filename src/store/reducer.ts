@@ -2,12 +2,12 @@ import { createReducer } from '@reduxjs/toolkit';
 import {
   changeCity,
   changeSortingType,
-  loadOffers,
-  changeLoadingStatus,
-  requireAuthorization,
+  setOffers,
+  isOffersLoading,
+  setAuthorization, isOfferLoading, setOffer, isReviewsLoading, setReviews, setUserInfo, isNearbyLoading, setNearby,
 } from './action.ts';
 import { AuthorizationStatus, CityName, SortingType } from '../const.ts';
-import { OfferPreview } from '../types.ts';
+import { OfferFull, OfferPreview, Review, UserData } from '../types.ts';
 
 const DEFAULT_SELECTED_CITY = CityName.Paris;
 const DEFAULT_SELECTED_SORTING = SortingType.Popular;
@@ -16,16 +16,30 @@ type InitialState = {
   selectedCity: CityName;
   offers: OfferPreview[];
   selectedSortType: SortingType;
-  isOffersDataLoading: boolean;
+  isOffersLoading: boolean;
+  isOfferLoading: boolean;
+  offer: OfferFull | null;
+  isReviewsLoading: boolean;
+  reviews: Review[];
   authorizationStatus: AuthorizationStatus;
+  userInfo: UserData | null;
+  isNearbyLoading: boolean;
+  nearby: OfferPreview[];
 }
 
 const initialState: InitialState = {
   selectedCity: DEFAULT_SELECTED_CITY,
   offers: [],
   selectedSortType: DEFAULT_SELECTED_SORTING,
-  isOffersDataLoading: false,
+  isOffersLoading: false,
+  isOfferLoading: false,
+  offer: null,
+  isReviewsLoading: false,
+  reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
+  userInfo: null,
+  isNearbyLoading: false,
+  nearby: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -36,13 +50,34 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(changeSortingType, (state, action) => {
       state.selectedSortType = action.payload;
     })
-    .addCase(loadOffers, (state, action) => {
+    .addCase(setOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(changeLoadingStatus, (state, action) => {
-      state.isOffersDataLoading = action.payload;
+    .addCase(isOffersLoading, (state, action) => {
+      state.isOffersLoading = action.payload;
     })
-    .addCase(requireAuthorization, (state, action) => {
+    .addCase(isOfferLoading, (state, action) => {
+      state.isOfferLoading = action.payload;
+    })
+    .addCase(setOffer, (state, action) => {
+      state.offer = action.payload;
+    })
+    .addCase(isReviewsLoading, (state, action) => {
+      state.isReviewsLoading = action.payload;
+    })
+    .addCase(setReviews, (state, action) => {
+      state.reviews = action.payload;
+    })
+    .addCase(setUserInfo, (state, action) => {
+      state.userInfo = action.payload;
+    })
+    .addCase(isNearbyLoading, (state, action) => {
+      state.isNearbyLoading = action.payload;
+    })
+    .addCase(setNearby, (state, action) => {
+      state.nearby = action.payload;
+    })
+    .addCase(setAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     });
 });

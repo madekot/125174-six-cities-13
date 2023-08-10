@@ -1,37 +1,71 @@
-import { Navigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import Map from '../../components/map/map.tsx';
 import FormComment from '../../components/form-comment/form-comment.tsx';
 import { calculateRatingPercentage, convertCapitalizeFirstLetter, getPluralSuffix } from '../../utils.ts';
 import Reviews from '../../components/reviews/reviews.tsx';
 import PlaceList from '../../components/place-list/place-list.tsx';
-import { AppRoute } from '../../const.ts';
-import { OfferFull, OfferPreview, Review } from '../../types.ts';
+import { OfferPreview } from '../../types.ts';
 import Header from '../../components/header/header.tsx';
+import LoadingPage from '../loading-page/loading-page.tsx';
+import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import { useEffect } from 'react';
+import NotFoundPage from '../not-found-page/not-found-page.tsx';
+import { AuthorizationStatus } from '../../const.ts';
 
 type PageParams = {
   id: string;
 }
 
 type OfferProps = {
-  offersFull: OfferFull[];
   offersPreview: OfferPreview[];
-  reviews: Review[];
 }
 
 const MAX_IMAGES = 6;
 const MAX_OFFERS_PREVIEW = 3;
 
-function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Element {
-  const { id } = useParams<PageParams>();
-  const offerPage = offersFull.find((offer) => offer.id === id);
-  const limitedNearPlaces = offersPreview.slice(0, MAX_OFFERS_PREVIEW);
-  const mapCenter = offersPreview[0].city.location;
-  const targetOfferPreview = offersPreview.find((offer) => offer.id === id);
-  const offersMap = targetOfferPreview ? [targetOfferPreview, ...offersPreview] : offersPreview;
+function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
+  const dispatch = useAppDispatch();
 
-  if (!offerPage) {
-    return <Navigate to={AppRoute.Main} replace />;
+  const offer = useAppSelector((state) => state.offer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const nearby = useAppSelector((state) => state.nearby);
+
+  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
+  const isNearbyLoading = useAppSelector((state) => state.isNearbyLoading);
+
+  const isAllLoading = isOfferLoading || isNearbyLoading;
+  const isAuthorization = useAppSelector(
+    (state) => state.authorizationStatus
+  ) === AuthorizationStatus.Auth;
+
+  const offerId = String(useParams<PageParams>().id);
+
+  useEffect(() => {
+    dispatch(fetchOfferAction(offerId));
+    dispatch(fetchReviewsAction(offerId));
+    dispatch(fetchNearbyAction(offerId));
+  }, [dispatch, offerId]);
+
+  if (isAllLoading) {
+    return <LoadingPage />;
   }
+
+  if (!offer) {
+    return <NotFoundPage />;
+  }
+
+  const limitedNearPlaces = nearby.slice(0, MAX_OFFERS_PREVIEW);
+
+  const targetOfferPreview = offersPreview.find(
+    (offerPreview) => offerPreview.id === offerId
+  );
+
+  const offersMap = targetOfferPreview
+    ? [targetOfferPreview, ...limitedNearPlaces]
+    : limitedNearPlaces;
+
+  const mapCenter = offer.city.location;
 
   const {
     images,
@@ -46,7 +80,7 @@ function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Elem
     host,
     maxAdults,
     price,
-  } = offerPage;
+  } = offer;
 
   const limitedImageGallery = (
     <div className="offer__gallery">
@@ -138,23 +172,33 @@ function OfferPage({ offersFull, offersPreview, reviews }: OfferProps): JSX.Elem
                 </div>
               </div>
               <Reviews reviews={reviews}>
-                <FormComment />
+                {isAuthorization && <FormComment offerId={offerId}/>}
               </Reviews>
             </div>
           </div>
-          <section className="offer__map map">
-            <Map offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id}/>
-          </section>
+          {limitedNearPlaces.length !== 0 &&
+            <section className="offer__map map">
+              <Map
+                offers={offersMap}
+                centerCoordinates={mapCenter}
+                selectedOfferId={offerId}
+                scrollWheelZoom={false}
+              />
+            </section>}
         </section>
         <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <div className="near-places__list places__list">
-              <PlaceList offers={limitedNearPlaces} cardType={'near-places'}/>
-            </div>
-          </section>
+          {limitedNearPlaces.length !== 0 &&
+            <section className="near-places places">
+              <h2 className="near-places__title">
+                Other places in the neighbourhood
+              </h2>
+              <div className="near-places__list places__list">
+                <PlaceList
+                  offers={limitedNearPlaces}
+                  cardType={'near-places'}
+                />
+              </div>
+            </section>}
         </div>
       </main>
     </div>

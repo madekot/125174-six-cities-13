@@ -5,7 +5,8 @@ import { Location } from '../../types.ts';
 
 function useMap(
   mapRef: MutableRefObject<HTMLElement | null>,
-  centerCoordinates: Location
+  centerCoordinates: Location,
+  scrollWheelZoom = true
 ): Map | null {
   const [map, setMap] = useState<Map | null>(null);
   const isRenderedRef = useRef<boolean>(false);
@@ -17,7 +18,8 @@ function useMap(
           lat: centerCoordinates.latitude,
           lng: centerCoordinates.longitude
         },
-        zoom: centerCoordinates.zoom
+        zoom: centerCoordinates.zoom,
+        scrollWheelZoom,
       });
 
       const layer = new TileLayer(
@@ -33,7 +35,7 @@ function useMap(
       setMap(instance);
       isRenderedRef.current = true;
     }
-  }, [mapRef, centerCoordinates]);
+  }, [mapRef, centerCoordinates, scrollWheelZoom]);
 
   return map;
 }
