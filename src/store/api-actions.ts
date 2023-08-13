@@ -2,18 +2,21 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from './index.ts';
 import { AxiosInstance } from 'axios';
 import {
+  isFavoritesLoading, isSubmittingLogin,
   isNearbyLoading,
   isOfferLoading,
   isOffersLoading,
   isReviewsLoading,
   redirectToRoute,
-  setAuthorization, setNearby,
+  setAuthorization,
+  setFavorites,
+  setNearby,
   setOffer,
   setOffers,
   setReviews,
   setUserInfo
 } from './action.ts';
-import { AuthData, OfferFull, OfferPreview, Review, ReviewData, UserData } from '../types.ts';
+import { AuthData, FavoriteItem, OfferFull, OfferPreview, Review, ReviewData, UserData } from '../types.ts';
 import { APIRoute, AppRoute, AuthorizationStatus } from '../const.ts';
 import { dropToken, saveToken } from '../services/token.ts';
 
@@ -74,6 +77,16 @@ export const fetchNearbyAction = createAsyncThunk<void, string, AsyncThunkConfig
   },
 );
 
+export const fetchFavoritesAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+  'data/fetchFavorites',
+  async (_arg, {dispatch, extra: api}) => {
+    dispatch(isFavoritesLoading(true));
+    const {data} = await api.get<FavoriteItem[]>(APIRoute.Favorite);
+    dispatch(setFavorites(data));
+    dispatch(isFavoritesLoading(false));
+  },
+);
+
 export const postReviewAction = createAsyncThunk<void, ReviewData, AsyncThunkConfig>(
   'data/postReview',
   async ({comment, rating, offerId}, {dispatch, extra: api}) => {
@@ -88,7 +101,6 @@ export const checkAuthAction = createAsyncThunk<void, undefined, AsyncThunkConfi
     try {
       const { data } = await api.get<UserData>(APIRoute.Login);
       dispatch(setAuthorization(AuthorizationStatus.Auth));
-      dispatch(redirectToRoute(AppRoute.Main));
       dispatch(setUserInfo(data));
     } catch {
       dispatch(setAuthorization(AuthorizationStatus.NoAuth));
@@ -99,11 +111,17 @@ export const checkAuthAction = createAsyncThunk<void, undefined, AsyncThunkConfi
 export const loginAction = createAsyncThunk<void, AuthData, AsyncThunkConfig>(
   'user/login',
   async ({login: email, password}, {dispatch, extra: api}) => {
-    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
-    saveToken(data.token);
-    dispatch(setAuthorization(AuthorizationStatus.Auth));
-    dispatch(redirectToRoute(AppRoute.Main));
-    dispatch(setUserInfo(data));
+    try {
+      dispatch(isSubmittingLogin(true));
+      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+      saveToken(data.token);
+      dispatch(setAuthorization(AuthorizationStatus.Auth));
+      dispatch(setUserInfo(data));
+    } catch {
+      dispatch(setAuthorization(AuthorizationStatus.NoAuth));
+    } finally {
+      dispatch(isSubmittingLogin(false));
+    }
   },
 );
 

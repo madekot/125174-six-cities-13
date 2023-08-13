@@ -5,8 +5,11 @@ import { logoutAction } from '../../store/api-actions.ts';
 
 function UserNavigation(): JSX.Element {
   const dispatch = useAppDispatch();
+
   const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const userInfo = useAppSelector((state) => state.userInfo);
+  const favoriteCount = useAppSelector((state) => state.favorites).length;
+
   const isLoggedIn = authorizationStatus === AuthorizationStatus.Auth;
   const userAvatar = userInfo?.avatarUrl ? { backgroundImage: `url(${userInfo?.avatarUrl})`} : {};
 
@@ -24,7 +27,7 @@ function UserNavigation(): JSX.Element {
             {isLoggedIn &&
               <>
                 <span className="header__user-name user__name">{userInfo?.email}</span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">{favoriteCount}</span>
               </>}
           </Link>
         </li>

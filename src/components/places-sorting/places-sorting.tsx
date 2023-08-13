@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import cn from 'classnames';
 import { SortingType } from '../../const';
@@ -49,4 +49,6 @@ function PlacesSorting(): JSX.Element {
   );
 }
 
-export default PlacesSorting;
+const PlacesSortingMemo = memo(PlacesSorting);
+
+export default PlacesSortingMemo;

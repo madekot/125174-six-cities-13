@@ -2,7 +2,7 @@ import {createAction} from '@reduxjs/toolkit';
 
 import { AppRoute, AuthorizationStatus, CityName, SortingType } from '../const.ts';
 
-import { OfferFull, OfferPreview, Review, UserData } from '../types.ts';
+import { FavoriteItem, OfferFull, OfferPreview, Review, UserData } from '../types.ts';
 
 export const REDIRECT_TO_ROUTE_TYPE = 'app/redirectToRoute';
 
@@ -32,6 +32,12 @@ export const setReviews = createAction<Review[]>('data/setReviews');
 
 export const setUserInfo = createAction<UserData | null>('user/setUserInfo');
 
-export const isNearbyLoading = createAction<boolean>('user/isNearbyLoading');
+export const isNearbyLoading = createAction<boolean>('data/isNearbyLoading');
 
-export const setNearby = createAction<OfferPreview[]>('user/setNearby');
+export const setNearby = createAction<OfferPreview[]>('data/setNearby');
+
+export const isFavoritesLoading = createAction<boolean>('data/isFavoritesLoading');
+
+export const setFavorites = createAction<FavoriteItem[]>('data/setFavorites');
+
+export const isSubmittingLogin = createAction<boolean>('user/isSubmittingLogin');

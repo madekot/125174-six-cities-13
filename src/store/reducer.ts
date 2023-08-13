@@ -4,10 +4,18 @@ import {
   changeSortingType,
   setOffers,
   isOffersLoading,
-  setAuthorization, isOfferLoading, setOffer, isReviewsLoading, setReviews, setUserInfo, isNearbyLoading, setNearby,
+  setAuthorization,
+  isOfferLoading,
+  setOffer,
+  isReviewsLoading,
+  setReviews,
+  setUserInfo,
+  isNearbyLoading,
+  setNearby,
+  isFavoritesLoading, setFavorites, isSubmittingLogin,
 } from './action.ts';
 import { AuthorizationStatus, CityName, SortingType } from '../const.ts';
-import { OfferFull, OfferPreview, Review, UserData } from '../types.ts';
+import { FavoriteItem, OfferFull, OfferPreview, Review, UserData } from '../types.ts';
 
 const DEFAULT_SELECTED_CITY = CityName.Paris;
 const DEFAULT_SELECTED_SORTING = SortingType.Popular;
@@ -25,6 +33,9 @@ type InitialState = {
   userInfo: UserData | null;
   isNearbyLoading: boolean;
   nearby: OfferPreview[];
+  isFavoritesLoading: boolean;
+  favorites: FavoriteItem[];
+  isSubmittingLogin: boolean;
 }
 
 const initialState: InitialState = {
@@ -40,6 +51,9 @@ const initialState: InitialState = {
   userInfo: null,
   isNearbyLoading: false,
   nearby: [],
+  isFavoritesLoading: false,
+  favorites: [],
+  isSubmittingLogin: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -76,6 +90,15 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setNearby, (state, action) => {
       state.nearby = action.payload;
+    })
+    .addCase(isFavoritesLoading, (state, action) => {
+      state.isFavoritesLoading = action.payload;
+    })
+    .addCase(setFavorites, (state, action) => {
+      state.favorites = action.payload;
+    })
+    .addCase(isSubmittingLogin, (state, action) => {
+      state.isSubmittingLogin = action.payload;
     })
     .addCase(setAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

@@ -1,27 +1,42 @@
 import Header from '../../components/header/header.tsx';
 import { useRef } from 'react';
-import { useAppDispatch } from '../../store/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import { Link } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions.ts';
 import { AppRoute } from '../../const.ts';
+import { toast } from 'react-toastify';
+
+const REGEX_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)[^\s]+$/;
+const ERROR_MESSAGE = 'The password must consist of at least one English letter and one symbol without spaces.';
+
+const isPasswordValid = (password: string) => REGEX_PASSWORD.test(password);
 
 function LoginPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const isLoginPending = useAppSelector((state) => state.isSubmittingLogin);
+
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
-  const dispatch = useAppDispatch();
-
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const login = loginRef.current;
-    const password = passwordRef.current;
 
-    if (login !== null && password !== null) {
-      dispatch(loginAction({
-        login: login.value.trim(),
-        password: password.value.trim()
-      }));
+    const login = loginRef.current?.value;
+    const password = passwordRef.current?.value;
+
+    if (!login || !password) {
+      return;
     }
+
+    if (!isPasswordValid(password)) {
+      toast.error(ERROR_MESSAGE);
+      return;
+    }
+
+    dispatch(loginAction({
+      login: login.trim(),
+      password: password.trim()
+    }));
   };
 
   return (
@@ -47,6 +62,7 @@ function LoginPage(): JSX.Element {
                   required
                   defaultValue={'sarah.conner@gmail.com'}
                   ref={loginRef}
+                  disabled={isLoginPending}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -59,11 +75,13 @@ function LoginPage(): JSX.Element {
                   required
                   defaultValue={'password1'}
                   ref={passwordRef}
+                  disabled={isLoginPending}
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
+                disabled={isLoginPending}
               >
                 Sign in
               </button>

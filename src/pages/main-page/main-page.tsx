@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo } from 'react';
 import LocationsTabs from '../../components/locations-tabs/locations-tabs.tsx';
 import Cities from '../../components/cities/cities.tsx';
 import { useAppSelector } from '../../store/hooks.ts';
@@ -11,24 +11,17 @@ type MainPageProps = {
 }
 
 function MainPage({ offers }: MainPageProps): JSX.Element {
-  const [selectedOfferId, setSelectedOfferId] = useState<OfferPreview['id']>('');
   const selectedCity = useAppSelector((state) => state.selectedCity);
-  const offersByCity = offers.filter((offer) => offer.city.name === selectedCity);
-
-  const handleCardMouseEnter = (id: OfferPreview['id']) => setSelectedOfferId(id);
-  const handleCardMouseLeave = () => setSelectedOfferId('');
+  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === selectedCity), [offers, selectedCity]);
 
   return (
     <div className="page page--gray page--main">
-      <Header />
+      <Header isMainPage/>
       <main className={cn('page__main page__main--index', {'page__main--index-empty': offersByCity.length === 0})}>
         <h1 className="visually-hidden">Cities</h1>
-        <LocationsTabs/>
+        <LocationsTabs selectedCity={selectedCity}/>
         <Cities
           offers={offersByCity}
-          selectedOfferId={selectedOfferId}
-          handleCardMouseLeave={handleCardMouseLeave}
-          handleCardMouseEnter={handleCardMouseEnter}
         />
       </main>
     </div>

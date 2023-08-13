@@ -43,7 +43,7 @@ function App(): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={userAuthorizationStatus}>
-              <FavoritesPage favoriteList={offers} />
+              <FavoritesPage />
             </PrivateRoute>
           }
         />

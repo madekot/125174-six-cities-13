@@ -2,6 +2,7 @@ import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
 import { SortingType } from '../../const.ts';
 import { useAppSelector } from '../../store/hooks.ts';
 import { OfferPreview } from '../../types.ts';
+import { memo } from 'react';
 
 const SortingFunctions: Record<SortingType, (offers: Readonly<OfferPreview[]>) => OfferPreview[]> = {
   [SortingType.Popular]: (offers) => [...offers],
@@ -38,4 +39,6 @@ function PlaceList({ offers, cardType, handleCardMouseLeave, handleCardMouseEnte
   );
 }
 
-export default PlaceList;
+const PlaceListMemo = memo(PlaceList);
+
+export default PlaceListMemo;
