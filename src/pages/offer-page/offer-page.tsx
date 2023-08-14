@@ -22,17 +22,13 @@ const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] => {
   return shuffledNearby.slice(0, MAX_OFFERS_PREVIEW);
 };
 
-type PageParams = {
-  id: string;
-}
-
 type OfferProps = {
   offersPreview: OfferPreview[];
 }
 
 function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
   const dispatch = useAppDispatch();
-  const id = String(useParams<PageParams>().id);
+  const id = String(useParams().id);
 
   const offer = useAppSelector((state) => state.offer);
   const reviews = useAppSelector((state) => state.reviews);
@@ -90,14 +86,14 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
               <OfferDescription offer={offer}/>
               <OfferHost host={host} description={description} />
               <Reviews reviews={reviews}>
-                {isAuthorization && <FormComment offerId={id}/>}
+                {isAuthorization && <FormComment offerId={id} />}
               </Reviews>
             </div>
           </div>
           {showNearbyMap && <OfferMap offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id} />}
         </section>
         <div className="container">
-          {showNearbyPlaces && <NearbyPlaces nearPlaces={shuffledNearby}/>}
+          {showNearbyPlaces && <NearbyPlaces nearPlaces={shuffledNearby} />}
         </div>
       </main>
     </div>
