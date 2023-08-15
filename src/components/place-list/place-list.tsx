@@ -3,6 +3,7 @@ import { SortingType } from '../../const.ts';
 import { useAppSelector } from '../../store/hooks.ts';
 import { OfferPreview } from '../../types.ts';
 import { memo } from 'react';
+import { getSelectedSortType } from '../../store/slices/app-process/selectors.ts';
 
 const SortingFunctions: Record<SortingType, (offers: Readonly<OfferPreview[]>) => OfferPreview[]> = {
   [SortingType.Popular]: (offers) => [...offers],
@@ -21,7 +22,7 @@ type OfferListProps = {
 };
 
 function PlaceList({ offers, cardType, handleCardMouseLeave, handleCardMouseEnter }: OfferListProps): JSX.Element {
-  const selectedSortType = useAppSelector((state) => state.selectedSortType);
+  const selectedSortType = useAppSelector(getSelectedSortType);
   const sortedOffers = SortingFunctions[selectedSortType](offers);
 
   return (

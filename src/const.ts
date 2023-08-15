@@ -36,3 +36,9 @@ export enum APIRoute {
   Nearby = '/nearby',
   Favorite = '/favorite',
 }
+
+export enum NameSpace {
+  Data = 'DATA',
+  App = 'APP',
+  User = 'USER',
+}

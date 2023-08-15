@@ -5,7 +5,6 @@ import LoadingPage from '../loading-page/loading-page';
 import NotFoundPage from '../not-found-page/not-found-page';
 import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import { useAppSelector, useAppDispatch } from '../../store/hooks';
-import { AuthorizationStatus } from '../../const';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferDescription from '../../components/offer-description/offer-description';
 import OfferHost from '../../components/offer-host/offer-host';
@@ -14,13 +13,21 @@ import FormComment from '../../components/form-comment/form-comment';
 import OfferMap from '../../components/offer-map/offer-map';
 import NearbyPlaces from '../../components/nearby-places/nearby-places';
 import { OfferPreview } from '../../types';
+import {
+  getIsNearbyLoading,
+  getIsOfferLoading,
+  getIsReviewsLoading,
+  getNearby,
+  getOffer,
+  getReviews
+} from '../../store/slices/app-data/selectors.ts';
+import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
 
 const MAX_OFFERS_PREVIEW = 3;
 
-const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] => {
-  const shuffledNearby = [...nearby].sort(() => Math.random() - 0.5);
-  return shuffledNearby.slice(0, MAX_OFFERS_PREVIEW);
-};
+const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] => (
+  [...nearby].sort(() => Math.random() - 0.5)
+);
 
 type OfferProps = {
   offersPreview: OfferPreview[];
@@ -30,18 +37,19 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
   const dispatch = useAppDispatch();
   const id = String(useParams().id);
 
-  const offer = useAppSelector((state) => state.offer);
-  const reviews = useAppSelector((state) => state.reviews);
-  const nearbyList = useAppSelector((state) => state.nearby);
+  const offer = useAppSelector(getOffer);
+  const reviews = useAppSelector(getReviews);
+  const nearbyList = useAppSelector(getNearby);
 
-  const isOfferLoading = useAppSelector((state) => state.isOfferLoading);
-  const isNearbyLoading = useAppSelector((state) => state.isNearbyLoading);
-  const isReviewsLoading = useAppSelector((state) => state.isReviewsLoading);
+  const isOfferLoading = useAppSelector(getIsOfferLoading);
+  const isReviewsLoading = useAppSelector(getIsReviewsLoading);
+  const isNearbyLoading = useAppSelector(getIsNearbyLoading);
+  const isAuthorization = useAppSelector(getAuthCheckedStatus);
+
   const isAllLoading = isOfferLoading || isNearbyLoading || isReviewsLoading;
-  const isAuthorization = useAppSelector(
-    (state) => state.authorizationStatus) === AuthorizationStatus.Auth;
 
-  const shuffledNearby = getShuffledNearby(nearbyList);
+
+  const limitedNearby = getShuffledNearby(nearbyList).slice(0, MAX_OFFERS_PREVIEW);
 
   useEffect(() => {
     dispatch(fetchOfferAction(id));
@@ -62,12 +70,12 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
   );
 
   const offersMap = targetOfferPreview
-    ? [targetOfferPreview, ...shuffledNearby]
-    : shuffledNearby;
+    ? [targetOfferPreview, ...limitedNearby]
+    : limitedNearby;
 
   const mapCenter = offer.city.location;
-  const showNearbyMap = shuffledNearby.length !== 0;
-  const showNearbyPlaces = shuffledNearby.length !== 0;
+  const showNearbyMap = limitedNearby.length !== 0;
+  const showNearbyPlaces = limitedNearby.length !== 0;
 
   const {
     images,
@@ -93,7 +101,7 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
           {showNearbyMap && <OfferMap offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id} />}
         </section>
         <div className="container">
-          {showNearbyPlaces && <NearbyPlaces nearPlaces={shuffledNearby} />}
+          {showNearbyPlaces && <NearbyPlaces nearPlaces={limitedNearby}/>}
         </div>
       </main>
     </div>

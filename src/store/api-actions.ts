@@ -1,136 +1,79 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from './index.ts';
 import { AxiosInstance } from 'axios';
-import {
-  isFavoritesLoading, isSubmittingLogin,
-  isNearbyLoading,
-  isOfferLoading,
-  isOffersLoading,
-  isReviewsLoading,
-  redirectToRoute,
-  setAuthorization,
-  setFavorites,
-  setNearby,
-  setOffer,
-  setOffers,
-  setReviews,
-  setUserInfo
-} from './action.ts';
 import { AuthData, FavoriteItem, OfferFull, OfferPreview, Review, ReviewData, UserData } from '../types.ts';
-import { APIRoute, AppRoute, AuthorizationStatus } from '../const.ts';
-import { dropToken, saveToken } from '../services/token.ts';
+import { APIRoute } from '../const.ts';
 
 type AsyncThunkConfig = { dispatch: AppDispatch; state: State; extra: AxiosInstance };
 
-export const fetchOffersAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+export const fetchOffersAction = createAsyncThunk<OfferPreview[], undefined, AsyncThunkConfig>(
   'data/fetchOffers',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(isOffersLoading(true));
+  async (_arg, { extra: api}) => {
     const {data} = await api.get<OfferPreview[]>(APIRoute.Offers);
-    dispatch(setOffers(data));
-    dispatch(isOffersLoading(false));
+    return data;
   },
 );
 
-export const fetchOfferAction = createAsyncThunk<void, string, AsyncThunkConfig>(
+export const fetchOfferAction = createAsyncThunk<OfferFull, string, AsyncThunkConfig>(
   'data/fetchOffer',
-  async (id, {dispatch, extra: api}) => {
-    try {
-      dispatch(isOfferLoading(true));
-      const {data} = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);
-      dispatch(setOffer(data));
-    } catch {
-      dispatch(redirectToRoute(AppRoute.PageNotFound));
-    } finally {
-      dispatch(isOfferLoading(false));
-    }
-  },
-);
-
-export const fetchReviewsAction = createAsyncThunk<void, string, AsyncThunkConfig>(
-  'data/fetchReviews',
-  async (id, { dispatch, extra: api }) => {
-    try {
-      dispatch(isReviewsLoading(true));
-      const { data } = await api.get<Review[]>(`${APIRoute.Review}/${id}`);
-      dispatch(setReviews(data));
-    } catch {
-      dispatch(redirectToRoute(AppRoute.PageNotFound));
-    } finally {
-      dispatch(isReviewsLoading(false));
-    }
+  async (id, { extra: api}) => {
+    const {data} = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);
+    return data;
   }
 );
 
-export const fetchNearbyAction = createAsyncThunk<void, string, AsyncThunkConfig>(
+export const fetchReviewsAction = createAsyncThunk<Review[], string, AsyncThunkConfig>(
+  'data/fetchReviews',
+  async (id, { extra: api }) => {
+    const { data } = await api.get<Review[]>(`${APIRoute.Review}/${id}`);
+    return data;
+  }
+);
+
+export const fetchNearbyAction = createAsyncThunk<OfferPreview[], string, AsyncThunkConfig>(
   'data/fetchNearby',
-  async (id, {dispatch, extra: api}) => {
-    try {
-      dispatch(isNearbyLoading(true));
-      const {data} = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${id}${APIRoute.Nearby}`);
-      dispatch(setNearby(data));
-    } catch {
-      dispatch(redirectToRoute(AppRoute.PageNotFound));
-    } finally {
-      dispatch(isNearbyLoading(false));
-    }
+  async (id, { extra: api}) => {
+    const {data} = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${id}${APIRoute.Nearby}`);
+    return data;
   },
 );
 
-export const fetchFavoritesAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+export const fetchFavoritesAction = createAsyncThunk<FavoriteItem[], undefined, AsyncThunkConfig>(
   'data/fetchFavorites',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(isFavoritesLoading(true));
+  async (_arg, { extra: api}) => {
     const {data} = await api.get<FavoriteItem[]>(APIRoute.Favorite);
-    dispatch(setFavorites(data));
-    dispatch(isFavoritesLoading(false));
+    return data;
   },
 );
 
-export const postReviewAction = createAsyncThunk<void, ReviewData, AsyncThunkConfig>(
+export const postReviewAction = createAsyncThunk<ReviewData[], ReviewData, AsyncThunkConfig>(
   'data/postReview',
   async ({comment, rating, offerId}, {dispatch, extra: api}) => {
-    await api.post<ReviewData>(`${APIRoute.Review}/${offerId}`, {comment, rating});
+    const { data } = await api.post<ReviewData[]>(`${APIRoute.Review}/${offerId}`, {comment, rating});
     dispatch(fetchReviewsAction(offerId));
+    return data;
   },
 );
 
-export const checkAuthAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
+export const checkAuthAction = createAsyncThunk<UserData, undefined, AsyncThunkConfig>(
   'user/checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
-    try {
-      const { data } = await api.get<UserData>(APIRoute.Login);
-      dispatch(setAuthorization(AuthorizationStatus.Auth));
-      dispatch(setUserInfo(data));
-    } catch {
-      dispatch(setAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, { extra: api}) => {
+    const { data } = await api.get<UserData>(APIRoute.Login);
+    return data;
   },
 );
 
-export const loginAction = createAsyncThunk<void, AuthData, AsyncThunkConfig>(
+export const loginAction = createAsyncThunk<UserData, AuthData, AsyncThunkConfig>(
   'user/login',
-  async ({login: email, password}, {dispatch, extra: api}) => {
-    try {
-      dispatch(isSubmittingLogin(true));
-      const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
-      saveToken(data.token);
-      dispatch(setAuthorization(AuthorizationStatus.Auth));
-      dispatch(setUserInfo(data));
-    } catch {
-      dispatch(setAuthorization(AuthorizationStatus.NoAuth));
-    } finally {
-      dispatch(isSubmittingLogin(false));
-    }
+  async ({login: email, password}, {extra: api}) => {
+    const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+    return data;
   },
 );
 
 export const logoutAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   'user/logout',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, { extra: api}) => {
     await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(setAuthorization(AuthorizationStatus.NoAuth));
-    dispatch(setUserInfo(null));
   },
 );

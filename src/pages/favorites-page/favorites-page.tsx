@@ -8,12 +8,13 @@ import EmptyFavorites from '../../components/empty-favorites/empty-favorites.tsx
 import NonEmptyFavorites from '../../components/non-empty-favorites/non-empty-favorites.tsx';
 import { AppRoute } from '../../const.ts';
 import { Link } from 'react-router-dom';
+import { getFavorites, getIsFavoritesLoading } from '../../store/slices/app-data/selectors.ts';
 
 function FavoritesPage(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const isFavoritesLoading = useAppSelector((state) => state.isFavoritesLoading);
-  const favorites = useAppSelector((state) => state.favorites);
+  const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
+  const favorites = useAppSelector(getFavorites);
   const isEmptyFavorites = favorites.length === 0;
 
   useEffect(() => {

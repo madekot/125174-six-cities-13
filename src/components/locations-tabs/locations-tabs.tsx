@@ -1,9 +1,8 @@
 import cn from 'classnames';
-
 import { CityName } from '../../const.ts';
 import { useDispatch } from 'react-redux';
-import { changeCity } from '../../store/action.ts';
 import { memo } from 'react';
+import { changeCity } from '../../store/slices/app-process/app-process.ts';
 
 type LocationsTabsProps = {
   selectedCity: CityName;

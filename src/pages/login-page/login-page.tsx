@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions.ts';
 import { AppRoute } from '../../const.ts';
 import { toast } from 'react-toastify';
+import { getIsSubmittingLogin } from '../../store/slices/user-process/selectors.ts';
 
 const REGEX_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)[^\s]+$/;
 const ERROR_MESSAGE = 'The password must consist of at least one English letter and one symbol without spaces.';
@@ -13,7 +14,7 @@ const isPasswordValid = (password: string) => REGEX_PASSWORD.test(password);
 
 function LoginPage(): JSX.Element {
   const dispatch = useAppDispatch();
-  const isLoginPending = useAppSelector((state) => state.isSubmittingLogin);
+  const isSubmittingLogin = useAppSelector(getIsSubmittingLogin);
 
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -62,7 +63,7 @@ function LoginPage(): JSX.Element {
                   required
                   defaultValue={'sarah.conner@gmail.com'}
                   ref={loginRef}
-                  disabled={isLoginPending}
+                  disabled={isSubmittingLogin}
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -75,13 +76,13 @@ function LoginPage(): JSX.Element {
                   required
                   defaultValue={'password1'}
                   ref={passwordRef}
-                  disabled={isLoginPending}
+                  disabled={isSubmittingLogin}
                 />
               </div>
               <button
                 className="login__submit form__submit button"
                 type="submit"
-                disabled={isLoginPending}
+                disabled={isSubmittingLogin}
               >
                 Sign in
               </button>
