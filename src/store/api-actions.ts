@@ -48,9 +48,8 @@ export const fetchFavoritesAction = createAsyncThunk<FavoriteItem[], undefined, 
 
 export const postReviewAction = createAsyncThunk<ReviewData[], ReviewData, AsyncThunkConfig>(
   'data/postReview',
-  async ({comment, rating, offerId}, {dispatch, extra: api}) => {
+  async ({comment, rating, offerId}, { extra: api}) => {
     const { data } = await api.post<ReviewData[]>(`${APIRoute.Review}/${offerId}`, {comment, rating});
-    dispatch(fetchReviewsAction(offerId));
     return data;
   },
 );

@@ -56,6 +56,7 @@ export const appData = createSlice({
         state.isOffersLoading = false;
       })
       .addCase(fetchOfferAction.pending, (state) => {
+        state.hasError = false;
         state.isOfferLoading = true;
       })
       .addCase(fetchOfferAction.fulfilled, (state, action) => {
@@ -63,14 +64,17 @@ export const appData = createSlice({
         state.isOfferLoading = false;
       })
       .addCase(fetchOfferAction.rejected, (state) => {
+        state.hasError = true;
         state.isOfferLoading = false;
-        // store.dispatch(redirectToRoute(AppRoute.PageNotFound))
       })
       .addCase(fetchNearbyAction.pending, (state) => {
         state.isNearbyLoading = true;
       })
       .addCase(fetchNearbyAction.fulfilled, (state, action) => {
         state.nearby = action.payload;
+        state.isNearbyLoading = false;
+      })
+      .addCase(fetchNearbyAction.rejected, (state) => {
         state.isNearbyLoading = false;
       })
       .addCase(fetchReviewsAction.pending, (state) => {
@@ -80,11 +84,17 @@ export const appData = createSlice({
         state.reviews = action.payload;
         state.isReviewsLoading = false;
       })
+      .addCase(fetchReviewsAction.rejected, (state) => {
+        state.isReviewsLoading = false;
+      })
       .addCase(fetchFavoritesAction.pending, (state) => {
         state.isFavoritesLoading = true;
       })
       .addCase(fetchFavoritesAction.fulfilled, (state, action) => {
         state.favorites = action.payload;
+        state.isFavoritesLoading = false;
+      })
+      .addCase(fetchFavoritesAction.rejected, (state) => {
         state.isFavoritesLoading = false;
       });
   }
