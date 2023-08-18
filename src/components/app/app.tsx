@@ -11,11 +11,13 @@ import { AppRoute } from '../../const.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
+import { getIsOffersLoading, getOffers } from '../../store/slices/app-data/selectors.ts';
+import { getAuthorizationStatus } from '../../store/slices/user-process/selectors.ts';
 
 function App(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const isOffersDataLoading = useAppSelector((state) => state.isOffersLoading);
-  const userAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const offers = useAppSelector(getOffers);
+  const isOffersDataLoading = useAppSelector(getIsOffersLoading);
+  const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
 
   if (isOffersDataLoading) {
     return (
@@ -43,7 +45,7 @@ function App(): JSX.Element {
           path={AppRoute.Favorites}
           element={
             <PrivateRoute authorizationStatus={userAuthorizationStatus}>
-              <FavoritesPage favoriteList={offers} />
+              <FavoritesPage />
             </PrivateRoute>
           }
         />

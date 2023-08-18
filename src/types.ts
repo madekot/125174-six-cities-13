@@ -69,3 +69,5 @@ export type ReviewData = {
   rating: number;
   offerId: string;
 }
+
+export type FavoriteItem = OfferPreview

@@ -1,14 +1,21 @@
 import cn from 'classnames';
-
 import { CityName } from '../../const.ts';
 import { useDispatch } from 'react-redux';
-import { changeCity } from '../../store/action.ts';
-import { useAppSelector } from '../../store/hooks.ts';
+import { memo } from 'react';
+import { changeCity } from '../../store/slices/app-process/app-process.ts';
 
-function LocationsTabs() {
+type LocationsTabsProps = {
+  selectedCity: CityName;
+}
+
+function LocationsTabs({ selectedCity }: LocationsTabsProps) {
   const dispatch = useDispatch();
   const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
-  const selectedCity = useAppSelector((state) => state.selectedCity);
+
+  const handleTabClick = (evt: React.MouseEvent<HTMLAnchorElement> ,city: CityName) => {
+    evt.preventDefault();
+    dispatch(changeCity(city));
+  };
 
   return (
     <div className="tabs">
@@ -21,7 +28,7 @@ function LocationsTabs() {
                   'tabs__item--active': selectedCity === city,
                 })}
                 href="#"
-                onClick={() => dispatch(changeCity(city))}
+                onClick={(evt) => handleTabClick(evt, city)}
               >
                 <span>{city}</span>
               </a>
@@ -33,4 +40,6 @@ function LocationsTabs() {
   );
 }
 
-export default LocationsTabs;
+const LocationsTabsMemo = memo(LocationsTabs);
+
+export default LocationsTabsMemo;

@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { getPluralSuffix } from '../../utils.ts';
 import { useAppDispatch } from '../../store/hooks.ts';
-import { postReviewAction } from '../../store/api-actions.ts';
+import { fetchReviewsAction, postReviewAction } from '../../store/api-actions.ts';
 
 const ratingTitlesToValues: Record<string, number> = {
   'terribly': 1,
@@ -45,6 +45,7 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(postReviewAction({comment, rating, offerId}));
+    dispatch(fetchReviewsAction(offerId));
     resetForm(evt);
   };
 

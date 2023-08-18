@@ -1,13 +1,17 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { AppRoute, AuthorizationStatus } from '../../const.ts';
+import { AppRoute } from '../../const.ts';
 import { Link } from 'react-router-dom';
 import { logoutAction } from '../../store/api-actions.ts';
+import { getFavorites } from '../../store/slices/app-data/selectors.ts';
+import { getAuthCheckedStatus, getUserInfo } from '../../store/slices/user-process/selectors.ts';
 
 function UserNavigation(): JSX.Element {
   const dispatch = useAppDispatch();
-  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
-  const userInfo = useAppSelector((state) => state.userInfo);
-  const isLoggedIn = authorizationStatus === AuthorizationStatus.Auth;
+
+  const userInfo = useAppSelector(getUserInfo);
+  const favoriteCount = useAppSelector(getFavorites).length;
+  const isLoggedIn = useAppSelector(getAuthCheckedStatus);
+
   const userAvatar = userInfo?.avatarUrl ? { backgroundImage: `url(${userInfo?.avatarUrl})`} : {};
 
   const handleLogoutClick = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
@@ -24,7 +28,7 @@ function UserNavigation(): JSX.Element {
             {isLoggedIn &&
               <>
                 <span className="header__user-name user__name">{userInfo?.email}</span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">{favoriteCount}</span>
               </>}
           </Link>
         </li>
