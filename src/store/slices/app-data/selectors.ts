@@ -18,3 +18,5 @@ export const getFavorites = (state: State): OfferPreview[] => state[NameSpace.Da
 export const getIsFavoritesLoading = (state: State): boolean => state[NameSpace.Data].isFavoritesLoading;
 
 export const getHasError = (state: State): boolean => state[NameSpace.Data].hasError;
+
+export const getIsFavoriteStatusSubmitting = (state: State): boolean => state[NameSpace.Data].isFavoriteStatusSubmitting;

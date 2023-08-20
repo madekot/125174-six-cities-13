@@ -1,13 +1,22 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from './index.ts';
 import { AxiosInstance } from 'axios';
-import { AuthData, FavoriteItem, OfferFull, OfferPreview, Review, ReviewData, UserData } from '../types.ts';
-import { APIRoute } from '../const.ts';
+import {
+  AuthData,
+  FavoriteData,
+  FavoriteItem,
+  OfferFull,
+  OfferPreview,
+  Review,
+  ReviewData,
+  UserData
+} from '../types.ts';
+import { APIRoute, NameSpace } from '../const.ts';
 
 type AsyncThunkConfig = { dispatch: AppDispatch; state: State; extra: AxiosInstance };
 
 export const fetchOffersAction = createAsyncThunk<OfferPreview[], undefined, AsyncThunkConfig>(
-  'data/fetchOffers',
+  `${NameSpace.Data}/fetchOffers`,
   async (_arg, { extra: api}) => {
     const {data} = await api.get<OfferPreview[]>(APIRoute.Offers);
     return data;
@@ -15,7 +24,7 @@ export const fetchOffersAction = createAsyncThunk<OfferPreview[], undefined, Asy
 );
 
 export const fetchOfferAction = createAsyncThunk<OfferFull, string, AsyncThunkConfig>(
-  'data/fetchOffer',
+  `${NameSpace.Data}/fetchOffer`,
   async (id, { extra: api}) => {
     const {data} = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);
     return data;
@@ -23,7 +32,7 @@ export const fetchOfferAction = createAsyncThunk<OfferFull, string, AsyncThunkCo
 );
 
 export const fetchReviewsAction = createAsyncThunk<Review[], string, AsyncThunkConfig>(
-  'data/fetchReviews',
+  `${NameSpace.Data}/fetchReviews`,
   async (id, { extra: api }) => {
     const { data } = await api.get<Review[]>(`${APIRoute.Review}/${id}`);
     return data;
@@ -31,7 +40,7 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, AsyncThunkC
 );
 
 export const fetchNearbyAction = createAsyncThunk<OfferPreview[], string, AsyncThunkConfig>(
-  'data/fetchNearby',
+  `${NameSpace.Data}/fetchNearby`,
   async (id, { extra: api}) => {
     const {data} = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${id}${APIRoute.Nearby}`);
     return data;
@@ -39,15 +48,23 @@ export const fetchNearbyAction = createAsyncThunk<OfferPreview[], string, AsyncT
 );
 
 export const fetchFavoritesAction = createAsyncThunk<FavoriteItem[], undefined, AsyncThunkConfig>(
-  'data/fetchFavorites',
+  `${NameSpace.Data}/fetchFavorites`,
   async (_arg, { extra: api}) => {
     const {data} = await api.get<FavoriteItem[]>(APIRoute.Favorite);
     return data;
   },
 );
 
+export const changeFavoriteStatusAction = createAsyncThunk<{ id: string }, FavoriteData, AsyncThunkConfig>(
+  `${NameSpace.Data}/changeFavoriteStatus`,
+  async ({status, offerId}, { extra: api}) => {
+    const { data } = await api.post<{id: string }>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    return data;
+  },
+);
+
 export const postReviewAction = createAsyncThunk<ReviewData[], ReviewData, AsyncThunkConfig>(
-  'data/postReview',
+  `${NameSpace.Data}/postReview`,
   async ({comment, rating, offerId}, { extra: api}) => {
     const { data } = await api.post<ReviewData[]>(`${APIRoute.Review}/${offerId}`, {comment, rating});
     return data;
@@ -55,7 +72,7 @@ export const postReviewAction = createAsyncThunk<ReviewData[], ReviewData, Async
 );
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, AsyncThunkConfig>(
-  'user/checkAuth',
+  `${NameSpace.User}/checkAuth`,
   async (_arg, { extra: api}) => {
     const { data } = await api.get<UserData>(APIRoute.Login);
     return data;
@@ -63,7 +80,7 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, AsyncThunkC
 );
 
 export const loginAction = createAsyncThunk<UserData, AuthData, AsyncThunkConfig>(
-  'user/login',
+  `${NameSpace.User}/login`,
   async ({login: email, password}, {extra: api}) => {
     const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
     return data;
@@ -71,7 +88,7 @@ export const loginAction = createAsyncThunk<UserData, AuthData, AsyncThunkConfig
 );
 
 export const logoutAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
-  'user/logout',
+  `${NameSpace.User}/logout`,
   async (_arg, { extra: api}) => {
     await api.delete(APIRoute.Logout);
   },

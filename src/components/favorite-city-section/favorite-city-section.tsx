@@ -1,5 +1,7 @@
 import PlaceList from '../place-list/place-list.tsx';
 import { OfferPreview } from '../../types.ts';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const.ts';
 
 type FavoriteCitySectionProps = {
   cityName: string;
@@ -11,9 +13,9 @@ function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX
     <li key={cityName} className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <a className="locations__item-link" href="#">
+          <Link className="locations__item-link" to={AppRoute.Main}>
             <span>{cityName}</span>
-          </a>
+          </Link>
         </div>
       </div>
       <div className="favorites__places">

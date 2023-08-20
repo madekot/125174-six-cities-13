@@ -1,11 +1,23 @@
 import { calculateRatingPercentage, convertCapitalizeFirstLetter, getPluralSuffix } from '../../utils';
 import { OfferFull } from '../../types.ts';
+import { AppRoute, FavoriteStatus } from '../../const.ts';
+import { changeFavoriteStatusAction } from '../../store/api-actions.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
+import { useNavigate } from 'react-router-dom';
+import { getIsFavoriteStatusSubmitting } from '../../store/slices/app-data/selectors.ts';
 
 type OfferDescriptionProps = {
   offer: OfferFull;
 }
 
 function OfferDescription({ offer }: OfferDescriptionProps) {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const hasUserAuth = useAppSelector(getAuthCheckedStatus);
+  const disabledBookmarkButton = useAppSelector(getIsFavoriteStatusSubmitting);
+
   const {
     isPremium,
     isFavorite,
@@ -16,6 +28,7 @@ function OfferDescription({ offer }: OfferDescriptionProps) {
     type,
     bedrooms,
     maxAdults,
+    id,
   } = offer;
 
   const offerFeatures = [
@@ -27,6 +40,20 @@ function OfferDescription({ offer }: OfferDescriptionProps) {
   const ratingPercentage = calculateRatingPercentage(rating);
   const bookmarkButtonClass = isFavorite ? 'offer__bookmark-button--active' : '';
 
+  const handleBookmarkClick = () => {
+    if (!hasUserAuth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+
+    if (!isFavorite) {
+      dispatch(changeFavoriteStatusAction({ offerId: id, status: FavoriteStatus.Add }));
+      return;
+    }
+
+    dispatch(changeFavoriteStatusAction({ offerId: id, status: FavoriteStatus.Remove }));
+  };
+
   return (
     <>
       {isPremium && (
@@ -36,7 +63,12 @@ function OfferDescription({ offer }: OfferDescriptionProps) {
       )}
       <div className="offer__name-wrapper">
         <h1 className="offer__name">{title}</h1>
-        <button className={`offer__bookmark-button button ${bookmarkButtonClass}`} type="button">
+        <button
+          className={`offer__bookmark-button button ${bookmarkButtonClass}`}
+          type="button"
+          disabled={disabledBookmarkButton}
+          onClick={handleBookmarkClick}
+        >
           <svg className="offer__bookmark-icon" width={31} height={33}>
             <use xlinkHref="#icon-bookmark" />
           </svg>

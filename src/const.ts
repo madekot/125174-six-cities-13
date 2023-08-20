@@ -42,3 +42,9 @@ export enum NameSpace {
   App = 'APP',
   User = 'USER',
 }
+
+
+export enum FavoriteStatus {
+  Add = 1,
+  Remove = 0,
+}
