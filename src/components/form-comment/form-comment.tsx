@@ -1,7 +1,8 @@
 import { Fragment, useState } from 'react';
 import { getPluralSuffix } from '../../utils.ts';
-import { useAppDispatch } from '../../store/hooks.ts';
-import { fetchReviewsAction, postReviewAction } from '../../store/api-actions.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import { postReviewAction } from '../../store/api-actions.ts';
+import { getIsReviewsStatusSubmitting } from '../../store/slices/app-data/selectors.ts';
 
 const ratingTitlesToValues: Record<string, number> = {
   'terribly': 1,
@@ -21,10 +22,13 @@ type FormCommentProps = {
 
 function FormComment({ offerId }: FormCommentProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const isReviewsStatusSubmitting = useAppSelector(getIsReviewsStatusSubmitting);
 
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [invalid, setInvalid] = useState(true);
+
+  const disabledSubmitButton = invalid || isReviewsStatusSubmitting;
 
   const validateForm = (commentLength: number, newRating: number) => {
     const isInvalid = !(
@@ -45,7 +49,6 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(postReviewAction({comment, rating, offerId}));
-    dispatch(fetchReviewsAction(offerId));
     resetForm(evt);
   };
 
@@ -71,6 +74,7 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
           id={`${ratingStar}-stars`}
           type="radio"
           required
+          disabled={isReviewsStatusSubmitting}
         />
         <label
           htmlFor={`${ratingStar}-stars`}
@@ -115,6 +119,7 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
         value={comment}
         required
         onChange={handleChangeComment}
+        disabled={isReviewsStatusSubmitting}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -126,7 +131,7 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={invalid}
+          disabled={disabledSubmitButton}
         >
           Submit
         </button>

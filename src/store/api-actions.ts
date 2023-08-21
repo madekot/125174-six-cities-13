@@ -63,10 +63,10 @@ export const changeFavoriteStatusAction = createAsyncThunk<{ id: string }, Favor
   },
 );
 
-export const postReviewAction = createAsyncThunk<ReviewData[], ReviewData, AsyncThunkConfig>(
+export const postReviewAction = createAsyncThunk<Review, ReviewData, AsyncThunkConfig>(
   `${NameSpace.Data}/postReview`,
   async ({comment, rating, offerId}, { extra: api}) => {
-    const { data } = await api.post<ReviewData[]>(`${APIRoute.Review}/${offerId}`, {comment, rating});
+    const { data } = await api.post<Review>(`${APIRoute.Review}/${offerId}`, {comment, rating});
     return data;
   },
 );

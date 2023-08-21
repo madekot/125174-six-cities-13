@@ -29,7 +29,7 @@ import {
   fetchNearbyAction,
   fetchOfferAction,
   fetchOffersAction,
-  fetchReviewsAction
+  fetchReviewsAction, postReviewAction
 } from '../../api-actions.ts';
 
 type AppData = {
@@ -37,6 +37,7 @@ type AppData = {
   offers: OfferPreview[];
   nearby: OfferPreview[];
   reviews: Review[];
+  isReviewsStatusSubmitting: boolean;
   favorites: FavoriteItem[];
   isOffersLoading: boolean;
   isOfferLoading: boolean;
@@ -52,6 +53,7 @@ const initialState: AppData = {
   offers: [],
   nearby: [],
   reviews: [],
+  isReviewsStatusSubmitting: false,
   favorites: [],
   isOffersLoading: false,
   isOfferLoading: false,
@@ -111,6 +113,16 @@ export const appData = createSlice({
       })
       .addCase(fetchReviewsAction.rejected, (state) => {
         state.isReviewsLoading = false;
+      })
+      .addCase(postReviewAction.pending, (state) => {
+        state.isReviewsStatusSubmitting = true;
+      })
+      .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.isReviewsStatusSubmitting = false;
+        state.reviews.push(action.payload);
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.isReviewsStatusSubmitting = false;
       })
       .addCase(fetchFavoritesAction.pending, (state) => {
         state.isFavoritesLoading = true;

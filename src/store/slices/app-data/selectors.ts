@@ -20,3 +20,5 @@ export const getIsFavoritesLoading = (state: State): boolean => state[NameSpace.
 export const getHasError = (state: State): boolean => state[NameSpace.Data].hasError;
 
 export const getIsFavoriteStatusSubmitting = (state: State): boolean => state[NameSpace.Data].isFavoriteStatusSubmitting;
+
+export const getIsReviewsStatusSubmitting = (state: State): boolean => state[NameSpace.Data].isReviewsStatusSubmitting;
