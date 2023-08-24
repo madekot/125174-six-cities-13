@@ -2,9 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from '../../components/header/header';
 import LoadingPage from '../loading-page/loading-page';
-import NotFoundPage from '../not-found-page/not-found-page';
 import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferDescription from '../../components/offer-description/offer-description';
 import OfferHost from '../../components/offer-host/offer-host';
@@ -14,6 +13,7 @@ import OfferMap from '../../components/offer-map/offer-map';
 import NearbyPlaces from '../../components/nearby-places/nearby-places';
 import { OfferPreview } from '../../types';
 import {
+  getHasError,
   getIsNearbyLoading,
   getIsOfferLoading,
   getIsReviewsLoading,
@@ -22,6 +22,8 @@ import {
   getReviews
 } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
+import NotFoundPage from '../not-found-page/not-found-page.tsx';
+import ErrorPage from '../error-page/error-page.tsx';
 
 const MAX_OFFERS_PREVIEW = 3;
 
@@ -45,6 +47,7 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
   const isReviewsLoading = useAppSelector(getIsReviewsLoading);
   const isNearbyLoading = useAppSelector(getIsNearbyLoading);
   const isAuthorization = useAppSelector(getAuthCheckedStatus);
+  const hasError = useAppSelector(getHasError);
 
   const isAllLoading = isOfferLoading || isNearbyLoading || isReviewsLoading;
 
@@ -63,6 +66,10 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
 
   if (!offer) {
     return <NotFoundPage />;
+  }
+
+  if (hasError) {
+    return <ErrorPage />;
   }
 
   const targetOfferPreview = offersPreview.find(

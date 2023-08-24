@@ -11,7 +11,8 @@ import {
   ReviewData,
   UserData
 } from '../types.ts';
-import { APIRoute, NameSpace } from '../const.ts';
+import { APIRoute, AppRoute, NameSpace } from '../const.ts';
+import { redirectToRoute } from './action.ts';
 
 type AsyncThunkConfig = { dispatch: AppDispatch; state: State; extra: AxiosInstance };
 
@@ -23,11 +24,16 @@ export const fetchOffersAction = createAsyncThunk<OfferPreview[], undefined, Asy
   },
 );
 
-export const fetchOfferAction = createAsyncThunk<OfferFull, string, AsyncThunkConfig>(
+export const fetchOfferAction = createAsyncThunk<OfferFull | null, string, AsyncThunkConfig>(
   `${NameSpace.Data}/fetchOffer`,
-  async (id, { extra: api}) => {
-    const {data} = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);
-    return data;
+  async (id, { dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);
+      return data;
+    } catch (e) {
+      dispatch(redirectToRoute(AppRoute.PageNotFound));
+      return null;
+    }
   }
 );
 
