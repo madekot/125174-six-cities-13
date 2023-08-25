@@ -1,10 +1,10 @@
 import { memo } from 'react';
+import { useAppSelector } from '../../store/hooks.ts';
+import { getSelectedCity } from '../../store/slices/app-process/selectors.ts';
 
-type NoPlacesAvailableProps = {
-  cityName: string;
-}
+function NoPlacesAvailable() {
+  const cityName = useAppSelector(getSelectedCity);
 
-function NoPlacesAvailable({ cityName }: NoPlacesAvailableProps) {
   return (
     <section className="cities__no-places">
       <div className="cities__status-wrapper tabs__content">

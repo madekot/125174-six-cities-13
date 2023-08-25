@@ -61,7 +61,6 @@ function LoginPage(): JSX.Element {
                   name="email"
                   placeholder="Email"
                   required
-                  defaultValue={'sarah.conner@gmail.com'}
                   ref={loginRef}
                   disabled={isSubmittingLogin}
                 />
@@ -74,7 +73,6 @@ function LoginPage(): JSX.Element {
                   name="password"
                   placeholder="Password"
                   required
-                  defaultValue={'password1'}
                   ref={passwordRef}
                   disabled={isSubmittingLogin}
                 />
