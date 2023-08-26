@@ -11,19 +11,19 @@ import Reviews from '../../components/reviews/reviews';
 import FormComment from '../../components/form-comment/form-comment';
 import OfferMap from '../../components/offer-map/offer-map';
 import NearbyPlaces from '../../components/nearby-places/nearby-places';
-import { OfferPreview } from '../../types';
 import {
   getHasError,
   getIsNearbyLoading,
   getIsOfferLoading,
   getIsReviewsLoading,
   getNearby,
-  getOffer,
+  getOffer, getOffers,
   getReviews
 } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import ErrorPage from '../error-page/error-page.tsx';
+import { OfferPreview } from '../../types.ts';
 
 const MAX_OFFERS_PREVIEW = 3;
 
@@ -31,17 +31,14 @@ const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] => (
   [...nearby].sort(() => Math.random() - 0.5)
 );
 
-type OfferProps = {
-  offersPreview: OfferPreview[];
-}
-
-function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
+function OfferPage(): JSX.Element | null {
   const dispatch = useAppDispatch();
   const id = String(useParams().id);
 
   const offer = useAppSelector(getOffer);
   const reviews = useAppSelector(getReviews);
   const nearbyList = useAppSelector(getNearby);
+  const offersPreview = useAppSelector(getOffers);
 
   const isOfferLoading = useAppSelector(getIsOfferLoading);
   const isReviewsLoading = useAppSelector(getIsReviewsLoading);
@@ -81,8 +78,6 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
     : limitedNearby;
 
   const mapCenter = offer.city.location;
-  const showNearbyMap = limitedNearby.length !== 0;
-  const showNearbyPlaces = limitedNearby.length !== 0;
 
   const {
     images,
@@ -105,10 +100,10 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
               </Reviews>
             </div>
           </div>
-          {showNearbyMap && <OfferMap offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id} />}
+          <OfferMap offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id} />
         </section>
         <div className="container">
-          {showNearbyPlaces && <NearbyPlaces nearPlaces={limitedNearby}/>}
+          <NearbyPlaces nearPlaces={limitedNearby} />
         </div>
       </main>
     </div>

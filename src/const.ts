@@ -25,7 +25,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
-  PageNotFound = '*'
+  PageNotFound = '/*'
 }
 
 export enum APIRoute {
@@ -47,4 +47,11 @@ export enum NameSpace {
 export enum FavoriteStatus {
   Add = 1,
   Remove = 0,
+}
+
+export enum Status {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error'
 }

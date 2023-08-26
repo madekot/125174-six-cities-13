@@ -4,13 +4,14 @@ import { useDispatch } from 'react-redux';
 import { memo } from 'react';
 import { changeCity } from '../../store/slices/app-process/app-process.ts';
 
+export const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
+
 type LocationsTabsProps = {
   selectedCity: CityName;
 }
 
 function LocationsTabs({ selectedCity }: LocationsTabsProps) {
   const dispatch = useDispatch();
-  const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
 
   const handleTabClick = (evt: React.MouseEvent<HTMLAnchorElement> ,city: CityName) => {
     evt.preventDefault();

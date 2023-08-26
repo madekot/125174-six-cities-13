@@ -7,13 +7,13 @@ import { Location, OfferPreview } from '../../types.ts';
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
   iconSize: [27, 39],
-  iconAnchor: [20, 39]
+  iconAnchor: [13.5, 39]
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: 'img/pin-active.svg',
   iconSize: [27, 39],
-  iconAnchor: [20, 39]
+  iconAnchor: [13.5, 39]
 });
 
 type MapProps = {

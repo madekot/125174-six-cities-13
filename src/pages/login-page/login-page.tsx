@@ -1,23 +1,34 @@
 import Header from '../../components/header/header.tsx';
 import { useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions.ts';
 import { AppRoute } from '../../const.ts';
 import { toast } from 'react-toastify';
 import { getIsSubmittingLogin } from '../../store/slices/user-process/selectors.ts';
+import { changeCity } from '../../store/slices/app-process/app-process.ts';
+import { cities } from '../../components/locations-tabs/locations-tabs.tsx';
 
 const REGEX_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)[^\s]+$/;
 const ERROR_MESSAGE = 'The password must consist of at least one English letter and one symbol without spaces.';
 
 const isPasswordValid = (password: string) => REGEX_PASSWORD.test(password);
 
-function LoginPage(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const isSubmittingLogin = useAppSelector(getIsSubmittingLogin);
+function getRandomElementArray<T>(arr: T[]) {
+  const randomIndex = Math.floor(Math.random() * arr.length);
+  return arr[randomIndex];
+}
 
+function LoginPage(): JSX.Element {
+
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isSubmittingLogin = useAppSelector(getIsSubmittingLogin);
   const loginRef = useRef<HTMLInputElement | null>(null);
+
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const city = getRandomElementArray(cities);
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
@@ -88,12 +99,16 @@ function LoginPage(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link
+              <a
                 className="locations__item-link"
-                to={AppRoute.Main}
+                onClick={(evt) => {
+                  evt.preventDefault();
+                  navigate(AppRoute.Main);
+                  dispatch(changeCity(city));
+                }}
               >
-                <span>Amsterdam</span>
-              </Link>
+                <span>{city}</span>
+              </a>
             </div>
           </section>
         </div>

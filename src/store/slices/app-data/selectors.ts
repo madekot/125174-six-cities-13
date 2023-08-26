@@ -1,6 +1,6 @@
 import { State } from '../../index.ts';
 import { OfferFull, OfferPreview, Review } from '../../../types.ts';
-import { NameSpace } from '../../../const.ts';
+import { NameSpace, Status } from '../../../const.ts';
 
 export const getOffers = (state: State): OfferPreview[] => state[NameSpace.Data].offers;
 export const getIsOffersLoading = (state: State): boolean => state[NameSpace.Data].isOffersLoading;
@@ -15,9 +15,11 @@ export const getNearby = (state: State): OfferPreview[] => state[NameSpace.Data]
 export const getIsNearbyLoading = (state: State): boolean => state[NameSpace.Data].isNearbyLoading;
 
 export const getFavorites = (state: State): OfferPreview[] => state[NameSpace.Data].favorites;
+export const getFavoriteCount = (state: State): number => state[NameSpace.Data].favorites.length;
 export const getIsFavoritesLoading = (state: State): boolean => state[NameSpace.Data].isFavoritesLoading;
 
 export const getHasError = (state: State): boolean => state[NameSpace.Data].hasError;
+export const getReviewsHasError = (state: State): Status => state[NameSpace.Data].reviewsStatus;
 
 export const getIsFavoriteStatusSubmitting = (state: State): boolean => state[NameSpace.Data].isFavoriteStatusSubmitting;
 

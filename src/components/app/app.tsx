@@ -5,19 +5,30 @@ import FavoritesPage from '../../pages/favorites-page/favorites-page.tsx';
 import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
-import { useAppSelector } from '../../store/hooks.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import LoadingPage from '../../pages/loading-page/loading-page.tsx';
 import { AppRoute } from '../../const.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import { getIsOffersLoading, getOffers } from '../../store/slices/app-data/selectors.ts';
-import { getAuthorizationStatus } from '../../store/slices/user-process/selectors.ts';
+import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/slices/user-process/selectors.ts';
+import { fetchFavoritesAction } from '../../store/api-actions.ts';
+import { useEffect } from 'react';
 
 function App(): JSX.Element {
+  const dispatch = useAppDispatch();
+
   const offers = useAppSelector(getOffers);
   const isOffersDataLoading = useAppSelector(getIsOffersLoading);
   const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authCheckedStatus = useAppSelector(getAuthCheckedStatus);
+
+  useEffect(() => {
+    if (authCheckedStatus) {
+      dispatch(fetchFavoritesAction);
+    }
+  }, [dispatch, authCheckedStatus]);
 
   if (isOffersDataLoading) {
     return (
@@ -51,7 +62,7 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Offer}
-          element={<OfferPage offersPreview={offers}/>}
+          element={<OfferPage />}
         />
         <Route
           path={AppRoute.PageNotFound}

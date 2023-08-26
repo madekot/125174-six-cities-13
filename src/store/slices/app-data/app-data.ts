@@ -1,6 +1,15 @@
 import { FavoriteItem, OfferFull, OfferPreview, Review } from '../../../types.ts';
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../../const.ts';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NameSpace, Status } from '../../../const.ts';
+import {
+  changeFavoriteStatusAction,
+  fetchFavoritesAction,
+  fetchNearbyAction,
+  fetchOfferAction,
+  fetchOffersAction,
+  fetchReviewsAction,
+  postReviewAction
+} from '../../api-actions.ts';
 
 function updateFavoritesList(state: AppData, offer: OfferPreview) {
   if (offer.isFavorite) {
@@ -23,15 +32,6 @@ function updateNearbyStatus(nearbyOffers: OfferPreview[], id: string) {
   }
 }
 
-import {
-  changeFavoriteStatusAction,
-  fetchFavoritesAction,
-  fetchNearbyAction,
-  fetchOfferAction,
-  fetchOffersAction,
-  fetchReviewsAction, postReviewAction
-} from '../../api-actions.ts';
-
 type AppData = {
   offer: OfferFull | null;
   offers: OfferPreview[];
@@ -46,6 +46,7 @@ type AppData = {
   isFavoritesLoading: boolean;
   isFavoriteStatusSubmitting: boolean;
   hasError: boolean;
+  reviewsStatus: Status;
 }
 
 const initialState: AppData = {
@@ -62,12 +63,17 @@ const initialState: AppData = {
   isFavoritesLoading: false,
   isFavoriteStatusSubmitting: false,
   hasError: false,
+  reviewsStatus: Status.Idle,
 };
 
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    setReviewsErrorStatus: (state, action: PayloadAction<Status>) => {
+      state.reviewsStatus = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -115,13 +121,16 @@ export const appData = createSlice({
         state.isReviewsLoading = false;
       })
       .addCase(postReviewAction.pending, (state) => {
+        state.reviewsStatus = Status.Loading;
         state.isReviewsStatusSubmitting = true;
       })
       .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviewsStatus = Status.Success;
         state.isReviewsStatusSubmitting = false;
         state.reviews.push(action.payload);
       })
       .addCase(postReviewAction.rejected, (state) => {
+        state.reviewsStatus = Status.Error;
         state.isReviewsStatusSubmitting = false;
       })
       .addCase(fetchFavoritesAction.pending, (state) => {
@@ -157,3 +166,5 @@ export const appData = createSlice({
       });
   }
 });
+
+export const { setReviewsErrorStatus } = appData.actions;
