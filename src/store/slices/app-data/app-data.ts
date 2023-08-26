@@ -11,27 +11,6 @@ import {
   postReviewAction
 } from '../../api-actions.ts';
 
-function updateFavoritesList(state: AppData, offer: OfferPreview) {
-  if (offer.isFavorite) {
-    state.favorites.push(offer);
-  } else {
-    state.favorites = state.favorites.filter((el) => el.id !== offer.id);
-  }
-}
-
-function updateOfferStatus(offer: OfferFull | null, id: string) {
-  if (offer && offer.id === id) {
-    offer.isFavorite = !offer.isFavorite;
-  }
-}
-
-function updateNearbyStatus(nearbyOffers: OfferPreview[], id: string) {
-  const offerNearbyIndex = nearbyOffers.findIndex((el) => el.id === id);
-  if (offerNearbyIndex !== -1) {
-    nearbyOffers[offerNearbyIndex].isFavorite = !nearbyOffers[offerNearbyIndex].isFavorite;
-  }
-}
-
 type AppData = {
   offer: OfferFull | null;
   offers: OfferPreview[];
@@ -72,6 +51,9 @@ export const appData = createSlice({
   reducers: {
     setReviewsErrorStatus: (state, action: PayloadAction<Status>) => {
       state.reviewsStatus = action.payload;
+    },
+    resetFavoriteStatus: (state) => {
+      state.favorites = [];
     },
   },
   extraReducers(builder) {
@@ -149,17 +131,28 @@ export const appData = createSlice({
       .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
         state.isFavoriteStatusSubmitting = false;
 
-        const { id } = action.payload;
+        const payloadOffer = action.payload;
+        const { id } = payloadOffer;
         const offerIndex = state.offers.findIndex((el) => el.id === id);
-
+        const favoriteOfferIndex = state.favorites.findIndex((el) => el.id === id);
         if (offerIndex !== -1) {
-          const offer = state.offers[offerIndex];
-          offer.isFavorite = !offer.isFavorite;
-          updateFavoritesList(state, offer);
+          state.offers[offerIndex] = payloadOffer;
         }
 
-        updateOfferStatus(state.offer, id);
-        updateNearbyStatus(state.nearby, id);
+        if (payloadOffer.isFavorite) {
+          state.favorites.push(payloadOffer);
+        } else {
+          state.favorites.splice(favoriteOfferIndex, 1);
+        }
+
+        if (state.offer && state.offer.id === id) {
+          state.offer.isFavorite = !state.offer.isFavorite;
+        }
+
+        const offerNearbyIndex = state.nearby.findIndex((el) => el.id === id);
+        if (offerNearbyIndex !== -1) {
+          state.nearby[offerNearbyIndex].isFavorite = !state.nearby[offerNearbyIndex].isFavorite;
+        }
       })
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
         state.isFavoriteStatusSubmitting = false;
@@ -167,4 +160,4 @@ export const appData = createSlice({
   }
 });
 
-export const { setReviewsErrorStatus } = appData.actions;
+export const { setReviewsErrorStatus, resetFavoriteStatus } = appData.actions;

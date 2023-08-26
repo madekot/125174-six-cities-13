@@ -13,6 +13,7 @@ import {
 } from '../types.ts';
 import { APIRoute, AppRoute, NameSpace } from '../const.ts';
 import { redirectToRoute } from './action.ts';
+import { resetFavoriteStatus } from './slices/app-data/app-data.ts';
 
 type AsyncThunkConfig = { dispatch: AppDispatch; state: State; extra: AxiosInstance };
 
@@ -61,10 +62,10 @@ export const fetchFavoritesAction = createAsyncThunk<FavoriteItem[], undefined, 
   },
 );
 
-export const changeFavoriteStatusAction = createAsyncThunk<{ id: string }, FavoriteData, AsyncThunkConfig>(
+export const changeFavoriteStatusAction = createAsyncThunk<OfferPreview, FavoriteData, AsyncThunkConfig>(
   `${NameSpace.Data}/changeFavoriteStatus`,
   async ({status, offerId}, { extra: api}) => {
-    const { data } = await api.post<{id: string }>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    const { data } = await api.post<OfferPreview>(`${APIRoute.Favorite}/${offerId}/${status}`);
     return data;
   },
 );
@@ -95,7 +96,8 @@ export const loginAction = createAsyncThunk<UserData, AuthData, AsyncThunkConfig
 
 export const logoutAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   `${NameSpace.User}/logout`,
-  async (_arg, { extra: api}) => {
+  async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
+    dispatch(resetFavoriteStatus());
   },
 );

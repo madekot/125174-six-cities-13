@@ -11,10 +11,11 @@ import { AppRoute } from '../../const.ts';
 import HistoryRouter from '../history-route/history-route.tsx';
 import browserHistory from '../../browser-history.ts';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
-import { getIsOffersLoading, getOffers } from '../../store/slices/app-data/selectors.ts';
+import { getHasError, getIsOffersLoading, getOffers } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus, getAuthorizationStatus } from '../../store/slices/user-process/selectors.ts';
 import { fetchFavoritesAction } from '../../store/api-actions.ts';
 import { useEffect } from 'react';
+import ErrorPage from '../../pages/error-page/error-page.tsx';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -23,10 +24,11 @@ function App(): JSX.Element {
   const isOffersDataLoading = useAppSelector(getIsOffersLoading);
   const userAuthorizationStatus = useAppSelector(getAuthorizationStatus);
   const authCheckedStatus = useAppSelector(getAuthCheckedStatus);
+  const hasError = useAppSelector(getHasError);
 
   useEffect(() => {
     if (authCheckedStatus) {
-      dispatch(fetchFavoritesAction);
+      dispatch(fetchFavoritesAction());
     }
   }, [dispatch, authCheckedStatus]);
 
@@ -34,6 +36,11 @@ function App(): JSX.Element {
     return (
       <LoadingPage />
     );
+  }
+
+  if (hasError) {
+    return (
+      <ErrorPage />);
   }
 
   return (
