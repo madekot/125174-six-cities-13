@@ -1,13 +1,14 @@
-import { OfferPreview, Location } from '../../types.ts';
+import { OfferPreview, Location, OfferFull } from '../../types.ts';
 import Map from '../../components/map/map.tsx';
 
 type OfferMapProps = {
   offers: OfferPreview[];
   centerCoordinates: Location;
   selectedOfferId: string;
+  currentOffer: OfferFull;
 }
 
-function OfferMap({ offers, centerCoordinates, selectedOfferId }: OfferMapProps) {
+function OfferMap({ offers, centerCoordinates, selectedOfferId, currentOffer }: OfferMapProps) {
   return (
     <section className="offer__map map">
       <Map
@@ -15,6 +16,7 @@ function OfferMap({ offers, centerCoordinates, selectedOfferId }: OfferMapProps)
         centerCoordinates={centerCoordinates}
         selectedOfferId={selectedOfferId}
         scrollWheelZoom={false}
+        currentOffer={currentOffer}
       />
     </section>
   );

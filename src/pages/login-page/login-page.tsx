@@ -3,16 +3,17 @@ import { useRef } from 'react';
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import { useNavigate } from 'react-router-dom';
 import { loginAction } from '../../store/api-actions.ts';
-import { AppRoute } from '../../const.ts';
+import { AppRoute, CityName } from '../../const.ts';
 import { toast } from 'react-toastify';
 import { getIsSubmittingLogin } from '../../store/slices/user-process/selectors.ts';
 import { changeCity } from '../../store/slices/app-process/app-process.ts';
-import { cities } from '../../components/locations-tabs/locations-tabs.tsx';
 
 const REGEX_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)[^\s]+$/;
 const ERROR_MESSAGE = 'The password must consist of at least one English letter and one symbol without spaces.';
 
 const isPasswordValid = (password: string) => REGEX_PASSWORD.test(password);
+
+const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
 
 function getRandomElementArray<T>(arr: T[]) {
   const randomIndex = Math.floor(Math.random() * arr.length);

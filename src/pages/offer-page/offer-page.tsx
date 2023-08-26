@@ -17,7 +17,7 @@ import {
   getIsOfferLoading,
   getIsReviewsLoading,
   getNearby,
-  getOffer, getOffers,
+  getOffer,
   getReviews
 } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
@@ -38,7 +38,6 @@ function OfferPage(): JSX.Element | null {
   const offer = useAppSelector(getOffer);
   const reviews = useAppSelector(getReviews);
   const nearbyList = useAppSelector(getNearby);
-  const offersPreview = useAppSelector(getOffers);
 
   const isOfferLoading = useAppSelector(getIsOfferLoading);
   const isReviewsLoading = useAppSelector(getIsReviewsLoading);
@@ -69,14 +68,6 @@ function OfferPage(): JSX.Element | null {
     return <ErrorPage />;
   }
 
-  const targetOfferPreview = offersPreview.find(
-    (offerPreview) => offerPreview.id === id
-  );
-
-  const offersMap = targetOfferPreview
-    ? [targetOfferPreview, ...limitedNearby]
-    : limitedNearby;
-
   const mapCenter = offer.city.location;
 
   const {
@@ -100,7 +91,7 @@ function OfferPage(): JSX.Element | null {
               </Reviews>
             </div>
           </div>
-          <OfferMap offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id} />
+          <OfferMap offers={limitedNearby} centerCoordinates={mapCenter} selectedOfferId={id} currentOffer={offer}/>
         </section>
         <div className="container">
           <NearbyPlaces nearPlaces={limitedNearby} />
