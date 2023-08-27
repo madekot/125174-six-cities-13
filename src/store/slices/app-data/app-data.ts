@@ -11,6 +11,36 @@ import {
   postReviewAction
 } from '../../api-actions.ts';
 
+const updateOfferList = (offers: OfferPreview[], updatedOffer: OfferPreview) => {
+  const offerIndex = offers.findIndex((el) => el.id === updatedOffer.id);
+  if (offerIndex !== -1) {
+    offers[offerIndex] = updatedOffer;
+  }
+};
+
+const updateFavoritesList = (favorites: OfferPreview[], updatedOffer: OfferPreview, isFavorite: boolean) => {
+  const favoriteOfferIndex = favorites.findIndex((el) => el.id === updatedOffer.id);
+
+  if (isFavorite && favoriteOfferIndex === -1) {
+    favorites.push(updatedOffer);
+  } else if (!isFavorite && favoriteOfferIndex !== -1) {
+    favorites.splice(favoriteOfferIndex, 1);
+  }
+};
+
+const updateOfferNearbyList = (nearby: OfferPreview[], updatedOffer: OfferPreview) => {
+  const offerNearbyIndex = nearby.findIndex((el) => el.id === updatedOffer.id);
+  if (offerNearbyIndex !== -1) {
+    nearby[offerNearbyIndex].isFavorite = !nearby[offerNearbyIndex].isFavorite;
+  }
+};
+
+const updateOfferIsFavorite = (state: AppData, id: string) => {
+  if (state.offer && state.offer.id === id) {
+    state.offer.isFavorite = !state.offer.isFavorite;
+  }
+};
+
 type AppData = {
   offer: OfferFull | null;
   offers: OfferPreview[];
@@ -125,31 +155,15 @@ export const appData = createSlice({
       .addCase(changeFavoriteStatusAction.pending, (state) => {
         state.isFavoriteStatusSubmitting = true;
       })
-      .addCase(changeFavoriteStatusAction.fulfilled, (state, action) => {
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, {payload: payloadOffer}) => {
         state.isFavoriteStatusSubmitting = false;
 
-        const payloadOffer = action.payload;
-        const { id } = payloadOffer;
-        const offerIndex = state.offers.findIndex((el) => el.id === id);
-        const favoriteOfferIndex = state.favorites.findIndex((el) => el.id === id);
-        if (offerIndex !== -1) {
-          state.offers[offerIndex] = payloadOffer;
-        }
+        const { id, isFavorite } = payloadOffer;
 
-        if (payloadOffer.isFavorite) {
-          state.favorites.push(payloadOffer);
-        } else {
-          state.favorites.splice(favoriteOfferIndex, 1);
-        }
-
-        if (state.offer && state.offer.id === id) {
-          state.offer.isFavorite = !state.offer.isFavorite;
-        }
-
-        const offerNearbyIndex = state.nearby.findIndex((el) => el.id === id);
-        if (offerNearbyIndex !== -1) {
-          state.nearby[offerNearbyIndex].isFavorite = !state.nearby[offerNearbyIndex].isFavorite;
-        }
+        updateOfferList(state.offers, payloadOffer);
+        updateFavoritesList(state.favorites, payloadOffer, isFavorite);
+        updateOfferNearbyList(state.nearby, payloadOffer);
+        updateOfferIsFavorite(state, id);
       })
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
         state.isFavoriteStatusSubmitting = false;
