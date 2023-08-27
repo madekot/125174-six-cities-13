@@ -52,9 +52,6 @@ export const appData = createSlice({
     setReviewsErrorStatus: (state, action: PayloadAction<Status>) => {
       state.reviewsStatus = action.payload;
     },
-    resetFavoriteStatus: (state) => {
-      state.favorites = [];
-    },
   },
   extraReducers(builder) {
     builder
@@ -160,4 +157,4 @@ export const appData = createSlice({
   }
 });
 
-export const { setReviewsErrorStatus, resetFavoriteStatus } = appData.actions;
+export const { setReviewsErrorStatus } = appData.actions;

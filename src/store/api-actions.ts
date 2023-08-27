@@ -13,7 +13,7 @@ import {
 } from '../types.ts';
 import { APIRoute, AppRoute, NameSpace } from '../const.ts';
 import { redirectToRoute } from './action.ts';
-import { resetFavoriteStatus } from './slices/app-data/app-data.ts';
+import { dropToken, saveToken } from '../services/token.ts';
 
 type AsyncThunkConfig = { dispatch: AppDispatch; state: State; extra: AxiosInstance };
 
@@ -88,8 +88,10 @@ export const checkAuthAction = createAsyncThunk<UserData, undefined, AsyncThunkC
 
 export const loginAction = createAsyncThunk<UserData, AuthData, AsyncThunkConfig>(
   `${NameSpace.User}/login`,
-  async ({login: email, password}, {extra: api}) => {
+  async ({login: email, password}, {dispatch, extra: api}) => {
     const {data} = await api.post<UserData>(APIRoute.Login, {email, password});
+    dispatch(fetchOffersAction());
+    saveToken(data.token);
     return data;
   },
 );
@@ -98,6 +100,7 @@ export const logoutAction = createAsyncThunk<void, undefined, AsyncThunkConfig>(
   `${NameSpace.User}/logout`,
   async (_arg, {dispatch, extra: api}) => {
     await api.delete(APIRoute.Logout);
-    dispatch(resetFavoriteStatus());
+    dispatch(fetchOffersAction());
+    dropToken();
   },
 );
