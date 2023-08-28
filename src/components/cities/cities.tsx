@@ -13,8 +13,6 @@ function Cities({ offers }: CitiesProps) {
   const [selectedOfferId, setSelectedOfferId] = useState<OfferPreview['id']>('');
 
   const noPlacesAvailable = offers.length === 0;
-  const firstOfferCity = offers[0]?.city;
-  const selectedCityCoordinates = firstOfferCity?.location;
 
   const handleCardMouseEnter = useCallback((id: OfferPreview['id']) => setSelectedOfferId(id), []);
   const handleCardMouseLeave = useCallback(() => setSelectedOfferId(''), []);
@@ -26,7 +24,6 @@ function Cities({ offers }: CitiesProps) {
           <NoPlacesAvailable />
         ) : (
           <AvailablePlaces
-            cityName={firstOfferCity?.name}
             offers={offers}
             handleCardMouseEnter={handleCardMouseEnter}
             handleCardMouseLeave={handleCardMouseLeave}
@@ -36,7 +33,7 @@ function Cities({ offers }: CitiesProps) {
           {!noPlacesAvailable && (
             <section className="cities__map map">
               <Map
-                centerCoordinates={selectedCityCoordinates}
+                centerCoordinates={offers[0].city.location}
                 offers={offers}
                 selectedOfferId={selectedOfferId}
               />

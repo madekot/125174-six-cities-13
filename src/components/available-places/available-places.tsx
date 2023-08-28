@@ -3,16 +3,18 @@ import PlaceList from '../place-list/place-list.tsx';
 import { OfferPreview } from '../../types.ts';
 import { memo } from 'react';
 import { getPluralSuffix } from '../../utils.ts';
+import { useAppSelector } from '../../store/hooks.ts';
+import { getSelectedCity } from '../../store/slices/app-process/selectors.ts';
 
 type AvailablePlacesProps = {
-  cityName: string;
   offers: OfferPreview[];
   handleCardMouseEnter?: (id: OfferPreview['id']) => void;
   handleCardMouseLeave?: () => void;
 }
 
-function AvailablePlaces({ cityName, offers, handleCardMouseEnter, handleCardMouseLeave }: AvailablePlacesProps) {
+function AvailablePlaces({ offers, handleCardMouseEnter, handleCardMouseLeave }: AvailablePlacesProps) {
   const quantityOffers = offers.length;
+  const cityName = useAppSelector(getSelectedCity);
 
   return (
     <section className="cities__places places">

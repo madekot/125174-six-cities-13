@@ -20,13 +20,13 @@ function ReviewItem({ review }: ReviewItemProps): JSX.Element {
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
           <img
             className="reviews__avatar user__avatar"
-            src={user?.avatarUrl}
+            src={user.avatarUrl}
             width={54}
             height={54}
             alt="Reviews avatar"
           />
         </div>
-        <span className="reviews__user-name">{user?.name}</span>
+        <span className="reviews__user-name">{user.name}</span>
       </div>
       <div className="reviews__info">
         <div className="reviews__rating rating">

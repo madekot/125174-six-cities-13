@@ -1,8 +1,6 @@
 import cn from 'classnames';
 import Header from '../../components/header/header.tsx';
-import { useEffect } from 'react';
-import { fetchFavoritesAction } from '../../store/api-actions.ts';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import { useAppSelector } from '../../store/hooks.ts';
 import LoadingPage from '../loading-page/loading-page.tsx';
 import EmptyFavorites from '../../components/empty-favorites/empty-favorites.tsx';
 import NonEmptyFavorites from '../../components/non-empty-favorites/non-empty-favorites.tsx';
@@ -11,15 +9,10 @@ import { Link } from 'react-router-dom';
 import { getFavorites, getIsFavoritesLoading } from '../../store/slices/app-data/selectors.ts';
 
 function FavoritesPage(): JSX.Element {
-  const dispatch = useAppDispatch();
 
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
   const favorites = useAppSelector(getFavorites);
   const isEmptyFavorites = favorites.length === 0;
-
-  useEffect(() => {
-    dispatch(fetchFavoritesAction());
-  }, [dispatch]);
 
   if (isFavoritesLoading) {
     return <LoadingPage />;
