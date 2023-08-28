@@ -3,6 +3,7 @@ import useMap from './use-map.ts';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Location, OfferFull, OfferPreview } from '../../types.ts';
+import styles from './map.module.css';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
@@ -82,7 +83,7 @@ function Map(props: MapProps): JSX.Element {
 
 
   return (
-    <div ref={mapRef} style={{height: '100%'}}></div>
+    <div className={styles.map} ref={mapRef}></div>
   );
 }
 

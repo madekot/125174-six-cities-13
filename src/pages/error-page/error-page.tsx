@@ -1,20 +1,12 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
-import React from 'react';
+import styles from './error-page.module.css';
 
 function ErrorPage(): JSX.Element {
-  const style: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh'
-  };
-
   return (
-    <div style={style}>
-      <h1 style={{textAlign: 'center'}}>Oops, something went wrong</h1>
-      <Link to={AppRoute.Main} style={{color: 'blue'}}>
+    <div className={styles.container}>
+      <h1 className={styles.heading}>Oops, something went wrong</h1>
+      <Link to={AppRoute.Main} className={styles.link}>
         Let&apos;s go back to the main page
       </Link>
     </div>

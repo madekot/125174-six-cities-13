@@ -1,8 +1,8 @@
-import './loading-page.css';
+import styles from './loading-page.module.css';
 
 function LoadingPage(): JSX.Element {
   return (
-    <p className='loading-page__text'>Loading ...</p>
+    <p className={styles.loadingPageText}>Loading ...</p>
   );
 }
 
