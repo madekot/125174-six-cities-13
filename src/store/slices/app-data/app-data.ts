@@ -1,26 +1,61 @@
 import { FavoriteItem, OfferFull, OfferPreview, Review } from '../../../types.ts';
-import { createSlice } from '@reduxjs/toolkit';
-import { NameSpace } from '../../../const.ts';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NameSpace, Status } from '../../../const.ts';
 import {
+  changeFavoriteStatusAction,
   fetchFavoritesAction,
   fetchNearbyAction,
   fetchOfferAction,
   fetchOffersAction,
-  fetchReviewsAction
+  fetchReviewsAction,
+  postReviewAction
 } from '../../api-actions.ts';
+
+const updateOfferList = (offers: OfferPreview[], updatedOffer: OfferPreview) => {
+  const offerIndex = offers.findIndex((el) => el.id === updatedOffer.id);
+  if (offerIndex !== -1) {
+    offers[offerIndex] = updatedOffer;
+  }
+};
+
+const updateFavoritesList = (favorites: OfferPreview[], updatedOffer: OfferPreview, isFavorite: boolean) => {
+  const favoriteOfferIndex = favorites.findIndex((el) => el.id === updatedOffer.id);
+
+  if (isFavorite && favoriteOfferIndex === -1) {
+    favorites.push(updatedOffer);
+  } else if (!isFavorite && favoriteOfferIndex !== -1) {
+    favorites.splice(favoriteOfferIndex, 1);
+  }
+};
+
+const updateOfferNearbyList = (nearby: OfferPreview[], updatedOffer: OfferPreview) => {
+  const offerNearbyIndex = nearby.findIndex((el) => el.id === updatedOffer.id);
+  if (offerNearbyIndex !== -1) {
+    nearby[offerNearbyIndex].isFavorite = !nearby[offerNearbyIndex].isFavorite;
+  }
+};
+
+const updateOfferIsFavorite = (state: AppData, id: string) => {
+  if (state.offer && state.offer.id === id) {
+    state.offer.isFavorite = !state.offer.isFavorite;
+  }
+};
 
 type AppData = {
   offer: OfferFull | null;
   offers: OfferPreview[];
   nearby: OfferPreview[];
   reviews: Review[];
+  isReviewsStatusSubmitting: boolean;
   favorites: FavoriteItem[];
   isOffersLoading: boolean;
   isOfferLoading: boolean;
   isNearbyLoading: boolean;
   isReviewsLoading: boolean;
   isFavoritesLoading: boolean;
+  isFavoriteStatusSubmitting: boolean;
   hasError: boolean;
+  reviewsStatus: Status;
 }
 
 const initialState: AppData = {
@@ -28,19 +63,26 @@ const initialState: AppData = {
   offers: [],
   nearby: [],
   reviews: [],
+  isReviewsStatusSubmitting: false,
   favorites: [],
   isOffersLoading: false,
   isOfferLoading: false,
   isNearbyLoading: false,
   isReviewsLoading: false,
   isFavoritesLoading: false,
+  isFavoriteStatusSubmitting: false,
   hasError: false,
+  reviewsStatus: Status.Idle,
 };
 
 export const appData = createSlice({
   name: NameSpace.Data,
   initialState,
-  reducers: {},
+  reducers: {
+    setReviewsErrorStatus: (state, action: PayloadAction<Status>) => {
+      state.reviewsStatus = action.payload;
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -87,6 +129,19 @@ export const appData = createSlice({
       .addCase(fetchReviewsAction.rejected, (state) => {
         state.isReviewsLoading = false;
       })
+      .addCase(postReviewAction.pending, (state) => {
+        state.reviewsStatus = Status.Loading;
+        state.isReviewsStatusSubmitting = true;
+      })
+      .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviewsStatus = Status.Success;
+        state.isReviewsStatusSubmitting = false;
+        state.reviews.push(action.payload);
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.reviewsStatus = Status.Error;
+        state.isReviewsStatusSubmitting = false;
+      })
       .addCase(fetchFavoritesAction.pending, (state) => {
         state.isFavoritesLoading = true;
       })
@@ -96,6 +151,24 @@ export const appData = createSlice({
       })
       .addCase(fetchFavoritesAction.rejected, (state) => {
         state.isFavoritesLoading = false;
+      })
+      .addCase(changeFavoriteStatusAction.pending, (state) => {
+        state.isFavoriteStatusSubmitting = true;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, {payload: payloadOffer}) => {
+        state.isFavoriteStatusSubmitting = false;
+
+        const { id, isFavorite } = payloadOffer;
+
+        updateOfferList(state.offers, payloadOffer);
+        updateFavoritesList(state.favorites, payloadOffer, isFavorite);
+        updateOfferNearbyList(state.nearby, payloadOffer);
+        updateOfferIsFavorite(state, id);
+      })
+      .addCase(changeFavoriteStatusAction.rejected, (state) => {
+        state.isFavoriteStatusSubmitting = false;
       });
   }
 });
+
+export const { setReviewsErrorStatus } = appData.actions;

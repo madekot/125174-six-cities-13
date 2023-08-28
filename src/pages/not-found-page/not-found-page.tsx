@@ -1,20 +1,12 @@
 import { Link } from 'react-router-dom';
-import React from 'react';
+import styles from './not-found-page.module.css';
 
 function NotFoundPage(): JSX.Element {
-  const style: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    height: '100vh'
-  };
-
   return (
-    <div style={style}>
-      <div style={{textAlign: 'center'}}>
+    <div className={styles.container}>
+      <div className={styles.textContainer}>
         <h1>404 Not Found</h1>
-        <Link to={'/'} style={{color: 'blue'}}>return to main page</Link>
+        <Link to={'/'} className={styles.link}>return to main page</Link>
       </div>
     </div>
   );

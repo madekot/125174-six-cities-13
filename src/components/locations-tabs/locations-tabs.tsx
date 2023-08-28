@@ -10,6 +10,7 @@ type LocationsTabsProps = {
 
 function LocationsTabs({ selectedCity }: LocationsTabsProps) {
   const dispatch = useDispatch();
+
   const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
 
   const handleTabClick = (evt: React.MouseEvent<HTMLAnchorElement> ,city: CityName) => {

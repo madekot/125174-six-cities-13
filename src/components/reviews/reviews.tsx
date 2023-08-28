@@ -3,8 +3,8 @@ import { Review } from '../../types.ts';
 
 const MAX_REVIEWS_COUNT = 10;
 
-const getRewiewsToRender = (rewiews: readonly Review[]): Review[] => (
-  [...rewiews]
+const getReviewsToRender = (reviews: readonly Review[]): Review[] => (
+  [...reviews]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .slice(0, MAX_REVIEWS_COUNT)
 );
@@ -21,7 +21,7 @@ function Reviews({reviews, children}: ReviewsProps): JSX.Element {
         Reviews · <span className="reviews__amount">{reviews.length}</span>
       </h2>
       <ul className="reviews__list">
-        {getRewiewsToRender(reviews).map((review) => <ReviewItem key={review.id} review={review} />)}
+        {getReviewsToRender(reviews).map((review) => <ReviewItem key={review.id} review={review} />)}
       </ul>
       {children}
     </section>

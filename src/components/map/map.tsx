@@ -2,18 +2,19 @@ import { useEffect, useRef } from 'react';
 import useMap from './use-map.ts';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Location, OfferPreview } from '../../types.ts';
+import { Location, OfferFull, OfferPreview } from '../../types.ts';
+import styles from './map.module.css';
 
 const defaultCustomIcon = new Icon({
   iconUrl: 'img/pin.svg',
   iconSize: [27, 39],
-  iconAnchor: [20, 39]
+  iconAnchor: [13.5, 39]
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: 'img/pin-active.svg',
   iconSize: [27, 39],
-  iconAnchor: [20, 39]
+  iconAnchor: [13.5, 39]
 });
 
 type MapProps = {
@@ -21,6 +22,7 @@ type MapProps = {
   offers: OfferPreview[];
   selectedOfferId?: OfferPreview['id'];
   scrollWheelZoom?: boolean;
+  currentOffer?: OfferFull;
 };
 
 function Map(props: MapProps): JSX.Element {
@@ -28,7 +30,8 @@ function Map(props: MapProps): JSX.Element {
     centerCoordinates,
     offers,
     selectedOfferId,
-    scrollWheelZoom
+    scrollWheelZoom,
+    currentOffer,
   } = props;
 
   const mapRef = useRef(null);
@@ -37,6 +40,20 @@ function Map(props: MapProps): JSX.Element {
   useEffect(() => {
     if (map) {
       const markerLayer = layerGroup().addTo(map);
+
+      if (currentOffer) {
+        const marker = new Marker({
+          lat: currentOffer.location.latitude,
+          lng: currentOffer.location.longitude,
+        });
+
+        marker
+          .setIcon(
+            currentCustomIcon
+          )
+          .addTo(markerLayer);
+      }
+
       offers.forEach((offer) => {
         const marker = new Marker({
           lat: offer.location.latitude,
@@ -56,7 +73,7 @@ function Map(props: MapProps): JSX.Element {
         map.removeLayer(markerLayer);
       };
     }
-  }, [map, offers, selectedOfferId]);
+  }, [currentOffer, map, offers, selectedOfferId]);
 
   useEffect(() => {
     if (map) {
@@ -66,7 +83,7 @@ function Map(props: MapProps): JSX.Element {
 
 
   return (
-    <div ref={mapRef} style={{height: '100%'}}></div>
+    <div className={styles.map} ref={mapRef}></div>
   );
 }
 

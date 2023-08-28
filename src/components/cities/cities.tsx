@@ -23,7 +23,7 @@ function Cities({ offers }: CitiesProps) {
     <div className="cities">
       <div className={cn('cities__places-container container', {'cities__places-container--empty': noPlacesAvailable})}>
         {noPlacesAvailable ? (
-          <NoPlacesAvailable cityName={firstOfferCity?.name} />
+          <NoPlacesAvailable />
         ) : (
           <AvailablePlaces
             cityName={firstOfferCity?.name}

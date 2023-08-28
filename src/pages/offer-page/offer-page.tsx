@@ -2,9 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import Header from '../../components/header/header';
 import LoadingPage from '../loading-page/loading-page';
-import NotFoundPage from '../not-found-page/not-found-page';
 import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
-import { useAppSelector, useAppDispatch } from '../../store/hooks';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
 import OfferDescription from '../../components/offer-description/offer-description';
 import OfferHost from '../../components/offer-host/offer-host';
@@ -12,8 +11,8 @@ import Reviews from '../../components/reviews/reviews';
 import FormComment from '../../components/form-comment/form-comment';
 import OfferMap from '../../components/offer-map/offer-map';
 import NearbyPlaces from '../../components/nearby-places/nearby-places';
-import { OfferPreview } from '../../types';
 import {
+  getHasError,
   getIsNearbyLoading,
   getIsOfferLoading,
   getIsReviewsLoading,
@@ -22,6 +21,9 @@ import {
   getReviews
 } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
+import NotFoundPage from '../not-found-page/not-found-page.tsx';
+import ErrorPage from '../error-page/error-page.tsx';
+import { OfferPreview } from '../../types.ts';
 
 const MAX_OFFERS_PREVIEW = 3;
 
@@ -29,11 +31,7 @@ const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] => (
   [...nearby].sort(() => Math.random() - 0.5)
 );
 
-type OfferProps = {
-  offersPreview: OfferPreview[];
-}
-
-function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
+function OfferPage(): JSX.Element | null {
   const dispatch = useAppDispatch();
   const id = String(useParams().id);
 
@@ -45,6 +43,7 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
   const isReviewsLoading = useAppSelector(getIsReviewsLoading);
   const isNearbyLoading = useAppSelector(getIsNearbyLoading);
   const isAuthorization = useAppSelector(getAuthCheckedStatus);
+  const hasError = useAppSelector(getHasError);
 
   const isAllLoading = isOfferLoading || isNearbyLoading || isReviewsLoading;
 
@@ -65,17 +64,11 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
     return <NotFoundPage />;
   }
 
-  const targetOfferPreview = offersPreview.find(
-    (offerPreview) => offerPreview.id === id
-  );
-
-  const offersMap = targetOfferPreview
-    ? [targetOfferPreview, ...limitedNearby]
-    : limitedNearby;
+  if (hasError) {
+    return <ErrorPage />;
+  }
 
   const mapCenter = offer.city.location;
-  const showNearbyMap = limitedNearby.length !== 0;
-  const showNearbyPlaces = limitedNearby.length !== 0;
 
   const {
     images,
@@ -98,10 +91,10 @@ function OfferPage({ offersPreview }: OfferProps): JSX.Element | null {
               </Reviews>
             </div>
           </div>
-          {showNearbyMap && <OfferMap offers={offersMap} centerCoordinates={mapCenter} selectedOfferId={id} />}
+          <OfferMap offers={limitedNearby} centerCoordinates={mapCenter} selectedOfferId={id} currentOffer={offer}/>
         </section>
         <div className="container">
-          {showNearbyPlaces && <NearbyPlaces nearPlaces={limitedNearby}/>}
+          <NearbyPlaces nearPlaces={limitedNearby} />
         </div>
       </main>
     </div>

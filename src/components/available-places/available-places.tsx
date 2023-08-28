@@ -2,6 +2,7 @@ import PlacesSorting from '../places-sorting/places-sorting.tsx';
 import PlaceList from '../place-list/place-list.tsx';
 import { OfferPreview } from '../../types.ts';
 import { memo } from 'react';
+import { getPluralSuffix } from '../../utils.ts';
 
 type AvailablePlacesProps = {
   cityName: string;
@@ -11,10 +12,12 @@ type AvailablePlacesProps = {
 }
 
 function AvailablePlaces({ cityName, offers, handleCardMouseEnter, handleCardMouseLeave }: AvailablePlacesProps) {
+  const quantityOffers = offers.length;
+
   return (
     <section className="cities__places places">
       <h2 className="visually-hidden">Places</h2>
-      <b className="places__found">{offers.length} places to stay in {cityName}</b>
+      <b className="places__found">{quantityOffers} {`place${getPluralSuffix(quantityOffers)}`} to stay in {cityName}</b>
       <PlacesSorting />
       <div className="cities__places-list places__list tabs__content">
         <PlaceList

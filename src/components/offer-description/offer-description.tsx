@@ -1,5 +1,6 @@
 import { calculateRatingPercentage, convertCapitalizeFirstLetter, getPluralSuffix } from '../../utils';
 import { OfferFull } from '../../types.ts';
+import FavoriteToggleButton from '../favorite-toggle-button/favorite-toggle-button.tsx';
 
 type OfferDescriptionProps = {
   offer: OfferFull;
@@ -16,6 +17,7 @@ function OfferDescription({ offer }: OfferDescriptionProps) {
     type,
     bedrooms,
     maxAdults,
+    id,
   } = offer;
 
   const offerFeatures = [
@@ -25,7 +27,6 @@ function OfferDescription({ offer }: OfferDescriptionProps) {
   ];
 
   const ratingPercentage = calculateRatingPercentage(rating);
-  const bookmarkButtonClass = isFavorite ? 'offer__bookmark-button--active' : '';
 
   return (
     <>
@@ -36,12 +37,16 @@ function OfferDescription({ offer }: OfferDescriptionProps) {
       )}
       <div className="offer__name-wrapper">
         <h1 className="offer__name">{title}</h1>
-        <button className={`offer__bookmark-button button ${bookmarkButtonClass}`} type="button">
-          <svg className="offer__bookmark-icon" width={31} height={33}>
-            <use xlinkHref="#icon-bookmark" />
-          </svg>
-          <span className="visually-hidden">To bookmarks</span>
-        </button>
+        <FavoriteToggleButton
+          id={id}
+          isFavorite={isFavorite}
+          iconWidth={31}
+          iconHeight={33}
+          buttonClass="offer__bookmark-button"
+          activeClass="offer__bookmark-button--active"
+          iconClass="offer__bookmark-icon"
+          buttonText="To bookmarks"
+        />
       </div>
       <div className="offer__rating rating">
         <div className="offer__stars rating__stars">

@@ -1,7 +1,10 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { getPluralSuffix } from '../../utils.ts';
-import { useAppDispatch } from '../../store/hooks.ts';
-import { fetchReviewsAction, postReviewAction } from '../../store/api-actions.ts';
+import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import { postReviewAction } from '../../store/api-actions.ts';
+import { getIsReviewsStatusSubmitting, getReviewsHasError } from '../../store/slices/app-data/selectors.ts';
+import { setReviewsErrorStatus } from '../../store/slices/app-data/app-data.ts';
+import { Status } from '../../const.ts';
 
 const ratingTitlesToValues: Record<string, number> = {
   'terribly': 1,
@@ -13,7 +16,7 @@ const ratingTitlesToValues: Record<string, number> = {
 
 const MIN_LENGTH_COMMENT = 50;
 const MAX_LENGTH_COMMENT = 300;
-const DEFAULT_RATING = 0;
+const DEFAULT_RATING = -1;
 
 type FormCommentProps = {
   offerId: string;
@@ -22,9 +25,14 @@ type FormCommentProps = {
 function FormComment({ offerId }: FormCommentProps): JSX.Element {
   const dispatch = useAppDispatch();
 
+  const isReviewsStatusSubmitting = useAppSelector(getIsReviewsStatusSubmitting);
+  const reviewsStatus = useAppSelector(getReviewsHasError);
+
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(DEFAULT_RATING);
   const [invalid, setInvalid] = useState(true);
+
+  const disabledSubmitButton = invalid || isReviewsStatusSubmitting;
 
   const validateForm = (commentLength: number, newRating: number) => {
     const isInvalid = !(
@@ -35,22 +43,25 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
     setInvalid(isInvalid);
   };
 
-  const resetForm = (evt: React.FormEvent<HTMLFormElement>) => {
+  const resetForm = () => {
     setComment('');
     setRating(DEFAULT_RATING);
     setInvalid(true);
-    evt.currentTarget.reset();
   };
+
+  useEffect(() => {
+    if (reviewsStatus === Status.Success) {
+      resetForm();
+      dispatch(setReviewsErrorStatus(Status.Idle));
+    }
+  }, [reviewsStatus, dispatch]);
 
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
     dispatch(postReviewAction({comment, rating, offerId}));
-    dispatch(fetchReviewsAction(offerId));
-    resetForm(evt);
   };
 
-  const handleClickStar = (evt: React.MouseEvent<HTMLLabelElement, MouseEvent>) => {
-    const newRating = ratingTitlesToValues[evt.currentTarget.title];
+  const handleClickStar = (newRating: number) => {
     setRating(newRating);
     validateForm(comment.length, newRating);
   };
@@ -70,13 +81,14 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
           defaultValue={ratingStar}
           id={`${ratingStar}-stars`}
           type="radio"
-          required
+          checked={ratingStar === rating}
+          disabled={isReviewsStatusSubmitting}
+          onChange={() => handleClickStar(ratingStar)}
         />
         <label
           htmlFor={`${ratingStar}-stars`}
           className="reviews__rating-label form__rating-label"
           title={title}
-          onClick={handleClickStar}
         >
           <svg
             className="form__star-image"
@@ -115,6 +127,7 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
         value={comment}
         required
         onChange={handleChangeComment}
+        disabled={isReviewsStatusSubmitting}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
@@ -126,7 +139,7 @@ function FormComment({ offerId }: FormCommentProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={invalid}
+          disabled={disabledSubmitButton}
         >
           Submit
         </button>

@@ -1,3 +1,5 @@
+import { FavoriteStatus } from './const.ts';
+
 export type Location = {
   latitude: number;
   longitude: number;
@@ -68,6 +70,11 @@ export type ReviewData = {
   comment: string;
   rating: number;
   offerId: string;
+}
+
+export type FavoriteData = {
+  offerId: string;
+  status: FavoriteStatus;
 }
 
 export type FavoriteItem = OfferPreview
