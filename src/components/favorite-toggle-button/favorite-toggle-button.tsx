@@ -40,12 +40,12 @@ function FavoriteToggleButton(props: BookmarkButtonProps) {
       return;
     }
 
-    if (!isFavorite) {
-      dispatch(changeFavoriteStatusAction({ offerId: id, status: FavoriteStatus.Add }));
-      return;
-    }
-
-    dispatch(changeFavoriteStatusAction({ offerId: id, status: FavoriteStatus.Remove }));
+    dispatch(changeFavoriteStatusAction(
+      {
+        offerId: id,
+        status: isFavorite ? FavoriteStatus.Remove : FavoriteStatus.Add
+      }
+    ));
   };
 
   return (

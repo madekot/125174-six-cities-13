@@ -12,7 +12,6 @@ import FormComment from '../../components/form-comment/form-comment';
 import OfferMap from '../../components/offer-map/offer-map';
 import NearbyPlaces from '../../components/nearby-places/nearby-places';
 import {
-  getHasError,
   getIsNearbyLoading,
   getIsOfferLoading,
   getIsReviewsLoading,
@@ -22,7 +21,6 @@ import {
 } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
-import ErrorPage from '../error-page/error-page.tsx';
 import { OfferPreview } from '../../types.ts';
 
 const MAX_OFFERS_PREVIEW = 3;
@@ -43,10 +41,8 @@ function OfferPage(): JSX.Element | null {
   const isReviewsLoading = useAppSelector(getIsReviewsLoading);
   const isNearbyLoading = useAppSelector(getIsNearbyLoading);
   const isAuthorization = useAppSelector(getAuthCheckedStatus);
-  const hasError = useAppSelector(getHasError);
 
   const isAllLoading = isOfferLoading || isNearbyLoading || isReviewsLoading;
-
 
   const limitedNearby = getShuffledNearby(nearbyList).slice(0, MAX_OFFERS_PREVIEW);
 
@@ -62,10 +58,6 @@ function OfferPage(): JSX.Element | null {
 
   if (!offer) {
     return <NotFoundPage />;
-  }
-
-  if (hasError) {
-    return <ErrorPage />;
   }
 
   const mapCenter = offer.city.location;
