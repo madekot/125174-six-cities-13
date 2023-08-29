@@ -19,14 +19,9 @@ type AsyncThunkConfig = { dispatch: AppDispatch; state: State; extra: AxiosInsta
 
 export const fetchOffersAction = createAsyncThunk<OfferPreview[], undefined, AsyncThunkConfig>(
   `${NameSpace.Data}/fetchOffers`,
-  async (_arg, {dispatch, extra: api}) => {
-    try {
-      const {data} = await api.get<OfferPreview[]>(APIRoute.Offers);
-      return data;
-    } catch (e) {
-      dispatch(redirectToRoute(AppRoute.Error));
-      return [];
-    }
+  async (_arg, { extra: api}) => {
+    const {data} = await api.get<OfferPreview[]>(APIRoute.Offers);
+    return data;
   },
 );
 
