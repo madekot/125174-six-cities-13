@@ -72,6 +72,10 @@ function App(): JSX.Element {
           element={<OfferPage />}
         />
         <Route
+          path={AppRoute.Error}
+          element={<ErrorPage />}
+        />
+        <Route
           path={AppRoute.PageNotFound}
           element={<NotFoundPage />}
         />
