@@ -8,7 +8,7 @@ import {
   fetchOfferAction,
   fetchOffersAction,
   fetchReviewsAction,
-  postReviewAction
+  postReviewAction,
 } from '../../api-actions.ts';
 
 const updateOfferList = (offers: OfferPreview[], updatedOffer: OfferPreview) => {
@@ -18,7 +18,11 @@ const updateOfferList = (offers: OfferPreview[], updatedOffer: OfferPreview) => 
   }
 };
 
-const updateFavoritesList = (favorites: OfferPreview[], updatedOffer: OfferPreview, isFavorite: boolean) => {
+const updateFavoritesList = (
+  favorites: OfferPreview[],
+  updatedOffer: OfferPreview,
+  isFavorite: boolean,
+) => {
   const favoriteOfferIndex = favorites.findIndex((el) => el.id === updatedOffer.id);
 
   if (isFavorite && favoriteOfferIndex === -1) {
@@ -56,7 +60,7 @@ type AppData = {
   isFavoriteStatusSubmitting: boolean;
   hasError: boolean;
   reviewsStatus: Status;
-}
+};
 
 const initialState: AppData = {
   offer: null,
@@ -155,7 +159,7 @@ export const appData = createSlice({
       .addCase(changeFavoriteStatusAction.pending, (state) => {
         state.isFavoriteStatusSubmitting = true;
       })
-      .addCase(changeFavoriteStatusAction.fulfilled, (state, {payload: payloadOffer}) => {
+      .addCase(changeFavoriteStatusAction.fulfilled, (state, { payload: payloadOffer }) => {
         state.isFavoriteStatusSubmitting = false;
 
         const { id, isFavorite } = payloadOffer;
@@ -168,7 +172,7 @@ export const appData = createSlice({
       .addCase(changeFavoriteStatusAction.rejected, (state) => {
         state.isFavoriteStatusSubmitting = false;
       });
-  }
+  },
 });
 
 export const { setReviewsErrorStatus } = appData.actions;

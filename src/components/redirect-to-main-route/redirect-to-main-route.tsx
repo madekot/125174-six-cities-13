@@ -4,13 +4,16 @@ import { AppRoute, AuthorizationStatus } from '../../const.ts';
 type RedirectToMainRouteProps = {
   children: JSX.Element;
   authorizationStatus: AuthorizationStatus;
-}
+};
 
-function RedirectToMainRoute({ children, authorizationStatus }: RedirectToMainRouteProps): JSX.Element {
-  return (
-    authorizationStatus === AuthorizationStatus.Auth
-      ? <Navigate to={AppRoute.Main}/>
-      : children
+function RedirectToMainRoute({
+  children,
+  authorizationStatus,
+}: RedirectToMainRouteProps): JSX.Element {
+  return authorizationStatus === AuthorizationStatus.Auth ? (
+    <Navigate to={AppRoute.Main} />
+  ) : (
+    children
   );
 }
 

@@ -46,5 +46,5 @@ export const userProcess = createSlice({
         state.authorizationStatus = AuthorizationStatus.NoAuth;
         state.userInfo = null;
       });
-  }
+  },
 });

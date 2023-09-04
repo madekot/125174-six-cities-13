@@ -7,7 +7,7 @@ import { memo } from 'react';
 type HeaderProps = {
   showUserNavigation?: boolean;
   isMainPage?: boolean;
-}
+};
 
 function Header({ showUserNavigation = true, isMainPage = false }: HeaderProps): JSX.Element {
   return (
@@ -16,7 +16,7 @@ function Header({ showUserNavigation = true, isMainPage = false }: HeaderProps):
         <div className="header__wrapper">
           <div className="header__left">
             <Link
-              className={cn('header__logo-link', {'header__logo-link--active': isMainPage})}
+              className={cn('header__logo-link', { 'header__logo-link--active': isMainPage })}
               to={AppRoute.Main}
             >
               <img

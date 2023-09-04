@@ -4,7 +4,7 @@ export enum CityName {
   Brussels = 'Brussels',
   Amsterdam = 'Amsterdam',
   Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf'
+  Dusseldorf = 'Dusseldorf',
 }
 
 export enum SortingType {
@@ -17,7 +17,7 @@ export enum SortingType {
 export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
-  Unknown = 'UNKNOWN'
+  Unknown = 'UNKNOWN',
 }
 
 export enum AppRoute {
@@ -25,7 +25,7 @@ export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer/:id',
-  PageNotFound = '/*'
+  PageNotFound = '/*',
 }
 
 export enum APIRoute {
@@ -43,7 +43,6 @@ export enum NameSpace {
   User = 'USER',
 }
 
-
 export enum FavoriteStatus {
   Add = 1,
   Remove = 0,
@@ -53,5 +52,5 @@ export enum Status {
   Idle = 'idle',
   Loading = 'loading',
   Success = 'success',
-  Error = 'error'
+  Error = 'error',
 }

@@ -9,16 +9,23 @@ import { getSelectedCity } from '../../store/slices/app-process/selectors.ts';
 
 type MainPageProps = {
   offers: OfferPreview[];
-}
+};
 
 function MainPage({ offers }: MainPageProps): JSX.Element {
   const selectedCity = useAppSelector(getSelectedCity);
-  const offersByCity = useMemo(() => offers.filter((offer) => offer.city.name === selectedCity), [offers, selectedCity]);
+  const offersByCity = useMemo(
+    () => offers.filter((offer) => offer.city.name === selectedCity),
+    [offers, selectedCity],
+  );
 
   return (
     <div className="page page--gray page--main">
-      <Header isMainPage/>
-      <main className={cn('page__main page__main--index', {'page__main--index-empty': offersByCity.length === 0})}>
+      <Header isMainPage />
+      <main
+        className={cn('page__main page__main--index', {
+          'page__main--index-empty': offersByCity.length === 0,
+        })}
+      >
         <h1 className="visually-hidden">Cities</h1>
         <LocationsTabs selectedCity={selectedCity} />
         <Cities offers={offersByCity} />

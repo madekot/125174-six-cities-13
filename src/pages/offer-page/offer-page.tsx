@@ -17,7 +17,7 @@ import {
   getIsReviewsLoading,
   getNearby,
   getOffer,
-  getReviews
+  getReviews,
 } from '../../store/slices/app-data/selectors.ts';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
@@ -25,9 +25,8 @@ import { OfferPreview } from '../../types.ts';
 
 const MAX_OFFERS_PREVIEW = 3;
 
-const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] => (
-  [...nearby].sort(() => Math.random() - 0.5)
-);
+const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] =>
+  [...nearby].sort(() => Math.random() - 0.5);
 
 function OfferPage(): JSX.Element | null {
   const dispatch = useAppDispatch();
@@ -62,28 +61,27 @@ function OfferPage(): JSX.Element | null {
 
   const mapCenter = offer.city.location;
 
-  const {
-    images,
-    description,
-    host,
-  } = offer;
+  const { images, description, host } = offer;
 
   return (
     <div className="page">
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
-          <OfferGallery images={images}/>
+          <OfferGallery images={images} />
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <OfferDescription offer={offer}/>
+              <OfferDescription offer={offer} />
               <OfferHost host={host} description={description} />
-              <Reviews reviews={reviews}>
-                {isAuthorization && <FormComment offerId={id} />}
-              </Reviews>
+              <Reviews reviews={reviews}>{isAuthorization && <FormComment offerId={id} />}</Reviews>
             </div>
           </div>
-          <OfferMap offers={limitedNearby} centerCoordinates={mapCenter} selectedOfferId={id} currentOffer={offer}/>
+          <OfferMap
+            offers={limitedNearby}
+            centerCoordinates={mapCenter}
+            selectedOfferId={id}
+            currentOffer={offer}
+          />
         </section>
         <div className="container">
           <NearbyPlaces nearPlaces={limitedNearby} />

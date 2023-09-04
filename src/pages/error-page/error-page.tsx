@@ -8,14 +8,12 @@ function ErrorPage(): JSX.Element {
   return (
     <div className={styles.container}>
       <h1 className={styles.heading}>Oops, something went wrong</h1>
-      <button
-        onClick={() => void dispatch(fetchOffersAction())}
-      >
-        Try uploading again
-      </button>
+      <button onClick={() => void dispatch(fetchOffersAction())}>Try uploading again</button>
       <div className={styles.mail}>
         <p>If the error occurs again, write to our support team</p>
-        <a className={styles.link} href="mailto:supportFake@mail.ru">Email Support team: support@mail.ru</a>
+        <a className={styles.link} href="mailto:supportFake@mail.ru">
+          Email Support team: support@mail.ru
+        </a>
       </div>
     </div>
   );

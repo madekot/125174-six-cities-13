@@ -5,13 +5,13 @@ import { AppRoute, AuthorizationStatus } from '../../const.ts';
 type PrivateRouteProps = {
   children: JSX.Element;
   authorizationStatus: AuthorizationStatus;
-}
+};
 
 function PrivateRoute({ children, authorizationStatus }: PrivateRouteProps): JSX.Element {
-  return (
-    authorizationStatus === AuthorizationStatus.Auth
-      ? children
-      : <Navigate to={AppRoute.Login}/>
+  return authorizationStatus === AuthorizationStatus.Auth ? (
+    children
+  ) : (
+    <Navigate to={AppRoute.Login} />
   );
 }
 
