@@ -8,7 +8,7 @@ import { changeCity } from '../../store/slices/app-process/app-process.ts';
 type FavoriteCitySectionProps = {
   cityName: CityName;
   cards: OfferPreview[];
-}
+};
 
 function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX.Element {
   const dispatch = useAppDispatch();
@@ -21,17 +21,13 @@ function FavoriteCitySection({ cityName, cards }: FavoriteCitySectionProps): JSX
     <li key={cityName} className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
         <div className="locations__item">
-          <Link
-            className="locations__item-link"
-            to={AppRoute.Main}
-            onClick={handleCityClick}
-          >
+          <Link className="locations__item-link" to={AppRoute.Main} onClick={handleCityClick}>
             <span>{cityName}</span>
           </Link>
         </div>
       </div>
       <div className="favorites__places">
-        <PlaceList offers={cards} cardType={'favorites'}/>
+        <PlaceList offers={cards} cardType={'favorites'} />
       </div>
     </li>
   );

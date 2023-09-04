@@ -3,7 +3,7 @@ import { OfferFull } from '../../types.ts';
 type OfferHostProps = {
   host: OfferFull['host'];
   description: OfferFull['description'];
-}
+};
 
 function OfferHost({ host, description }: OfferHostProps) {
   return (

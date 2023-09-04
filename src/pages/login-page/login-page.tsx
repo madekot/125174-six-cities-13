@@ -9,11 +9,19 @@ import { getIsSubmittingLogin } from '../../store/slices/user-process/selectors.
 import { changeCity } from '../../store/slices/app-process/app-process.ts';
 
 const REGEX_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)[^\s]+$/;
-const ERROR_MESSAGE = 'The password must consist of at least one English letter and one symbol without spaces.';
+const ERROR_MESSAGE =
+  'The password must consist of at least one English letter and one symbol without spaces.';
 
 const isPasswordValid = (password: string) => REGEX_PASSWORD.test(password);
 
-const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
+const cities: CityName[] = [
+  CityName.Paris,
+  CityName.Cologne,
+  CityName.Brussels,
+  CityName.Amsterdam,
+  CityName.Hamburg,
+  CityName.Dusseldorf,
+];
 
 function getRandomElementArray<T>(arr: T[]) {
   const randomIndex = Math.floor(Math.random() * arr.length);
@@ -21,7 +29,6 @@ function getRandomElementArray<T>(arr: T[]) {
 }
 
 function LoginPage(): JSX.Element {
-
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isSubmittingLogin = useAppSelector(getIsSubmittingLogin);
@@ -46,10 +53,12 @@ function LoginPage(): JSX.Element {
       return;
     }
 
-    dispatch(loginAction({
-      login: login.trim(),
-      password: password.trim()
-    }));
+    dispatch(
+      loginAction({
+        login: login.trim(),
+        password: password.trim(),
+      }),
+    );
   };
 
   return (
@@ -59,12 +68,7 @@ function LoginPage(): JSX.Element {
         <div className="page__login-container container">
           <section className="login">
             <h1 className="login__title">Sign in</h1>
-            <form
-              className="login__form form"
-              action="#"
-              method="post"
-              onSubmit={handleSubmit}
-            >
+            <form className="login__form form" action="#" method="post" onSubmit={handleSubmit}>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
@@ -75,7 +79,7 @@ function LoginPage(): JSX.Element {
                   required
                   ref={loginRef}
                   disabled={isSubmittingLogin}
-                  defaultValue='test@mail.com'
+                  defaultValue="test@mail.com"
                 />
               </div>
               <div className="login__input-wrapper form__input-wrapper">
@@ -88,7 +92,7 @@ function LoginPage(): JSX.Element {
                   required
                   ref={passwordRef}
                   disabled={isSubmittingLogin}
-                  defaultValue='1a'
+                  defaultValue="1a"
                 />
               </div>
               <button

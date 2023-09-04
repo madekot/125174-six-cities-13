@@ -19,7 +19,11 @@ function Cities({ offers }: CitiesProps) {
 
   return (
     <div className="cities">
-      <div className={cn('cities__places-container container', {'cities__places-container--empty': noPlacesAvailable})}>
+      <div
+        className={cn('cities__places-container container', {
+          'cities__places-container--empty': noPlacesAvailable,
+        })}
+      >
         {noPlacesAvailable ? (
           <NoPlacesAvailable />
         ) : (

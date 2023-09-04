@@ -11,7 +11,7 @@ type PlaceCardProps = OfferPreview & {
 };
 
 function CommonPlaceCard(props: PlaceCardProps): JSX.Element {
-  const { id, cardType, handleCardMouseEnter, handleCardMouseLeave , isFavorite, ...rest } = props;
+  const { id, cardType, handleCardMouseEnter, handleCardMouseLeave, isFavorite, ...rest } = props;
   const pathCard = `/offer/${id}`;
   const ratingPercentage = calculateRatingPercentage(rest.rating);
   const capitalizedType = convertCapitalizeFirstLetter(rest.type);

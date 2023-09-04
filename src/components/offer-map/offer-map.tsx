@@ -6,7 +6,7 @@ type OfferMapProps = {
   centerCoordinates: Location;
   selectedOfferId: string;
   currentOffer: OfferFull;
-}
+};
 
 function OfferMap({ offers, centerCoordinates, selectedOfferId, currentOffer }: OfferMapProps) {
   return (

@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
 import { getFavorites, getIsFavoritesLoading } from '../../store/slices/app-data/selectors.ts';
 
 function FavoritesPage(): JSX.Element {
-
   const isFavoritesLoading = useAppSelector(getIsFavoritesLoading);
   const favorites = useAppSelector(getFavorites);
   const isEmptyFavorites = favorites.length === 0;
@@ -21,14 +20,24 @@ function FavoritesPage(): JSX.Element {
   return (
     <div className={cn('page', { 'page--favorites-empty': isEmptyFavorites })}>
       <Header />
-      <main className={cn('page__main page__main--favorites', { 'page__main--favorites-empty': isEmptyFavorites })}>
+      <main
+        className={cn('page__main page__main--favorites', {
+          'page__main--favorites-empty': isEmptyFavorites,
+        })}
+      >
         <div className="page__favorites-container container">
           {isEmptyFavorites ? <EmptyFavorites /> : <NonEmptyFavorites favorites={favorites} />}
         </div>
       </main>
       <footer className="footer container">
         <Link className="footer__logo-link" to={AppRoute.Main}>
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33"/>
+          <img
+            className="footer__logo"
+            src="img/logo.svg"
+            alt="6 cities logo"
+            width="64"
+            height="33"
+          />
         </Link>
       </footer>
     </div>

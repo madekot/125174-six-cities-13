@@ -6,14 +6,21 @@ import { changeCity } from '../../store/slices/app-process/app-process.ts';
 
 type LocationsTabsProps = {
   selectedCity: CityName;
-}
+};
 
 function LocationsTabs({ selectedCity }: LocationsTabsProps) {
   const dispatch = useDispatch();
 
-  const cities: CityName[] = [CityName.Paris, CityName.Cologne, CityName.Brussels, CityName.Amsterdam, CityName.Hamburg, CityName.Dusseldorf];
+  const cities: CityName[] = [
+    CityName.Paris,
+    CityName.Cologne,
+    CityName.Brussels,
+    CityName.Amsterdam,
+    CityName.Hamburg,
+    CityName.Dusseldorf,
+  ];
 
-  const handleTabClick = (evt: React.MouseEvent<HTMLAnchorElement> ,city: CityName) => {
+  const handleTabClick = (evt: React.MouseEvent<HTMLAnchorElement>, city: CityName) => {
     evt.preventDefault();
     dispatch(changeCity(city));
   };
