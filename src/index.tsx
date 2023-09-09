@@ -6,6 +6,7 @@ import { store } from './store';
 import { checkAuthAction, fetchOffersAction } from './store/api-actions.ts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { HelmetProvider } from 'react-helmet-async';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
@@ -14,9 +15,11 @@ const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <ToastContainer />
-      <App />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <ToastContainer />
+        <App />
+      </Provider>
+    </HelmetProvider>
   </React.StrictMode>,
 );
