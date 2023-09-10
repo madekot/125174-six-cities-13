@@ -81,7 +81,7 @@ function LoginPage(): JSX.Element {
                     required
                     ref={loginRef}
                     disabled={isSubmittingLogin}
-                    defaultValue="test@mail.com"
+                    // defaultValue="test@mail.com"
                   />
                 </div>
                 <div className="login__input-wrapper form__input-wrapper">
@@ -94,7 +94,7 @@ function LoginPage(): JSX.Element {
                     required
                     ref={passwordRef}
                     disabled={isSubmittingLogin}
-                    defaultValue="1a"
+                    // defaultValue="1a"
                   />
                 </div>
                 <button
