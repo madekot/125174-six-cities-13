@@ -1,4 +1,27 @@
-# Проект «Шесть городов»
+# Личный проект «Шесть городов»
+В приложении можно получить актуальный список предложений по аренде в одном из шести 
+популярных городов. Сортировка объектов и подробное описание каждого из них помогут 
+быстро выбрать оптимальный вариант жилья. Авторизованные пользователи могут оставлять 
+отзыв под каждым предложением.
+
+> Этот проект создовался во время обучения по React.
+
+**За время прохождения обучения я получил опыт работы со следующими инструментами:**
+
+- TypeScript;
+- React Router;
+- Redux;
+- React Hooks;
+- Axios;
+- Redux-thunk;
+- Redux Toolkit;
+- Jest;
+- React Testing Library.
+
+К завершению периода обучения была проведена подготовка проекта к итоговой 
+защите и его оценка проверяющим составом по критериям качества.
+
+По окончанию обучения успешно защитил проект и получил сертификат.
 
 ---
 
@@ -32,16 +55,20 @@
 ---
 
 #### Переход на страницу карточки предложения, разлогиневание, удаление из избранного
-<img width="769" alt="Переход на страницу карточки предложения, разлогиневание, удаление из избранного" src="./readme/go-to-offer-card.gif">
+<img width="769" alt="Переход на страницу карточки предложения, разлогиневание, удаление из избранного" src="https://psv4.userapi.com/c909228/u1083486/docs/d35/1a8bd4c6c328/six-cities_go-to-offer-card.gif?extra=aDqWzRB44OZoiZjky2Rplp-ezAuXrzdP78cZq6QwByDKnXu79L1KcgT9-_AVCuVj5hsIIL4GHD6FdnM-YVnLryDBm4vlzl-V5LclXvN6UODazkL3VMRfoZmIsPWEMwDMF220xa-kpnVoD8O5gIs">
 
 ---
 
 #### Сортировка карточек
-<img width="769" alt="Сортировка карточек" src="./readme/card-sorting.gif">
+<img width="769" alt="Сортировка карточек" src="https://psv4.userapi.com/c909518/u1083486/docs/d10/0c92035fa2f6/six-cities_card-sorting.gif?extra=hKRUw9C8KAp6iE131Q9hO4KDoXlTllMI9-Rajbws01g6guKCMk6vXgjnTd1OleBuhQXoE5gPZYxu8iRV3NA6Q3UJ_0L91LEK5joa7pkeObZIhsnPwg_jAHr1fmRd3HJgk9mLBEVeydNhFK3moWE">
 
 ---
 
 #### Переключение предложений по городам
-<img width="769" alt="Переключение предложений по городам" src="./readme/switch-offers-by-city.gif">
+![screencast](./readme/switch-offers-by-city.gif)
 
 ---
+
+> В директории `public` лежат статичные ресурсы приложения (шрифты, стили, изображения и так далее).
+
+> В директории `src` располагаются все ресурсы связанные с непосредственной разработкой, а именно: React компоненты, хуки, stor и так далее.
