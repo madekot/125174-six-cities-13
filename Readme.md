@@ -7,7 +7,7 @@
 ---
 
 #### Вход по логину
-<img width="769" alt="Вход по логину" src="./readme/login-by-login.gif">
+<img width="769" alt="Вход по логину" src="./gif/login-by-login.gif">
 
 ---
 
