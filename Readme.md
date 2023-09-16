@@ -25,6 +25,11 @@
 
 ---
 
+> В директории `public` лежат статичные ресурсы приложения (шрифты, стили, изображения и так далее).
+
+> В директории `src` располагаются все ресурсы связанные с непосредственной разработкой, а именно: React компоненты, хуки, stor и так далее.
+
+
 ### Основная функциональность
 
 ---
@@ -65,10 +70,6 @@
 ---
 
 #### Переключение предложений по городам
-![screencast](./readme/switch-offers-by-city.gif)
+<img width="769" alt="Переключение предложений по городам" src="https://psv4.userapi.com/c237231/u1083486/docs/d42/c9680179cac9/six-cities_switch-offers-by-city.gif?extra=4MVZenH8yzwj1HwHbowrAHBBZIkAIioxe0YaUbvi9b3FDYpwoCk35nOuDRavJxQcjMmaza7eCCERrVuJE-YHYhG2sAH5xp_wY-pFNk2k11JOgG9usC-wT5KXZCEfv1TSmFqt8ZQuE3FvajAZ4QY">
 
 ---
-
-> В директории `public` лежат статичные ресурсы приложения (шрифты, стили, изображения и так далее).
-
-> В директории `src` располагаются все ресурсы связанные с непосредственной разработкой, а именно: React компоненты, хуки, stor и так далее.
