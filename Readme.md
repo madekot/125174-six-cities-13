@@ -7,12 +7,12 @@
 ---
 
 #### Вход по логину
-<img width="769" alt="Вход по логину" src="./gif/login-by-login.gif">
+![](./readme/login-by-login.gif)
 
 ---
 
 #### Добавление коментация на странице карточки предложения
-<img width="769" alt="Добавление коментация на странице карточки предложения" src="./readme/adding-comment.gif">
+<img width="769" alt="Добавление коментация на странице карточки предложения" src="https://psv4.userapi.com/c856416/u1083486/docs/d10/140b29353014/1579959255847.gif?extra=l63E0DzvTPKCFCYrbvZ1Kqgs_goFcPoI25cv1dX2FT3TfY4Z8E8LzqC3YDJaBg81xGt7jrz9vMScw8iNRsj1ZvaLoqxIyVeR5PBX0XVjsUpZ4RI-TE7JmU5tyrfWzpReXkTVhU5w-TbfadAb1q4">
 
 ---
 
