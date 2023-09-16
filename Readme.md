@@ -7,7 +7,7 @@
 ---
 
 #### Вход по логину
-![](./readme/login-by-login.gif)
+<img width="769" alt="Вход по логину" src="https://psv4.userapi.com/c237331/u1083486/docs/d2/2262ba9a07f2/six-cities_login-by-login.gif?extra=lZRgW2pPZ33CEJUWv_WilWqcl0HbEesFVNLSb7rEFg-U4E-OS1mw9CWwQjrKq_xkVhgxw28KzYLtfk7AOIm8HmneAlp_C6mBurbp5_xxYKpZscFSZzhR-d3d56YV20u-uMImlC_Fzfi2NlL06gM">
 
 ---
 
