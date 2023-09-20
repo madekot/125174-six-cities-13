@@ -1,22 +1,29 @@
 import { Helmet } from 'react-helmet-async';
-import { DescriptionPage, TitlePage } from '../../const.ts';
-import { ReactElement, ReactNode } from 'react';
+import { Outlet, useLocation } from 'react-router-dom';
+import { getPageInfo } from './utils.ts';
+import Page from '../page/page.tsx';
+import Header from '../header/header.tsx';
+import Footer from '../footer/footes.tsx';
 
-type LayoutProps = {
-  title: TitlePage;
-  description: DescriptionPage;
-  children: ReactElement | ReactNode;
-};
+function Layout(): JSX.Element {
+  const { pathname } = useLocation();
+  const pageInfo = getPageInfo(pathname);
 
-function Layout({ title, description, children }: LayoutProps): JSX.Element {
+  let title = `Six Cities`;
+  if (pageInfo.title) {
+    title += ` | ${pageInfo.title}`;
+  }
+
   return (
-    <>
+    <Page>
       <Helmet>
-        <title>{`Six Cities | ${title}`}</title>
-        <meta name="description" content={description} />
+        <title>{title}</title>
+        <meta name="description" content={pageInfo.description} />
       </Helmet>
-      {children}
-    </>
+      <Header />
+      <Outlet />
+      <Footer />
+    </Page>
   );
 }
 

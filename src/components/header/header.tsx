@@ -1,15 +1,15 @@
 import cn from 'classnames';
 import UserNavigation from '../user-navigation/user-navigation.tsx';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
 import { memo } from 'react';
 
-type HeaderProps = {
-  showUserNavigation?: boolean;
-  isMainPage?: boolean;
-};
+function Header(): JSX.Element | null {
+  const { pathname } = useLocation();
 
-function Header({ showUserNavigation = true, isMainPage = false }: HeaderProps): JSX.Element {
+  const isMainPage = pathname === AppRoute.Main;
+  const isLoginPage = pathname !== AppRoute.Login;
+
   return (
     <header className="header">
       <div className="container">
@@ -28,7 +28,7 @@ function Header({ showUserNavigation = true, isMainPage = false }: HeaderProps):
               />
             </Link>
           </div>
-          {showUserNavigation && <UserNavigation />}
+          {isLoginPage && <UserNavigation />}
         </div>
       </div>
     </header>
