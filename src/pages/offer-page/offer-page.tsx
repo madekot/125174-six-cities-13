@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import Header from '../../components/header/header';
 import LoadingPage from '../loading-page/loading-page';
 import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
@@ -22,8 +21,6 @@ import {
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { OfferPreview } from '../../types.ts';
-import Layout from '../../components/layout/layout.tsx';
-import { DescriptionPage, TitlePage } from '../../const.ts';
 
 const MAX_OFFERS_PREVIEW = 3;
 
@@ -66,34 +63,27 @@ function OfferPage(): JSX.Element | null {
   const { images, description, host } = offer;
 
   return (
-    <Layout title={TitlePage.Offer} description={DescriptionPage.Offer}>
-      <div className="page">
-        <Header />
-        <main className="page__main page__main--offer">
-          <section className="offer">
-            <OfferGallery images={images} />
-            <div className="offer__container container">
-              <div className="offer__wrapper">
-                <OfferDescription offer={offer} />
-                <OfferHost host={host} description={description} />
-                <Reviews reviews={reviews}>
-                  {isAuthorization && <FormComment offerId={id} />}
-                </Reviews>
-              </div>
-            </div>
-            <OfferMap
-              offers={limitedNearby}
-              centerCoordinates={mapCenter}
-              selectedOfferId={id}
-              currentOffer={offer}
-            />
-          </section>
-          <div className="container">
-            <NearbyPlaces nearPlaces={limitedNearby} />
+    <main className="page__main page__main--offer">
+      <section className="offer">
+        <OfferGallery images={images} />
+        <div className="offer__container container">
+          <div className="offer__wrapper">
+            <OfferDescription offer={offer} />
+            <OfferHost host={host} description={description} />
+            <Reviews reviews={reviews}>{isAuthorization && <FormComment offerId={id} />}</Reviews>
           </div>
-        </main>
+        </div>
+        <OfferMap
+          offers={limitedNearby}
+          centerCoordinates={mapCenter}
+          selectedOfferId={id}
+          currentOffer={offer}
+        />
+      </section>
+      <div className="container">
+        <NearbyPlaces nearPlaces={limitedNearby} />
       </div>
-    </Layout>
+    </main>
   );
 }
 

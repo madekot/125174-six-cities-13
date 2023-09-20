@@ -8,8 +8,6 @@ import PrivateRoute from '../private-route/private-route.tsx';
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import LoadingPage from '../../pages/loading-page/loading-page.tsx';
 import { AppRoute } from '../../const.ts';
-import HistoryRouter from '../history-route/history-route.tsx';
-import browserHistory from '../../browser-history.ts';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import {
   getHasError,
@@ -23,6 +21,7 @@ import {
 import { fetchFavoritesAction } from '../../store/api-actions.ts';
 import { useEffect } from 'react';
 import ErrorPage from '../../pages/error-page/error-page.tsx';
+import Layout from '../layout/layout.tsx';
 
 function App(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -48,9 +47,9 @@ function App(): JSX.Element {
   }
 
   return (
-    <HistoryRouter history={browserHistory}>
-      <Routes>
-        <Route index path={AppRoute.Main} element={<MainPage offers={offers} />} />
+    <Routes>
+      <Route path={AppRoute.Main} element={<Layout />}>
+        <Route index element={<MainPage offers={offers} />} />
         <Route
           path={AppRoute.Login}
           element={
@@ -69,8 +68,8 @@ function App(): JSX.Element {
         />
         <Route path={AppRoute.Offer} element={<OfferPage />} />
         <Route path={AppRoute.PageNotFound} element={<NotFoundPage />} />
-      </Routes>
-    </HistoryRouter>
+      </Route>
+    </Routes>
   );
 }
 

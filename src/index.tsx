@@ -7,6 +7,8 @@ import { checkAuthAction, fetchOffersAction } from './store/api-actions.ts';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { HelmetProvider } from 'react-helmet-async';
+import HistoryRouter from './components/history-route/history-route.tsx';
+import browserHistory from './browser-history.ts';
 
 store.dispatch(checkAuthAction());
 store.dispatch(fetchOffersAction());
@@ -17,8 +19,10 @@ root.render(
   <React.StrictMode>
     <HelmetProvider>
       <Provider store={store}>
-        <ToastContainer />
-        <App />
+        <HistoryRouter history={browserHistory}>
+          <ToastContainer />
+          <App />
+        </HistoryRouter>
       </Provider>
     </HelmetProvider>
   </React.StrictMode>,

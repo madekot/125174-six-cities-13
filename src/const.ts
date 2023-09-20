@@ -57,20 +57,14 @@ export enum Status {
 
 export enum TitlePage {
   Main = 'Home',
-  Error = 'Error',
   Favorites = 'Favorites',
   Loading = 'Loading',
   Login = 'Login',
-  NotFound = 'Not found',
-  Offer = 'Offer',
 }
 
 export enum DescriptionPage {
   Main = 'Description main',
-  Error = 'Description error',
   Favorites = 'Description favorites',
   Loading = 'Description loading',
   Login = 'Description login',
-  NotFound = 'Description not found',
-  Offer = 'Description offer',
 }
