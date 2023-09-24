@@ -1,8 +1,8 @@
-import styles from './error-page.module.css';
+import styles from './error-screen.module.css';
 import { useAppDispatch } from '../../store/hooks.ts';
 import { fetchOffersAction } from '../../store/api-actions.ts';
 
-function ErrorPage(): JSX.Element {
+function ErrorScreen(): JSX.Element {
   const dispatch = useAppDispatch();
 
   return (
@@ -19,4 +19,4 @@ function ErrorPage(): JSX.Element {
   );
 }
 
-export default ErrorPage;
+export default ErrorScreen;

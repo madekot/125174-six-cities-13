@@ -4,7 +4,7 @@ export function getPageInfo(pathname: string) {
   return (
     routeNameToPageInfoMap[pathname] || {
       title: '',
-      description: 'no description',
+      description: '',
     }
   );
 }

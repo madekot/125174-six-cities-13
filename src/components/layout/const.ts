@@ -1,9 +1,6 @@
 import { AppRoute, DescriptionPage, TitlePage } from '../../const.ts';
 
-export const routeNameToPageInfoMap: Record<
-  string,
-  { title: TitlePage; description: DescriptionPage }
-> = {
+export const routeNameToPageInfoMap: Record<string, { title: string; description: string }> = {
   [AppRoute.Main]: {
     title: TitlePage.Main,
     description: DescriptionPage.Main,

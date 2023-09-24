@@ -1,6 +1,6 @@
 import cn from 'classnames';
 import { useAppSelector } from '../../store/hooks.ts';
-import LoadingPage from '../loading-page/loading-page.tsx';
+import LoadingScreen from '../../components/loading-screen/loading-screen.tsx';
 import EmptyFavorites from '../../components/empty-favorites/empty-favorites.tsx';
 import NonEmptyFavorites from '../../components/non-empty-favorites/non-empty-favorites.tsx';
 import { getFavorites, getIsFavoritesLoading } from '../../store/slices/app-data/selectors.ts';
@@ -11,7 +11,7 @@ function FavoritesPage(): JSX.Element {
   const isEmptyFavorites = favorites.length === 0;
 
   if (isFavoritesLoading) {
-    return <LoadingPage />;
+    return <LoadingScreen />;
   }
 
   return (

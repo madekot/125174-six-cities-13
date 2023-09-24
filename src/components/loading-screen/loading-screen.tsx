@@ -1,6 +1,6 @@
-import styles from './loading-page.module.css';
+import styles from './loading-screen.module.css';
 
-function LoadingPage(): JSX.Element {
+function LoadingScreen(): JSX.Element {
   return (
     <div className={styles.page}>
       <p className={styles.loadingPageText}>Loading ...</p>
@@ -8,4 +8,4 @@ function LoadingPage(): JSX.Element {
   );
 }
 
-export default LoadingPage;
+export default LoadingScreen;

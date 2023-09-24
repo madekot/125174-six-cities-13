@@ -6,7 +6,7 @@ import OfferPage from '../../pages/offer-page/offer-page.tsx';
 import NotFoundPage from '../../pages/not-found-page/not-found-page.tsx';
 import PrivateRoute from '../private-route/private-route.tsx';
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import LoadingPage from '../../pages/loading-page/loading-page.tsx';
+import LoadingScreen from '../loading-screen/loading-screen.tsx';
 import { AppRoute } from '../../const.ts';
 import RedirectToMainRoute from '../redirect-to-main-route/redirect-to-main-route.tsx';
 import {
@@ -20,7 +20,7 @@ import {
 } from '../../store/slices/user-process/selectors.ts';
 import { fetchFavoritesAction } from '../../store/api-actions.ts';
 import { useEffect } from 'react';
-import ErrorPage from '../../pages/error-page/error-page.tsx';
+import ErrorScreen from '../error-screen/error-screen.tsx';
 import Layout from '../layout/layout.tsx';
 
 function App(): JSX.Element {
@@ -39,11 +39,11 @@ function App(): JSX.Element {
   }, [dispatch, authCheckedStatus]);
 
   if (isOffersDataLoading) {
-    return <LoadingPage />;
+    return <LoadingScreen />;
   }
 
   if (hasError) {
-    return <ErrorPage />;
+    return <ErrorScreen />;
   }
 
   return (

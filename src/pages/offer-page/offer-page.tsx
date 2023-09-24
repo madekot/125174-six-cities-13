@@ -1,6 +1,6 @@
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import LoadingPage from '../loading-page/loading-page';
+import LoadingScreen from '../../components/loading-screen/loading-screen.tsx';
 import { fetchNearbyAction, fetchOfferAction, fetchReviewsAction } from '../../store/api-actions';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import OfferGallery from '../../components/offer-gallery/offer-gallery';
@@ -22,6 +22,8 @@ import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.
 import NotFoundPage from '../not-found-page/not-found-page.tsx';
 import { OfferPreview } from '../../types.ts';
 
+import { useAppOutletContext } from '../../components/layout/hooks.ts';
+
 const MAX_OFFERS_PREVIEW = 3;
 
 const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] =>
@@ -29,6 +31,8 @@ const getShuffledNearby = (nearby: readonly OfferPreview[]): OfferPreview[] =>
 
 function OfferPage(): JSX.Element | null {
   const dispatch = useAppDispatch();
+  const { setPageInfo } = useAppOutletContext();
+
   const id = String(useParams().id);
 
   const offer = useAppSelector(getOffer);
@@ -50,8 +54,12 @@ function OfferPage(): JSX.Element | null {
     dispatch(fetchNearbyAction(id));
   }, [dispatch, id]);
 
+  useEffect(() => {
+    setPageInfo({ title: offer?.title || '', description: offer?.description || '' });
+  }, [offer?.description, offer?.title, setPageInfo]);
+
   if (isAllLoading) {
-    return <LoadingPage />;
+    return <LoadingScreen />;
   }
 
   if (!offer) {
