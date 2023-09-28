@@ -1,15 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
 
-function Footer(): JSX.Element | null {
-  const { pathname } = useLocation();
-
-  const isFavoritePage = pathname === AppRoute.Favorites;
-
-  if (!isFavoritePage) {
-    return null;
-  }
-
+function Footer(): JSX.Element {
   return (
     <footer className="footer container">
       <Link className="footer__logo-link" to={AppRoute.Main}>

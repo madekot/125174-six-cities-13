@@ -48,8 +48,10 @@ function App(): JSX.Element {
 
   return (
     <Routes>
-      <Route path={AppRoute.Main} element={<Layout />}>
-        <Route index element={<MainPage offers={offers} />} />
+      <Route element={<Layout isHeaderActiveLogo={false} />}>
+        <Route path={AppRoute.Main} element={<MainPage offers={offers} />} />
+      </Route>
+      <Route element={<Layout isHeaderUserNavigation={false} />}>
         <Route
           path={AppRoute.Login}
           element={
@@ -58,6 +60,8 @@ function App(): JSX.Element {
             </RedirectToMainRoute>
           }
         />
+      </Route>
+      <Route element={<Layout isFooterShow />}>
         <Route
           path={AppRoute.Favorites}
           element={
@@ -66,9 +70,11 @@ function App(): JSX.Element {
             </PrivateRoute>
           }
         />
-        <Route path={AppRoute.Offer} element={<OfferPage />} />
-        <Route path={AppRoute.PageNotFound} element={<NotFoundPage />} />
       </Route>
+      <Route element={<Layout />}>
+        <Route path={AppRoute.Offer} element={<OfferPage />} />
+      </Route>
+      <Route path={AppRoute.PageNotFound} element={<NotFoundPage />} />
     </Routes>
   );
 }

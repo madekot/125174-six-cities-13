@@ -1,14 +1,16 @@
 import cn from 'classnames';
 import UserNavigation from '../user-navigation/user-navigation.tsx';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const.ts';
 import { memo } from 'react';
 
-function Header(): JSX.Element | null {
-  const { pathname } = useLocation();
+type HeaderProps = {
+  isUserNavigation: boolean;
+  isActiveLogo: boolean;
+};
 
-  const isMainPage = pathname === AppRoute.Main;
-  const isLoginPage = pathname !== AppRoute.Login;
+function Header(props: HeaderProps): JSX.Element | null {
+  const { isUserNavigation, isActiveLogo } = props;
 
   return (
     <header className="header">
@@ -16,7 +18,7 @@ function Header(): JSX.Element | null {
         <div className="header__wrapper">
           <div className="header__left">
             <Link
-              className={cn('header__logo-link', { 'header__logo-link--active': isMainPage })}
+              className={cn('header__logo-link', { 'header__logo-link--active': !isActiveLogo })}
               to={AppRoute.Main}
             >
               <img
@@ -28,7 +30,7 @@ function Header(): JSX.Element | null {
               />
             </Link>
           </div>
-          {isLoginPage && <UserNavigation />}
+          {isUserNavigation && <UserNavigation />}
         </div>
       </div>
     </header>
