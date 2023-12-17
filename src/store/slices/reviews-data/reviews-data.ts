@@ -1,24 +1,11 @@
-import { Review } from '@/types';
-import { Status } from '@/const';
+import { NameSpace, Status } from '@/const';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { fetchReviewsAction } from './api-actions';
 
-export type ReviewsData = {
-  reviews: Review[];
-  isReviewsLoading: boolean;
-  isReviewsStatusSubmitting: boolean;
-  reviewsStatus: Status;
-};
+import { fetchReviewsAction, postReviewAction } from './api-actions';
+import { initialReviewsData } from './const';
 
-export const initialReviewsData: ReviewsData = {
-  reviews: [],
-  isReviewsLoading: false,
-  isReviewsStatusSubmitting: false,
-  reviewsStatus: Status.Idle,
-};
-
-export const reviewsSlice = createSlice({
-  name: 'reviews',
+export const reviewsData = createSlice({
+  name: NameSpace.ReviewsData,
   initialState: initialReviewsData,
   reducers: {
     setReviewsErrorStatus: (state, action: PayloadAction<Status>) => {
@@ -38,6 +25,21 @@ export const reviewsSlice = createSlice({
       .addCase(fetchReviewsAction.rejected, (state) => {
         state.hasError = true;
         state.isReviewsLoading = false;
+      })
+      .addCase(postReviewAction.pending, (state) => {
+        state.reviewsStatus = Status.Loading;
+        state.isReviewsStatusSubmitting = true;
+      })
+      .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviewsStatus = Status.Success;
+        state.isReviewsStatusSubmitting = false;
+        state.reviews.push(action.payload);
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.reviewsStatus = Status.Error;
+        state.isReviewsStatusSubmitting = false;
       });
   },
 });
+
+export const { setReviewsErrorStatus } = reviewsData.actions;

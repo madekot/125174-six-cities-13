@@ -1,6 +1,10 @@
-import { State } from '../../types';
 import { OfferPreview } from '@/types';
 import { NameSpace } from '@/const';
 
-export const getOffers = (state: State): OfferPreview[] => state[NameSpace.Data].offers;
-export const getIsOffersLoading = (state: State): boolean => state[NameSpace.Data].isOffersLoading;
+import { State } from '../../types';
+
+export const getOffers = (state: State): OfferPreview[] =>
+  state[NameSpace.MultipleOffersData].offers;
+
+export const getIsOffersLoading = (state: State): boolean =>
+  state[NameSpace.MultipleOffersData].isOffersLoading;

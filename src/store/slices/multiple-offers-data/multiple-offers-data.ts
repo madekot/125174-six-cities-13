@@ -1,21 +1,28 @@
-import { OfferPreview } from '../../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchOffersAction } from './api-actions';
+import { OfferFull, OfferPreview } from '@/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NameSpace } from '@/const';
 
-export const initialMultipleOffersData: MultipleOffersData = {
+import { fetchOffersAction } from './api-actions';
+import { updateOffers } from './utils';
+
+const initialMultipleOffersData: MultipleOffersData = {
   offers: [],
   isOffersLoading: false,
 };
 
-export type MultipleOffersData = {
+type MultipleOffersData = {
   offers: OfferPreview[];
   isOffersLoading: boolean;
 };
 
-export const multipleOffersSlice = createSlice({
-  name: 'multipleOffers',
+export const multipleOffersData = createSlice({
+  name: NameSpace.MultipleOffersData,
   initialState: initialMultipleOffersData,
-  reducers: {},
+  reducers: {
+    updateMultipleOffers: (state, action: PayloadAction<OfferFull>) => {
+      updateOffers(state.offers, action.payload);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOffersAction.pending, (state) => {
@@ -32,3 +39,5 @@ export const multipleOffersSlice = createSlice({
       });
   },
 });
+
+export const { updateMultipleOffers } = multipleOffersData.actions;

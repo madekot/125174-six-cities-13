@@ -1,23 +1,46 @@
 export { store } from './store';
 
-export { getSelectedCity, getSelectedSortType } from './slices/app-process/selectors';
-
-export { getHasError } from './slices/app-data/selectors';
-
 export { useAppSelector, useAppDispatch } from './hooks';
-export { getIsOffersLoading } from '@/store/slices/multiple-offers-data/selectors';
-export { getOffers } from '@/store/slices/multiple-offers-data/selectors';
-export { getIsOfferLoading } from '@/store/slices/single-offer-data/selectors';
-export { getOffer } from '@/store/slices/single-offer-data/selectors';
-export { getIsReviewsLoading } from '@/store/slices/reviews-data/selectors';
-export { getReviews } from '@/store/slices/reviews-data/selectors';
-export { getIsNearbyLoading } from '@/store/slices/nearby-data/selectors';
-export { getNearby } from '@/store/slices/nearby-data/selectors';
-export { getIsFavoritesLoading } from '@/store/slices/favorites-data/selectors';
-export { getFavoriteCount } from '@/store/slices/favorites-data/selectors';
-export { getFavorites } from '@/store/slices/favorites-data/selectors';
-export { getIsFavoriteStatusSubmitting } from '@/store/slices/favorites-data/selectors';
-export { getIsReviewsStatusSubmitting } from '@/store/slices/reviews-data/selectors';
-export { getReviewsHasError } from '@/store/slices/reviews-data/selectors';
 
-// тут мы делаем реэкспорт из модуля публичного интерфейса, селекторов, экшенов, всем чем другие модулю пользуются
+export { getIsOfferLoading, getOffer } from './slices/single-offer-data/selectors';
+
+export {
+  getIsReviewsLoading,
+  getReviews,
+  getHasError,
+  getIsReviewsStatusSubmitting,
+  getReviewsHasError,
+} from './slices/reviews-data/selectors';
+
+export { setReviewsErrorStatus } from './slices/reviews-data/reviews-data';
+
+export { getIsNearbyLoading, getNearby } from './slices/nearby-data/selectors';
+
+export { getOffers, getIsOffersLoading } from './slices/multiple-offers-data/selectors';
+
+export {
+  getAuthCheckedStatus,
+  getAuthorizationStatus,
+  getIsSubmittingLogin,
+  getUserInfo,
+} from './slices/user-process/selectors';
+
+export { favoritesData, updateMultipleFavorites } from './slices/favorites-data/favorites-data';
+
+export {
+  getIsFavoritesLoading,
+  getFavoriteCount,
+  getFavorites,
+  getIsFavoriteStatusSubmitting,
+} from './slices/favorites-data/selectors';
+
+export {
+  fetchFavoritesAction,
+  changeFavoriteStatusAction,
+} from './slices/favorites-data/api-actions';
+
+export { changeSortingType, changeCity, appProcess } from './slices/app-process/app-process';
+
+export { fetchOffersAction } from './slices/multiple-offers-data/api-actions';
+
+export { getSelectedCity, getSelectedSortType } from './slices/app-process/selectors';

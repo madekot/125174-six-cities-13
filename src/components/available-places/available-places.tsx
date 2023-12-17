@@ -3,8 +3,7 @@ import PlaceList from '../place-list/place-list.tsx';
 import { OfferPreview } from '@/types';
 import { memo } from 'react';
 import { getPluralSuffix } from '@/utils';
-import { useAppSelector } from '@/store';
-import { getSelectedCity } from '../../store';
+import { useAppSelector, getSelectedCity } from '@/store';
 
 type AvailablePlacesProps = {
   offers: OfferPreview[];

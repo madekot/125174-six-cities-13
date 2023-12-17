@@ -4,6 +4,7 @@ import { redirect } from './middlewares/redirect';
 import { configureStore } from '@reduxjs/toolkit';
 
 const api = createAPI();
+
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>

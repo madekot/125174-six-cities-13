@@ -38,9 +38,13 @@ export enum APIRoute {
 }
 
 export enum NameSpace {
-  Data = 'DATA',
   App = 'APP',
   User = 'USER',
+  MultipleOffersData = 'MULTIPLE_OFFERS_DATA',
+  SingleOfferData = 'SINGLE_OFFER_DATA',
+  FavoritesData = 'FAVORITES_DATA',
+  NearbyData = 'NEARBY_DATA',
+  ReviewsData = 'REVIEWS_DATA',
 }
 
 export enum FavoriteStatus {

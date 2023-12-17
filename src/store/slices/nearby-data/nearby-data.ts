@@ -1,21 +1,30 @@
-import { OfferPreview } from '../../../types';
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchNearbyAction } from './api-actions';
+import { OfferPreview } from '@/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { NameSpace } from '@/const';
 
-export type NearbyData = {
+import { fetchNearbyAction } from './api-actions';
+import { updateFavorites } from './utils';
+
+type NearbyData = {
   nearby: OfferPreview[];
   isNearbyLoading: boolean;
+  hasError: boolean;
 };
 
-export const initialNearbyData: NearbyData = {
+const initialNearbyData: NearbyData = {
   nearby: [],
   isNearbyLoading: false,
+  hasError: false,
 };
 
-export const nearbySlice = createSlice({
-  name: 'nearby',
+export const nearbyData = createSlice({
+  name: NameSpace.NearbyData,
   initialState: initialNearbyData,
-  reducers: {},
+  reducers: {
+    updateMultipleNearby: (state, action: PayloadAction<OfferPreview>) => {
+      updateFavorites(state.nearby, action.payload);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchNearbyAction.pending, (state) => {
@@ -23,6 +32,7 @@ export const nearbySlice = createSlice({
         state.isNearbyLoading = true;
       })
       .addCase(fetchNearbyAction.fulfilled, (state, action) => {
+        state.hasError = false;
         state.nearby = action.payload;
         state.isNearbyLoading = false;
       })
@@ -32,3 +42,5 @@ export const nearbySlice = createSlice({
       });
   },
 });
+
+export const { updateMultipleNearby } = nearbyData.actions;

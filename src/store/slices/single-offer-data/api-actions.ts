@@ -1,11 +1,12 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { OfferFull } from '../../../types';
-import { APIRoute, AppRoute, NameSpace } from '../../../const';
+import { OfferFull } from '@/types';
+import { APIRoute, AppRoute, NameSpace } from '@/const';
+
 import { AsyncThunkConfig } from '../../types';
 import { redirectToRoute } from '../../action';
 
 export const fetchOfferAction = createAsyncThunk<OfferFull | null, string, AsyncThunkConfig>(
-  `${NameSpace.Data}/fetchOffer`,
+  `${NameSpace.SingleOfferData}/fetchOffer`,
   async (id, { dispatch, extra: api }) => {
     try {
       const { data } = await api.get<OfferFull>(`${APIRoute.Offers}/${id}`);

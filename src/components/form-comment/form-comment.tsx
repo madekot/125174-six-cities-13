@@ -3,11 +3,11 @@ import { getPluralSuffix } from '@/utils';
 import {
   getIsReviewsStatusSubmitting,
   getReviewsHasError,
+  setReviewsErrorStatus,
   useAppDispatch,
   useAppSelector,
 } from '@/store';
 
-import { setReviewsErrorStatus } from '@/store/slices/app-data/app-data';
 import { Status } from '@/const';
 import { postReviewAction } from '@/store/slices/reviews-data/api-actions';
 

@@ -1,10 +1,11 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { Review, ReviewData } from '../../../types';
+import { Review, ReviewData } from '@/types';
+import { APIRoute, NameSpace } from '@/const';
+
 import { AsyncThunkConfig } from '../../types';
-import { APIRoute, NameSpace } from '../../../const';
 
 export const fetchReviewsAction = createAsyncThunk<Review[], string, AsyncThunkConfig>(
-  `${NameSpace.Data}/fetchReviews`,
+  `${NameSpace.ReviewsData}/fetchReviews`,
   async (id, { extra: api }) => {
     const { data } = await api.get<Review[]>(`${APIRoute.Review}/${id}`);
     return data;
@@ -12,7 +13,7 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, AsyncThunkC
 );
 
 export const postReviewAction = createAsyncThunk<Review, ReviewData, AsyncThunkConfig>(
-  `${NameSpace.Data}/postReview`,
+  `${NameSpace.ReviewsData}/postReview`,
   async ({ comment, rating, offerId }, { extra: api }) => {
     const { data } = await api.post<Review>(`${APIRoute.Review}/${offerId}`, { comment, rating });
     return data;

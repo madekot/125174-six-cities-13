@@ -1,7 +1,11 @@
-import { useAppDispatch, useAppSelector } from '@/store';
-import { fetchFavoritesAction } from '@/store/slices/favorites-data/api-actions';
 import { useEffect } from 'react';
-import { getAuthCheckedStatus } from '@/store/slices/user-process/selectors';
+
+import {
+  useAppDispatch,
+  useAppSelector,
+  fetchFavoritesAction,
+  getAuthCheckedStatus,
+} from '@/store';
 
 const useFetchFavorites = () => {
   const dispatch = useAppDispatch();

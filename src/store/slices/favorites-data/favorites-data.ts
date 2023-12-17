@@ -1,23 +1,20 @@
-import { FavoriteItem } from '@/types';
-import { createSlice } from '@reduxjs/toolkit';
-import { fetchFavoritesAction } from './api-actions';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-export type FavoritesData = {
-  favorites: FavoriteItem[];
-  isFavoritesLoading: boolean;
-  isFavoriteStatusSubmitting: boolean;
-};
+import { OfferPreview } from '@/types';
+import { NameSpace } from '@/const';
+import { changeFavoriteStatusAction, fetchFavoritesAction } from './api-actions';
 
-export const initialFavoritesData: FavoritesData = {
-  favorites: [],
-  isFavoritesLoading: false,
-  isFavoriteStatusSubmitting: false,
-};
+import { updateFavorites } from './utils';
+import { initialFavoritesData } from './const';
 
-export const favoritesSlice = createSlice({
-  name: 'favorites',
+export const favoritesData = createSlice({
+  name: NameSpace.FavoritesData,
   initialState: initialFavoritesData,
-  reducers: {},
+  reducers: {
+    updateMultipleFavorites: (state, action: PayloadAction<OfferPreview>) => {
+      updateFavorites(state.favorites, action.payload);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchFavoritesAction.pending, (state) => {
@@ -31,6 +28,17 @@ export const favoritesSlice = createSlice({
       .addCase(fetchFavoritesAction.rejected, (state) => {
         state.hasError = true;
         state.isFavoritesLoading = false;
+      })
+      .addCase(changeFavoriteStatusAction.pending, (state) => {
+        state.isFavoriteStatusSubmitting = true;
+      })
+      .addCase(changeFavoriteStatusAction.fulfilled, (state) => {
+        state.isFavoriteStatusSubmitting = false;
+      })
+      .addCase(changeFavoriteStatusAction.rejected, (state) => {
+        state.isFavoriteStatusSubmitting = false;
       });
   },
 });
+
+export const { updateMultipleFavorites } = favoritesData.actions;

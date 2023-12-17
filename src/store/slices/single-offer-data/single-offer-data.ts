@@ -1,21 +1,32 @@
-import { OfferFull } from '../../../types';
-import { createSlice } from '@reduxjs/toolkit';
+import { OfferFull } from '@/types';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchOfferAction } from './api-actions';
+import { NameSpace } from '@/const';
 
-export type SingleOfferData = {
+const updateFavorite = (state: SingleOfferData, id: string) => {
+  if (state.offer && state.offer.id === id) {
+    state.offer.isFavorite = !state.offer.isFavorite;
+  }
+};
+
+type SingleOfferData = {
   offer: OfferFull | null;
   isOfferLoading: boolean;
 };
 
-export const initialSingleOfferData: SingleOfferData = {
+const initialSingleOfferData: SingleOfferData = {
   offer: null,
   isOfferLoading: false,
 };
 
-export const singleOfferSlice = createSlice({
-  name: 'singleOffer',
+export const singleOfferData = createSlice({
+  name: NameSpace.SingleOfferData,
   initialState: initialSingleOfferData,
-  reducers: {},
+  reducers: {
+    updateSingleOffer: (state, action: PayloadAction<OfferFull>) => {
+      updateFavorite(state, action.payload.id);
+    },
+  },
   extraReducers(builder) {
     builder
       .addCase(fetchOfferAction.pending, (state) => {
@@ -32,3 +43,5 @@ export const singleOfferSlice = createSlice({
       });
   },
 });
+
+export const { updateSingleOffer } = singleOfferData.actions;
