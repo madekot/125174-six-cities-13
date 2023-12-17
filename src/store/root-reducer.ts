@@ -1,4 +1,4 @@
-import { NameSpace } from '../const.ts';
+import { NameSpace } from '@/const';
 import { combineReducers } from '@reduxjs/toolkit';
 import { appData } from './slices/app-data/app-data.ts';
 import { appProcess } from './slices/app-process/app-process.ts';

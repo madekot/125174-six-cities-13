@@ -1,5 +1,5 @@
-import { AuthorizationStatus, NameSpace } from '../../../const.ts';
-import { UserData } from '../../../types.ts';
+import { AuthorizationStatus, NameSpace } from '@/const';
+import { UserData } from '@/types';
 import { createSlice } from '@reduxjs/toolkit';
 import { checkAuthAction, loginAction, logoutAction } from './api-actions';
 
