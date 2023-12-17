@@ -3,13 +3,13 @@ import { getPluralSuffix } from '@/utils';
 import {
   getIsReviewsStatusSubmitting,
   getReviewsHasError,
+  postReviewAction,
   setReviewsErrorStatus,
   useAppDispatch,
   useAppSelector,
 } from '@/store';
 
 import { Status } from '@/const';
-import { postReviewAction } from '@/store/slices/reviews-data/api-actions';
 
 const ratingTitlesToValues: Record<string, number> = {
   terribly: 1,

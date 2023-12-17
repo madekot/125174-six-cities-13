@@ -2,47 +2,61 @@ export { store } from './store';
 
 export { useAppSelector, useAppDispatch } from './hooks';
 
-export { getIsOfferLoading, getOffer } from './slices/single-offer-data/selectors';
+export {
+  fetchOfferAction,
+  updateSingleOffer,
+  getOffer,
+  getIsOfferLoading,
+} from './slices/single-offer-data/index';
 
 export {
-  getIsReviewsLoading,
-  getReviews,
-  getHasError,
-  getIsReviewsStatusSubmitting,
+  fetchReviewsAction,
+  postReviewAction,
+  setReviewsErrorStatus,
   getReviewsHasError,
-} from './slices/reviews-data/selectors';
-
-export { setReviewsErrorStatus } from './slices/reviews-data/reviews-data';
-
-export { getIsNearbyLoading, getNearby } from './slices/nearby-data/selectors';
-
-export { getOffers, getIsOffersLoading } from './slices/multiple-offers-data/selectors';
+  getHasError,
+  getReviews,
+  getIsReviewsLoading,
+  getIsReviewsStatusSubmitting,
+} from './slices/reviews-data/index';
 
 export {
-  getAuthCheckedStatus,
-  getAuthorizationStatus,
-  getIsSubmittingLogin,
-  getUserInfo,
-} from './slices/user-process/selectors';
-
-export { favoritesData, updateMultipleFavorites } from './slices/favorites-data/favorites-data';
+  fetchNearbyAction,
+  updateMultipleNearby,
+  getNearby,
+  getIsNearbyLoading,
+} from './slices/nearby-data/index';
 
 export {
-  getIsFavoritesLoading,
-  getFavoriteCount,
+  changeFavoriteStatusAction,
+  fetchFavoritesAction,
+  updateMultipleFavorites,
   getFavorites,
   getIsFavoriteStatusSubmitting,
-} from './slices/favorites-data/selectors';
+  getFavoriteCount,
+  getIsFavoritesLoading,
+} from './slices/favorites-data/index';
 
 export {
-  fetchFavoritesAction,
-  changeFavoriteStatusAction,
-} from './slices/favorites-data/api-actions';
+  changeSortingType,
+  changeCity,
+  getSelectedSortType,
+  getSelectedCity,
+} from './slices/app-process/index';
 
-export { changeSortingType, changeCity, appProcess } from './slices/app-process/app-process';
+export {
+  fetchOffersAction,
+  updateMultipleOffers,
+  getOffers,
+  getIsOffersLoading,
+} from './slices/multiple-offers-data/index';
 
-export { fetchOffersAction } from './slices/multiple-offers-data/api-actions';
-
-export { getSelectedCity, getSelectedSortType } from './slices/app-process/selectors';
-
-export { checkAuthAction, loginAction, logoutAction } from './slices/user-process/api-actions';
+export {
+  checkAuthAction,
+  loginAction,
+  logoutAction,
+  getIsSubmittingLogin,
+  getAuthCheckedStatus,
+  getUserInfo,
+  getAuthorizationStatus,
+} from './slices/user-process/index';

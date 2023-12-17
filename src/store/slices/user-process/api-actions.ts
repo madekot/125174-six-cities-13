@@ -3,7 +3,7 @@ import { APIRoute, NameSpace } from '@/const';
 import { AsyncThunkConfig } from '../../types';
 import { AuthData, UserData } from '@/types';
 import { dropToken, saveToken } from '@/services/token';
-import { fetchOffersAction } from '../multiple-offers-data/api-actions';
+import { fetchOffersAction } from '../multiple-offers-data/';
 
 export const checkAuthAction = createAsyncThunk<UserData, undefined, AsyncThunkConfig>(
   `${NameSpace.User}/checkAuth`,

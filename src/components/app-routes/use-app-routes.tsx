@@ -1,5 +1,4 @@
-import { useAppSelector } from '@/store';
-import { getAuthorizationStatus } from '@/store/slices/user-process/selectors';
+import { getAuthorizationStatus, useAppSelector } from '@/store';
 import { AppRoute } from '@/const';
 import Layout from '@/components/layout/layout';
 import MainPage from '@/pages/main-page/main-page';

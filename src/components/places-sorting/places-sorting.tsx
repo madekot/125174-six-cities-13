@@ -1,8 +1,7 @@
 import { memo, useState } from 'react';
 import cn from 'classnames';
 import { SortingType } from '@/const';
-import { getSelectedSortType, useAppDispatch, useAppSelector } from '@/store';
-import { changeSortingType } from '@/store/slices/app-process/app-process';
+import { changeSortingType, getSelectedSortType, useAppDispatch, useAppSelector } from '@/store';
 
 function PlacesSorting(): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);

@@ -1,6 +1,11 @@
-import { getHasError, getIsOffersLoading, store, useAppSelector } from '@/store';
-import { checkAuthAction } from '@/store/slices/user-process/api-actions';
-import { fetchOffersAction } from '@/store/slices/multiple-offers-data/api-actions';
+import {
+  checkAuthAction,
+  fetchOffersAction,
+  getHasError,
+  getIsOffersLoading,
+  store,
+  useAppSelector,
+} from '@/store';
 import LoadingScreen from '@/components/loading-screen/loading-screen';
 import ErrorScreen from '@/components/error-screen/error-screen';
 import AppRoutes from '@/components/app-routes/app-routes';

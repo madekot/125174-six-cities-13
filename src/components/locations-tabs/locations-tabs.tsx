@@ -1,8 +1,7 @@
 import cn from 'classnames';
 import { CityName } from '@/const';
 import { memo } from 'react';
-import { changeCity } from '@/store/slices/app-process/app-process';
-import { useAppDispatch } from '@/store';
+import { changeCity, useAppDispatch } from '@/store';
 
 type LocationsTabsProps = {
   selectedCity: CityName;
