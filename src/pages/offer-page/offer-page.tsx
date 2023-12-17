@@ -1,16 +1,16 @@
-import { useParams } from "react-router-dom";
-import LoadingScreen from "../../components/loading-screen/loading-screen";
-import { useAppSelector } from "../../store/hooks";
-import NearbyPlaces from "../../components/nearby-places/nearby-places";
+import { useParams } from 'react-router-dom';
+import LoadingScreen from '../../components/loading-screen/loading-screen';
+import NearbyPlaces from '../../components/nearby-places/nearby-places';
 import {
   getIsNearbyLoading,
   getIsOfferLoading,
   getIsReviewsLoading,
   getNearby,
-  getOffer
-} from "../../store/slices/app-data/selectors";
-import NotFoundPage from "../not-found-page/not-found-page";
-import { useOfferData, usePageInfo } from "./hooks";
+  getOffer,
+  useAppSelector,
+} from '@/store';
+import NotFoundPage from '../not-found-page/not-found-page';
+import { useOfferData, usePageInfo } from './hooks';
 import OfferDetails from '../../components/offer-details/offer-details';
 import { getShuffledNearby } from './utils';
 import { MAX_OFFERS_PREVIEW } from './const';
@@ -39,11 +39,7 @@ function OfferPage(): JSX.Element | null {
 
   return (
     <main className="page__main page__main--offer">
-      <OfferDetails
-        offer={offer}
-        id={id}
-        limitedNearby={limitedNearby}
-      />
+      <OfferDetails offer={offer} id={id} limitedNearby={limitedNearby} />
       <div className="container">
         <NearbyPlaces nearPlaces={limitedNearby} />
       </div>

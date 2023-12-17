@@ -1,4 +1,4 @@
-import { FavoriteItem } from '../../types.ts';
+import { FavoriteItem } from '@/types';
 import FavoriteList from '../favorite-list/favorite-list.tsx';
 
 type NonEmptyFavoritesProps = {

@@ -1,5 +1,5 @@
 import PlaceList from '../place-list/place-list';
-import { OfferPreview } from '../../types';
+import { OfferPreview } from '@/types';
 
 type NearbyPlacesProps = {
   nearPlaces: OfferPreview[];

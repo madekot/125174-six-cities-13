@@ -1,15 +1,14 @@
 import PlacesSorting from '../places-sorting/places-sorting.tsx';
 import PlaceList from '../place-list/place-list.tsx';
-import { OfferPreview } from '../../types.ts';
+import { OfferPreview } from '@/types';
 import { memo } from 'react';
-import { getPluralSuffix } from '../../utils.ts';
-import { useAppSelector } from '../../store/hooks.ts';
-import { getSelectedCity } from '../../store/slices/app-process/selectors.ts';
+import { getPluralSuffix } from '@/utils';
+import { useAppSelector, getSelectedCity } from '@/store';
 
 type AvailablePlacesProps = {
   offers: OfferPreview[];
-  handleCardMouseEnter?: (id: OfferPreview['id']) => void;
-  handleCardMouseLeave?: () => void;
+  handleCardMouseEnter: (id: OfferPreview['id']) => void;
+  handleCardMouseLeave: () => void;
 };
 
 function AvailablePlaces({

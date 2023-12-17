@@ -1,19 +1,18 @@
-import { useAppSelector } from '../../store/hooks'
-import { getReviews } from '../../store/slices/app-data/selectors'
-import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors'
-import { OfferPreview, OfferFull } from '../../types'
-import FormComment from '../form-comment/form-comment'
-import OfferDescription from '../offer-description/offer-description'
-import OfferGallery from '../offer-gallery/offer-gallery'
-import OfferHost from '../offer-host/offer-host'
-import OfferMap from '../offer-map/offer-map'
-import Reviews from '../reviews/reviews'
+import { useAppSelector, getAuthCheckedStatus } from '@/store';
+import { OfferPreview, OfferFull } from '@/types';
+import FormComment from '../form-comment/form-comment';
+import OfferDescription from '../offer-description/offer-description';
+import OfferGallery from '../offer-gallery/offer-gallery';
+import OfferHost from '../offer-host/offer-host';
+import OfferMap from '../offer-map/offer-map';
+import Reviews from '../reviews/reviews';
+import { getReviews } from '@/store';
 
 type OfferDetailsProps = {
-  id: string
-  limitedNearby: OfferPreview[]
-  offer: OfferFull
-}
+  id: string;
+  limitedNearby: OfferPreview[];
+  offer: OfferFull;
+};
 
 function OfferDetails({ offer, id, limitedNearby }: OfferDetailsProps) {
   const reviews = useAppSelector(getReviews);

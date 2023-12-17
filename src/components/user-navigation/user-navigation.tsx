@@ -1,9 +1,8 @@
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { AppRoute } from '../../const.ts';
+import { logoutAction, useAppDispatch, useAppSelector } from '@/store';
+import { AppRoute } from '@/const';
 import { Link } from 'react-router-dom';
-import { logoutAction } from '../../store/api-actions.ts';
-import { getFavoriteCount } from '../../store/slices/app-data/selectors.ts';
-import { getAuthCheckedStatus, getUserInfo } from '../../store/slices/user-process/selectors.ts';
+import { getFavoriteCount } from '../../store';
+import { getAuthCheckedStatus, getUserInfo } from '@/store';
 
 function UserNavigation(): JSX.Element {
   const dispatch = useAppDispatch();

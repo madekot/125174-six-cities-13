@@ -1,6 +1,6 @@
 import FavoriteCitySection from '../favorite-city-section/favorite-city-section.tsx';
-import { FavoriteItem, OfferPreview } from '../../types.ts';
-import { CityName } from '../../const.ts';
+import { FavoriteItem, OfferPreview } from '@/types';
+import { CityName } from '@/const';
 
 const groupFavoritesByCity = (favoriteList: OfferPreview[]) =>
   favoriteList.reduce((favoritesByCity: Record<string, OfferPreview[]>, item: OfferPreview) => {

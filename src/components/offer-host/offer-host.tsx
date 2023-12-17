@@ -1,4 +1,4 @@
-import { OfferFull } from '../../types.ts';
+import { OfferFull } from '@/types';
 
 type OfferHostProps = {
   host: OfferFull['host'];

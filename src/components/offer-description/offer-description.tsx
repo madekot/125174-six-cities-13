@@ -1,9 +1,5 @@
-import {
-  calculateRatingPercentage,
-  convertCapitalizeFirstLetter,
-  getPluralSuffix,
-} from '../../utils';
-import { OfferFull } from '../../types.ts';
+import { calculateRatingPercentage, convertCapitalizeFirstLetter, getPluralSuffix } from '@/utils';
+import { OfferFull } from '@/types';
 import FavoriteToggleButton from '../favorite-toggle-button/favorite-toggle-button.tsx';
 
 type OfferDescriptionProps = {

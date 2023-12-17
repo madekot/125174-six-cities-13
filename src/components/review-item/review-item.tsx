@@ -1,5 +1,5 @@
-import { calculateRatingPercentage } from '../../utils.ts';
-import { Review } from '../../types.ts';
+import { calculateRatingPercentage } from '@/utils';
+import { Review } from '@/types';
 
 const dateTimeFormatInstance = new Intl.DateTimeFormat('en-US', {
   month: 'long',
