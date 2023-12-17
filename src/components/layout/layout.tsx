@@ -14,6 +14,7 @@ type LayoutProps = {
   isHeaderShow?: boolean;
   isFooterShow?: boolean;
   wrapperComponent?: React.ComponentType<{ children: ReactNode }>;
+  children?: ReactNode;
 };
 
 function Layout(props: LayoutProps): JSX.Element {
@@ -24,6 +25,7 @@ function Layout(props: LayoutProps): JSX.Element {
     isHeaderUserNavigation: isUserNavigation = true,
     isHeaderShow = true,
     isFooterShow = false,
+    children,
   } = props;
 
   const { pathname } = useLocation();
@@ -40,6 +42,7 @@ function Layout(props: LayoutProps): JSX.Element {
       </Helmet>
       {isHeaderShow && <Header isUserNavigation={isUserNavigation} isActiveLogo={isActiveLogo} />}
       <Outlet context={outletContext} />
+      {children}
       {isFooterShow && <Footer />}
     </>
   );

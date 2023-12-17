@@ -1,6 +1,6 @@
-import { State } from '../../index.ts';
 import { OfferFull, OfferPreview, Review } from '../../../types.ts';
 import { NameSpace, Status } from '../../../const.ts';
+import { State } from '../../types';
 
 export const getOffers = (state: State): OfferPreview[] => state[NameSpace.Data].offers;
 export const getIsOffersLoading = (state: State): boolean => state[NameSpace.Data].isOffersLoading;

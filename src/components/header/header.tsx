@@ -1,12 +1,12 @@
 import cn from 'classnames';
 import UserNavigation from '../user-navigation/user-navigation.tsx';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const.ts';
+import { AppRoute } from '@/const';
 import { memo } from 'react';
 
 type HeaderProps = {
-  isUserNavigation: boolean;
-  isActiveLogo: boolean;
+  isUserNavigation: boolean | undefined;
+  isActiveLogo: boolean | undefined;
 };
 
 function Header(props: HeaderProps): JSX.Element | null {

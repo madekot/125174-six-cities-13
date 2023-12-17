@@ -1,15 +1,13 @@
 import { memo, useState } from 'react';
-import { useDispatch } from 'react-redux';
 import cn from 'classnames';
-import { SortingType } from '../../const';
-import { useAppSelector } from '../../store/hooks';
-import { changeSortingType } from '../../store/slices/app-process/app-process.ts';
-import { getSelectedSortType } from '../../store/slices/app-process/selectors.ts';
+import { SortingType } from '@/const';
+import { getSelectedSortType, useAppDispatch, useAppSelector } from '@/store';
+import { changeSortingType } from '@/store/slices/app-process/app-process';
 
 function PlacesSorting(): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
   const selectedSortType = useAppSelector(getSelectedSortType);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const toggleSortingOptions = () => setIsOpened((prevState) => !prevState);
 
@@ -39,7 +37,7 @@ function PlacesSorting(): JSX.Element {
             className={cn('places__option', {
               'places__option--active': selectedSortType === sortType,
             })}
-            onClick={() => handleSortTypeChange(title)}
+            onClick={() => handleSortTypeChange(title as SortingType)}
           >
             {title}
           </li>

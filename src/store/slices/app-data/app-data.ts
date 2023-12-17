@@ -1,24 +1,28 @@
-import { FavoriteItem, OfferFull, OfferPreview, Review } from '../../../types.ts';
+import { OfferPreview } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { NameSpace, Status } from '../../../const.ts';
+import { NameSpace, Status } from '@/const';
+import { initialSingleOfferData, SingleOfferData } from '../single-offer-data/single-offer-data';
 import {
-  changeFavoriteStatusAction,
-  fetchFavoritesAction,
-  fetchNearbyAction,
-  fetchOfferAction,
-  fetchOffersAction,
-  fetchReviewsAction,
-  postReviewAction,
-} from '../../api-actions.ts';
+  initialMultipleOffersData,
+  MultipleOffersData,
+} from '../multiple-offers-data/multiple-offers-data';
+import { initialNearbyData, NearbyData } from '../nearby-data/nearby-data';
+import { initialReviewsData, ReviewsData } from '../reviews-data/reviews-data';
+import { FavoritesData, initialFavoritesData } from '../favorites-data/favorites-data';
+import { fetchNearbyAction } from '../nearby-data/api-actions';
+import { fetchReviewsAction, postReviewAction } from '../reviews-data/api-actions';
+import { changeFavoriteStatusAction, fetchFavoritesAction } from '../favorites-data/api-actions';
+import { fetchOffersAction } from '../multiple-offers-data/api-actions';
+import { fetchOfferAction } from '../single-offer-data/api-actions';
 
-const updateOfferList = (offers: OfferPreview[], updatedOffer: OfferPreview) => {
+export const updateOfferList = (offers: OfferPreview[], updatedOffer: OfferPreview) => {
   const offerIndex = offers.findIndex((el) => el.id === updatedOffer.id);
   if (offerIndex !== -1) {
     offers[offerIndex] = updatedOffer;
   }
 };
 
-const updateFavoritesList = (
+export const updateFavoritesList = (
   favorites: OfferPreview[],
   updatedOffer: OfferPreview,
   isFavorite: boolean,
@@ -32,51 +36,32 @@ const updateFavoritesList = (
   }
 };
 
-const updateOfferNearbyList = (nearby: OfferPreview[], updatedOffer: OfferPreview) => {
+export const updateOfferNearbyList = (nearby: OfferPreview[], updatedOffer: OfferPreview) => {
   const offerNearbyIndex = nearby.findIndex((el) => el.id === updatedOffer.id);
   if (offerNearbyIndex !== -1) {
     nearby[offerNearbyIndex].isFavorite = !nearby[offerNearbyIndex].isFavorite;
   }
 };
 
-const updateOfferIsFavorite = (state: AppData, id: string) => {
+export const updateOfferIsFavorite = (state: AppData, id: string) => {
   if (state.offer && state.offer.id === id) {
     state.offer.isFavorite = !state.offer.isFavorite;
   }
 };
 
-type AppData = {
-  offer: OfferFull | null;
-  offers: OfferPreview[];
-  nearby: OfferPreview[];
-  reviews: Review[];
-  isReviewsStatusSubmitting: boolean;
-  favorites: FavoriteItem[];
-  isOffersLoading: boolean;
-  isOfferLoading: boolean;
-  isNearbyLoading: boolean;
-  isReviewsLoading: boolean;
-  isFavoritesLoading: boolean;
-  isFavoriteStatusSubmitting: boolean;
-  hasError: boolean;
-  reviewsStatus: Status;
-};
+export type AppData = SingleOfferData &
+  MultipleOffersData &
+  NearbyData &
+  ReviewsData &
+  FavoritesData & { hasError: boolean };
 
 const initialState: AppData = {
-  offer: null,
-  offers: [],
-  nearby: [],
-  reviews: [],
-  isReviewsStatusSubmitting: false,
-  favorites: [],
-  isOffersLoading: false,
-  isOfferLoading: false,
-  isNearbyLoading: false,
-  isReviewsLoading: false,
-  isFavoritesLoading: false,
-  isFavoriteStatusSubmitting: false,
+  ...initialSingleOfferData,
+  ...initialMultipleOffersData,
+  ...initialNearbyData,
+  ...initialReviewsData,
+  ...initialFavoritesData,
   hasError: false,
-  reviewsStatus: Status.Idle,
 };
 
 export const appData = createSlice({

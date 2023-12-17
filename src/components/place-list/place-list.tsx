@@ -1,9 +1,8 @@
 import CommonPlaceCard from '../common-place-card/common-place-card.tsx';
-import { SortingType } from '../../const.ts';
-import { useAppSelector } from '../../store/hooks.ts';
-import { OfferPreview } from '../../types.ts';
+import { SortingType } from '@/const';
+import { getSelectedSortType, useAppSelector } from '@/store';
+import { OfferPreview } from '@/types';
 import { memo } from 'react';
-import { getSelectedSortType } from '../../store/slices/app-process/selectors.ts';
 
 const sortOfferFunction: Record<SortingType, (offers: Readonly<OfferPreview[]>) => OfferPreview[]> =
   {
@@ -18,8 +17,8 @@ export type CardType = 'cities' | 'favorites' | 'near-places';
 type OfferListProps = {
   offers: OfferPreview[];
   cardType: CardType;
-  handleCardMouseEnter?: (id: OfferPreview['id']) => void;
-  handleCardMouseLeave?: () => void;
+  handleCardMouseEnter: (id: OfferPreview['id']) => void;
+  handleCardMouseLeave: () => void;
 };
 
 function PlaceList({

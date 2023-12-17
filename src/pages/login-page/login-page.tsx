@@ -1,11 +1,11 @@
 import { useRef } from 'react';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
+import { useAppDispatch, useAppSelector } from '@/store';
 import { useNavigate } from 'react-router-dom';
-import { loginAction } from '../../store/api-actions.ts';
-import { AppRoute, CityName } from '../../const.ts';
+import { AppRoute, CityName } from '@/const';
 import { toast } from 'react-toastify';
-import { getIsSubmittingLogin } from '../../store/slices/user-process/selectors.ts';
-import { changeCity } from '../../store/slices/app-process/app-process.ts';
+import { getIsSubmittingLogin } from '@/store/slices/user-process/selectors';
+import { changeCity } from '@/store/slices/app-process/app-process';
+import { loginAction } from '@/store/slices/user-process/api-actions';
 
 const REGEX_PASSWORD = /^(?=.*[a-zA-Z])(?=.*\d)[^\s]+$/;
 const ERROR_MESSAGE =
@@ -76,7 +76,6 @@ function LoginPage(): JSX.Element {
                 required
                 ref={loginRef}
                 disabled={isSubmittingLogin}
-                // defaultValue="test@mail.com"
               />
             </div>
             <div className="login__input-wrapper form__input-wrapper">
@@ -89,7 +88,6 @@ function LoginPage(): JSX.Element {
                 required
                 ref={passwordRef}
                 disabled={isSubmittingLogin}
-                // defaultValue="1a"
               />
             </div>
             <button

@@ -1,9 +1,9 @@
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import { AppRoute } from '../../const.ts';
 import { Link } from 'react-router-dom';
-import { logoutAction } from '../../store/api-actions.ts';
-import { getFavoriteCount } from '../../store/slices/app-data/selectors.ts';
+import { getFavoriteCount } from '../../store';
 import { getAuthCheckedStatus, getUserInfo } from '../../store/slices/user-process/selectors.ts';
+import { logoutAction } from '../../store/slices/user-process/api-actions';
 
 function UserNavigation(): JSX.Element {
   const dispatch = useAppDispatch();

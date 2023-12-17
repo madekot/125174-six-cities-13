@@ -1,6 +1,6 @@
 import styles from './error-screen.module.css';
 import { useAppDispatch } from '../../store/hooks.ts';
-import { fetchOffersAction } from '../../store/api-actions.ts';
+import { fetchOffersAction } from '../../store/slices/multiple-offers-data/api-actions';
 
 function ErrorScreen(): JSX.Element {
   const dispatch = useAppDispatch();

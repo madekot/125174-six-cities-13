@@ -58,13 +58,11 @@ export enum Status {
 export enum TitlePage {
   Main = 'Home',
   Favorites = 'Favorites',
-  Loading = 'Loading',
   Login = 'Login',
 }
 
 export enum DescriptionPage {
   Main = 'Description main',
   Favorites = 'Description favorites',
-  Loading = 'Description loading',
   Login = 'Description login',
 }

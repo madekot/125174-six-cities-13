@@ -1,8 +1,7 @@
 import cn from 'classnames';
-import { useAppSelector } from '../../store/hooks.ts';
-import { getFavorites } from '../../store/slices/app-data/selectors.ts';
+import { useAppSelector, getFavorites } from '@/store';
 import { useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const.ts';
+import { AppRoute } from '@/const';
 
 interface PageProps {
   children: React.ReactNode;

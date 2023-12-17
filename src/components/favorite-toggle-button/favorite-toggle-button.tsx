@@ -1,9 +1,9 @@
 import { AppRoute, FavoriteStatus } from '../../const.ts';
-import { changeFavoriteStatusAction } from '../../store/api-actions.ts';
 import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
 import { useNavigate } from 'react-router-dom';
 import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors.ts';
 import { getIsFavoriteStatusSubmitting } from '../../store/slices/app-data/selectors.ts';
+import { changeFavoriteStatusAction } from '../../store/slices/favorites-data/api-actions';
 
 type BookmarkButtonProps = {
   isFavorite: boolean;

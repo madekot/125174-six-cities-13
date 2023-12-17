@@ -1,15 +1,15 @@
 import cn from 'classnames';
-import { CityName } from '../../const.ts';
-import { useDispatch } from 'react-redux';
+import { CityName } from '@/const';
 import { memo } from 'react';
-import { changeCity } from '../../store/slices/app-process/app-process.ts';
+import { changeCity } from '@/store/slices/app-process/app-process';
+import { useAppDispatch } from '@/store';
 
 type LocationsTabsProps = {
   selectedCity: CityName;
 };
 
 function LocationsTabs({ selectedCity }: LocationsTabsProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const cities: CityName[] = [
     CityName.Paris,

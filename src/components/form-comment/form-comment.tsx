@@ -1,13 +1,15 @@
 import { Fragment, useEffect, useState } from 'react';
-import { getPluralSuffix } from '../../utils.ts';
-import { useAppDispatch, useAppSelector } from '../../store/hooks.ts';
-import { postReviewAction } from '../../store/api-actions.ts';
+import { getPluralSuffix } from '@/utils';
 import {
   getIsReviewsStatusSubmitting,
   getReviewsHasError,
-} from '../../store/slices/app-data/selectors.ts';
-import { setReviewsErrorStatus } from '../../store/slices/app-data/app-data.ts';
-import { Status } from '../../const.ts';
+  useAppDispatch,
+  useAppSelector,
+} from '@/store';
+
+import { setReviewsErrorStatus } from '@/store/slices/app-data/app-data';
+import { Status } from '@/const';
+import { postReviewAction } from '@/store/slices/reviews-data/api-actions';
 
 const ratingTitlesToValues: Record<string, number> = {
   terribly: 1,

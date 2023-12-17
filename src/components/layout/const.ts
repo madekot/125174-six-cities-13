@@ -1,4 +1,4 @@
-import { AppRoute, DescriptionPage, TitlePage } from '../../const.ts';
+import { AppRoute, DescriptionPage, TitlePage } from '@/const';
 
 export const routeNameToPageInfoMap: Record<string, { title: string; description: string }> = {
   [AppRoute.Main]: {

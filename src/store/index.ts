@@ -1,20 +1,25 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { createAPI } from '../services/api.ts';
-import { redirect } from './middlewares/redirect.ts';
-import { rootReducer } from './root-reducer.ts';
+export { store } from './store';
 
-export type State = ReturnType<typeof store.getState>;
+export { getSelectedCity, getSelectedSortType } from './slices/app-process/selectors';
 
-export type AppDispatch = typeof store.dispatch;
+export {
+  getFavoriteCount,
+  getFavorites,
+  getIsFavoritesLoading,
+  getIsNearbyLoading,
+  getIsOfferLoading,
+  getIsOffersLoading,
+  getNearby,
+  getOffers,
+  getOffer,
+  getIsReviewsLoading,
+  getReviews,
+  getHasError,
+  getReviewsHasError,
+  getIsFavoriteStatusSubmitting,
+  getIsReviewsStatusSubmitting,
+} from './slices/app-data/selectors';
 
-export const api = createAPI();
+export { useAppSelector, useAppDispatch } from './hooks';
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      thunk: {
-        extraArgument: api,
-      },
-    }).concat(redirect),
-});
+// тут мы делаем реэкспорт из модуля публичного интерфейса, селекторов, экшенов, всем чем другие модулю пользуются
