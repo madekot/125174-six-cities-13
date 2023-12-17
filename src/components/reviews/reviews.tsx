@@ -1,5 +1,5 @@
 import ReviewItem from '../review-item/review-item.tsx';
-import { Review } from '../../types.ts';
+import { Review } from '@/types';
 
 const MAX_REVIEWS_COUNT = 10;
 

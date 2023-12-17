@@ -1,9 +1,8 @@
 import PlaceList from '../place-list/place-list.tsx';
-import { OfferPreview } from '../../types.ts';
+import { OfferPreview } from '@/types';
 import { Link } from 'react-router-dom';
-import { AppRoute, CityName } from '../../const.ts';
-import { useAppDispatch } from '../../store/hooks.ts';
-import { changeCity } from '../../store/slices/app-process/app-process.ts';
+import { AppRoute, CityName } from '@/const';
+import { useAppDispatch, changeCity } from '@/store';
 
 type FavoriteCitySectionProps = {
   cityName: CityName;

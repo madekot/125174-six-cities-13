@@ -1,4 +1,4 @@
-import { OfferPreview, Location, OfferFull } from '../../types.ts';
+import { OfferPreview, Location, OfferFull } from '@/types';
 import Map from '../../components/map/map.tsx';
 
 type OfferMapProps = {

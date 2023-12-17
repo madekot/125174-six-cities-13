@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import useMap from './use-map.ts';
 import { Icon, layerGroup, Marker } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Location, OfferFull, OfferPreview } from '../../types.ts';
+import { Location, OfferFull, OfferPreview } from '@/types';
 import styles from './map.module.css';
 
 const defaultCustomIcon = new Icon({

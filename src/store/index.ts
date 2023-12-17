@@ -44,3 +44,5 @@ export { changeSortingType, changeCity, appProcess } from './slices/app-process/
 export { fetchOffersAction } from './slices/multiple-offers-data/api-actions';
 
 export { getSelectedCity, getSelectedSortType } from './slices/app-process/selectors';
+
+export { checkAuthAction, loginAction, logoutAction } from './slices/user-process/api-actions';

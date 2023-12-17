@@ -1,6 +1,5 @@
-import { useAppSelector } from '../../store/hooks';
-import { getAuthCheckedStatus } from '../../store/slices/user-process/selectors';
-import { OfferPreview, OfferFull } from '../../types';
+import { useAppSelector, getAuthCheckedStatus } from '@/store';
+import { OfferPreview, OfferFull } from '@/types';
 import FormComment from '../form-comment/form-comment';
 import OfferDescription from '../offer-description/offer-description';
 import OfferGallery from '../offer-gallery/offer-gallery';

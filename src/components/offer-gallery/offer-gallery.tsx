@@ -1,4 +1,4 @@
-import { OfferFull } from '../../types.ts';
+import { OfferFull } from '@/types';
 
 const MAX_IMAGES = 6;
 

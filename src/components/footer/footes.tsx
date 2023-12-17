@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { AppRoute } from '../../const.ts';
+import { AppRoute } from '@/const';
 
 function Footer(): JSX.Element | null {
   const { pathname } = useLocation();
