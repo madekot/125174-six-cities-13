@@ -4,4 +4,5 @@ export type FavoritesData = {
   favorites: FavoriteItem[];
   isFavoritesLoading: boolean;
   isFavoriteStatusSubmitting: boolean;
+  hasError: boolean;
 };

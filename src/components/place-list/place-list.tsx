@@ -17,8 +17,8 @@ export type CardType = 'cities' | 'favorites' | 'near-places';
 type OfferListProps = {
   offers: OfferPreview[];
   cardType: CardType;
-  handleCardMouseEnter: (id: OfferPreview['id']) => void;
-  handleCardMouseLeave: () => void;
+  handleCardMouseEnter?: (id: OfferPreview['id']) => void;
+  handleCardMouseLeave?: () => void;
 };
 
 function PlaceList({
@@ -37,8 +37,8 @@ function PlaceList({
           key={offer.id}
           {...offer}
           cardType={cardType}
-          handleCardMouseEnter={handleCardMouseEnter}
-          handleCardMouseLeave={handleCardMouseLeave}
+          handleCardMouseEnter={(evt) => handleCardMouseEnter?.(evt)}
+          handleCardMouseLeave={() => handleCardMouseLeave?.()}
         />
       ))}
     </>

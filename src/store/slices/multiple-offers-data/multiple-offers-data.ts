@@ -1,4 +1,4 @@
-import { OfferFull, OfferPreview } from '@/types';
+import { OfferPreview } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { NameSpace } from '@/const';
 
@@ -8,18 +8,20 @@ import { updateOffers } from './utils';
 const initialMultipleOffersData: MultipleOffersData = {
   offers: [],
   isOffersLoading: false,
+  hasError: false,
 };
 
 type MultipleOffersData = {
   offers: OfferPreview[];
   isOffersLoading: boolean;
+  hasError: boolean;
 };
 
 export const multipleOffersData = createSlice({
   name: NameSpace.MultipleOffersData,
   initialState: initialMultipleOffersData,
   reducers: {
-    updateMultipleOffers: (state, action: PayloadAction<OfferFull>) => {
+    updateMultipleOffers: (state, action: PayloadAction<OfferPreview>) => {
       updateOffers(state.offers, action.payload);
     },
   },

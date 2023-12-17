@@ -1,4 +1,4 @@
-import { OfferFull } from '@/types';
+import { OfferFull, OfferPreview } from '@/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { fetchOfferAction } from './api-actions';
 import { NameSpace } from '@/const';
@@ -12,18 +12,20 @@ const updateFavorite = (state: SingleOfferData, id: string) => {
 type SingleOfferData = {
   offer: OfferFull | null;
   isOfferLoading: boolean;
+  hasError: boolean;
 };
 
 const initialSingleOfferData: SingleOfferData = {
   offer: null,
   isOfferLoading: false,
+  hasError: false,
 };
 
 export const singleOfferData = createSlice({
   name: NameSpace.SingleOfferData,
   initialState: initialSingleOfferData,
   reducers: {
-    updateSingleOffer: (state, action: PayloadAction<OfferFull>) => {
+    updateSingleOffer: (state, action: PayloadAction<OfferPreview>) => {
       updateFavorite(state, action.payload.id);
     },
   },
