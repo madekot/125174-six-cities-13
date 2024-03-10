@@ -188,7 +188,7 @@ Top rated first. От высокого рейтинга к низкому. По 
 #### `2. Взаимодействие с сервером`
 Все необходимые данные загружаются с сервера.
 Сервер доступен по адресу: [https://13.design.htmlacademy.pro/six-cities.](https://13.design.htmlacademy.pro/six-cities)
-Спецификация по взаимодействию с сервером в формате OpenAPI — [https://13.design.pages.academy/spec/six-cities.](https://13.design.htmlacademy.pro/spec/six-cities.)
+Спецификация по взаимодействию с сервером в формате OpenAPI — [[https://13.design.pages.academy/spec/six-cities.](https://13.design.htmlacademy.pro/spec/six-cities.)](https://13.design.htmlacademy.pro/spec/six-cities.)
 В случае недоступности сервера отображается информационное сообщение. Дизайн сообщения остаётся на усмотрение разработчика.
 Сервер принимает данные в виде JSON-объекта.
 Авторизация на сервере происходит на основании токена. Токен передаётся с каждым запросом в заголовке X-Token.
